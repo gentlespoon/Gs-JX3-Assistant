@@ -1,0 +1,26 @@
+﻿<Window x:Class="GsJX3NonInjectAssistant.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GsJX3NonInjectAssistant"
+        mc:Ignorable="d"
+        Title="Gs-JX3-NonInject-Assistant" Height="480" Width="640" MaxWidth="640" MaxHeight="480" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="CanMinimize"
+        Loaded="Window_Loaded">
+    <Grid>
+        <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,0">
+            <CheckBox x:Name="checkbox_topMost" Content="TopMost" Click="checkbox_topMost_Click"/>
+        </StatusBar>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,30">
+            <TabItem x:Name="tab_fishing" Header="Fishing">
+                <Grid>
+                    <Frame Source="Views/Fishing/Fishing.xaml" NavigationUIVisibility="Hidden"></Frame>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tab_session" Header="Session" Height="22" VerticalAlignment="Top">
+                <Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,1 +1,0 @@
-# Gs-JX3-NonInjection-Assistant
