@@ -28,6 +28,7 @@ namespace GsJX3NonInjectAssistant
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
             setTopMost(true);
+            
         }
 
         private void checkbox_topMost_Click(object sender, RoutedEventArgs e)

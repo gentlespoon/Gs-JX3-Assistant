@@ -1,16 +1,106 @@
-﻿<Page x:Class="GsJX3NonInjectAssistant.Views.Fishing.Page1"
+﻿<Page x:Class="GsJX3NonInjectAssistant.Views.Fishing.Fishing"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GsJX3NonInjectAssistant.Views.Fishing"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page1">
+      d:DesignHeight="480" d:DesignWidth="640"
+      Title="Page1"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      >
 
-    <Grid>
-        <DataGrid x:Name="FishingSettings" ItemsSource="{Binding}" AutoGenerateColumns="True">
 
-        </DataGrid>
+    <Grid Background="White">
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox x:Name="groupBox_configuration" Header="设置" HorizontalAlignment="Stretch" Grid.Column="0" Padding="5. 2">
+                    <StackPanel>
+                        <Label Content="开始钓鱼前先绑定屏幕坐标"/>
+                        <GroupBox Header="技能栏 - 钓鱼状态监控" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5. 2">
+                            <GroupBox.ToolTip>
+                                <ToolTip MaxWidth="400">
+                                    <TextBlock TextWrapping="Wrap" Text="钓鱼改版后，每一小时会自动退出钓鱼模式。当此坐标的颜色匹配记录的普通技能栏颜色时，可判定为已退出钓鱼模式，将点击进入钓鱼模式按钮的坐标重新开始钓鱼。"/>
+                                </ToolTip>
+                            </GroupBox.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="button_setCoordinates_skillBar" Content="设置坐标" Padding="5, 0" Click="button_setCoordinates_skillBar_Click"/>
+                                <Label x:Name="label_skillBar" Content="未设置" Foreground="Red" Width="Auto"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="按钮 - 进入钓鱼模式" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5. 2">
+                            <GroupBox.ToolTip>
+                                <ToolTip MaxWidth="400">
+                                    <TextBlock TextWrapping="Wrap" Text="把鱼竿放到普通技能栏上，将会点击此坐标开始钓鱼。"/>
+                                </ToolTip>
+                            </GroupBox.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="button_setCoordinates_fishingMode" Content="设置坐标" Padding="5, 0" Click="button_setCoordinates_fishingMode_Click"/>
+                                <Label x:Name="label_enterFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="按钮 - 钓鱼 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5. 2">
+                            <GroupBox.ToolTip>
+                                <ToolTip MaxWidth="400">
+                                    <TextBlock TextWrapping="Wrap" Text="设置垂钓按钮的坐标。"/>
+                                </ToolTip>
+                            </GroupBox.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="button_setCoordinates_startFishing" Content="设置坐标" Padding="5, 0" Click="button_setCoordinates_startFishing_Click"/>
+                                <Label x:Name="label_startFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="上钩提示 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5. 2">
+                            <GroupBox.ToolTip>
+                                <ToolTip MaxWidth="400">
+                                    <TextBlock TextWrapping="Wrap" Text="设置收杆按钮的坐标。"/>
+                                </ToolTip>
+                            </GroupBox.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="button_setCoordinates_successIndicator" Content="设置坐标" Padding="5, 0" Click="button_setCoordinates_successIndicator_Click"/>
+                                <Label x:Name="label_success" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="按钮 - 收杆 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5. 2">
+                            <GroupBox.ToolTip>
+                                <ToolTip MaxWidth="400">
+                                    <TextBlock TextWrapping="Wrap" Text="设置收杆按钮的坐标。"/>
+                                </ToolTip>
+                            </GroupBox.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="button_setCoordinates_endFishing" Content="设置坐标" Padding="5, 0" Click="button_setCoordinates_endFishing_Click"/>
+                                <Label x:Name="label_endFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox x:Name="groupBox_progress" Header="进度" HorizontalAlignment="Stretch" Grid.Column="1" Padding="5. 2">
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <GroupBox x:Name="groupBox" Header="已钓鱼次数">
+                            <Label x:Name="label_loopCounter" Content="0"></Label>
+                        </GroupBox>
+                    </StackPanel>
+                </GroupBox>
+                
+            </Grid>
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="button_start" Margin="0, 5" Padding="30, 0" Content="开始" IsEnabled="False" Click="button_start_Click"/>
+                    <Button x:Name="button_stop" Margin="5, 5" Padding="30, 0" Content="停止" IsEnabled="False" Click="button_stop_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
+        
     </Grid>
 </Page>

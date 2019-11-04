@@ -5,19 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GsJX3NonInjectAssistant"
         mc:Ignorable="d"
-        Title="Gs-JX3-NonInject-Assistant" Height="480" Width="640" MaxWidth="640" MaxHeight="480" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="CanMinimize"
-        Loaded="Window_Loaded">
+        Title="Gs-JX3-NonInject-Assistant" Height="480" Width="640" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="CanMinimize"
+        Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,0">
-            <CheckBox x:Name="checkbox_topMost" Content="TopMost" Click="checkbox_topMost_Click"/>
+            <CheckBox x:Name="checkbox_topMost" Content="保持窗口可见" Click="checkbox_topMost_Click"/>
         </StatusBar>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,30">
-            <TabItem x:Name="tab_fishing" Header="Fishing">
+            <TabItem x:Name="tab_fishing" Header="钓鱼">
                 <Grid>
                     <Frame Source="Views/Fishing/Fishing.xaml" NavigationUIVisibility="Hidden"></Frame>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tab_session" Header="Session" Height="22" VerticalAlignment="Top">
+            <TabItem x:Name="tab_session" Header="？" Height="22" VerticalAlignment="Top">
                 <Grid>
                 </Grid>
             </TabItem>

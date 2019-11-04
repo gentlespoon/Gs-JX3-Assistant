@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GsJX3NonInjectAssistant.Properties
+namespace JX3NIACommon.Properties
 {
 
 
