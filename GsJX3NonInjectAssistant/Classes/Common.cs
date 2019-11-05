@@ -37,6 +37,7 @@ namespace GsJX3NonInjectAssistant
             return MColor.FromArgb(color.A, color.R, color.G, color.B);
         }
 
+        
 
     }
 }

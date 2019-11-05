@@ -12,12 +12,15 @@ using System.Drawing;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Timers;
+
 using GsJX3NonInjectAssistant.Fishing;
 
 using YariControl.RealCursorPosition;
 using System.Windows.Media;
 using MColor = System.Windows.Media.Color;
 using DColor = System.Drawing.Color;
+using System.Threading;
 
 namespace GsJX3NonInjectAssistant.Views.Fishing
 {
@@ -27,11 +30,49 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
     public partial class Fishing : Page
     {
         private FishingController fishingController = new FishingController();
+        private System.Timers.Timer timer_pollStatus = new System.Timers.Timer(500);
 
         public Fishing()
         {
             InitializeComponent();
+
+            timer_pollStatus.Elapsed += Timer_PollStatus_Ticker;
+            timer_pollStatus.AutoReset = true;
+            timer_pollStatus.Start();
         }
+
+
+        ~Fishing()
+        {
+            timer_pollStatus.Stop();
+            timer_pollStatus.Dispose();
+        }
+
+        private void Timer_PollStatus_Ticker(Object source, ElapsedEventArgs e)
+        {
+            Task.Run(UpdateUI);
+        }
+
+        public void UpdateUI()
+        {
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                var fC = fishingController;
+                var state = fC.State;
+                label_loopCounter.Content = $"{fC.CounterSuccess} / {fC.CounterTotal}";
+                button_start.IsEnabled = state.RequiredCoords && !state.Running;
+                button_stop.IsEnabled = state.RequiredCoords && state.Running;
+                label_progressMonitor_requiredCoordsSet.Content = state.RequiredCoords ? "√" : "x";
+                label_progressMonitor_optionalCoordsSet.Content = state.OptionalCoords ? "√" : "-";
+                label_progressMonitor_fishingMode.Content = state.Running ? (state.OptionalCoords ? (state.FishingMode ? "√" : "x") : "-") : "";
+                label_progressMonitor_fishingStarted.Content = state.Running ? (state.Started ? "√" : "") : "";
+                label_progressMonitor_fishingSuccess.Content = state.Running ? (state.Started ? (!state.Stopped ? fC.timer_timeout_tick.ToString() : "√") : "") : "";
+                label_progressMonitor_fishingStopped.Content = state.Running ? (state.Stopped ? fC.timer_waitForPickup_tick.ToString() : "") : "";
+            }));
+
+        }
+
+
 
 
         private void button_setCoordinates_skillBar_Click(object sender, RoutedEventArgs e)
@@ -46,10 +87,9 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 label_skillBar.Background = new SolidColorBrush(Common.ToMediaColor(color));
                 Console.WriteLine($"Got Regular_SkillBar: {point.ToString()}, {color.ToString()}");
                 button_setCoordinates_skillBar.IsEnabled = true;
-                button_start.IsEnabled = fishingController.CanStartFishing;
             });
         }
-
+        
         private void button_setCoordinates_fishingMode_Click(object sender, RoutedEventArgs e)
         {
             button_setCoordinates_fishingMode.IsEnabled = false;
@@ -59,7 +99,6 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 label_enterFishing.Content = point.ToString();
                 Console.WriteLine($"Got FishingMode_Button: {point.ToString()}");
                 button_setCoordinates_fishingMode.IsEnabled = true;
-                button_start.IsEnabled = fishingController.CanStartFishing;
             });
         }
 
@@ -72,7 +111,6 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 label_startFishing.Content = point.ToString();
                 Console.WriteLine($"Got StartFishing_Button: {point.ToString()}");
                 button_setCoordinates_startFishing.IsEnabled = true;
-                button_start.IsEnabled = fishingController.CanStartFishing;
             });
         }
 
@@ -88,7 +126,6 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 label_success.Background = new SolidColorBrush(Common.ToMediaColor(color));
                 Console.WriteLine($"Got Success_Indicator: {point.ToString()}, {color.ToString()}");
                 button_setCoordinates_successIndicator.IsEnabled = true;
-                button_start.IsEnabled = fishingController.CanStartFishing;
             });
         }
 
@@ -101,22 +138,17 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 label_endFishing.Content = point.ToString();
                 Console.WriteLine($"Got StopFishing_Button: {point.ToString()}");
                 button_setCoordinates_endFishing.IsEnabled = true;
-                button_start.IsEnabled = fishingController.CanStartFishing;
             });
         }
 
         private void button_start_Click(object sender, RoutedEventArgs e)
         {
             fishingController.Start();
-            button_start.IsEnabled = fishingController.CanStartFishing;
-            button_stop.IsEnabled = fishingController.CanStopFishing;
         }
 
         private void button_stop_Click(object sender, RoutedEventArgs e)
         {
             fishingController.Stop();
-            button_start.IsEnabled = fishingController.CanStartFishing;
-            button_stop.IsEnabled = fishingController.CanStopFishing;
         }
     }
 }
