@@ -14,8 +14,9 @@ namespace GsJX3NonInjectAssistant
     class MouseEvents
     {
         private IKeyboardMouseEvents m_GlobalHook;
+        Common.GetMouseEventCallBack callbackFunction = null;
 
-        public void Subscribe(Common.CallBack callback)
+        public void Subscribe(Common.GetMouseEventCallBack callback)
         {
             if (null != callbackFunction)
             {
@@ -29,7 +30,6 @@ namespace GsJX3NonInjectAssistant
         }
 
         
-        Common.CallBack callbackFunction = null;
 
         //private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
         //{
@@ -43,12 +43,17 @@ namespace GsJX3NonInjectAssistant
                 throw new NullReferenceException("Callback is not set");
             }
 
-            //Console.WriteLine("MouseDown: \t{0}; \t System Timestamp: \t{1}", e.Button, e.Timestamp);
             Point coordinates = new Point(e.X, e.Y);
             Unsubscribe();
-            callbackFunction(coordinates);
-            // uncommenting the following line will suppress the middle mouse button click
-            // if (e.Buttons == MouseButtons.Middle) { e.Handled = true; }
+            string mouseButton;
+            switch (e.Button)
+            {
+                default:                    mouseButton = "";     break;
+                case MouseButtons.Left:     mouseButton = "L";    break;
+                case MouseButtons.Right:    mouseButton = "R";    break;
+                case MouseButtons.Middle:   mouseButton = "M";    break;
+            }
+            callbackFunction(coordinates, mouseButton);
         }
 
         public void Unsubscribe()
@@ -63,29 +68,38 @@ namespace GsJX3NonInjectAssistant
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
-        public static extern void send_input();
+        
 
         //Mouse actions
-        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
-        private const int MOUSEEVENTF_LEFTUP = 0x04;
-        private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
-        private const int MOUSEEVENTF_RIGHTUP = 0x10;
+        private const int MOUSEEVENTF_LEFTDOWN = 0x0002;
+        private const int MOUSEEVENTF_LEFTUP = 0x0004;
+        private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        private const int MOUSEEVENTF_RIGHTUP = 0x0010;
+        private const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
+        private const int MOUSEEVENTF_MIDDLEUP = 0x0040;
 
-
-        public static void SimulateMouseClick(Point point, int MouseButton)
+        public static void SimulateMouseClick(Point point, string mouseButton)
         {
+            Console.WriteLine($"{mouseButton} Click at {point.ToString()}");
+
+            Point currentMousePosition = Cursor.Position;
+            Cursor.Position = point;
+                        
+            // for some reason this coordinates does not work
+            // mouse movement relies on the Cursor.Position assignment.
             uint X = (uint)point.X;
             uint Y = (uint)point.Y;
-            if (MouseButton == 1)
+
+            switch (mouseButton)
             {
-                mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
-            }
-            else
-            {
-                mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, X, Y, 0, 0);
+                case "L":     mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);         break;
+                case "R":     mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, X, Y, 0, 0);       break;
+                case "M":     mouse_event(MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP, X, Y, 0, 0);     break;
+                default: break;
             }
 
-
+            // reset mouse position
+            Cursor.Position = currentMousePosition;
         }
 
     }

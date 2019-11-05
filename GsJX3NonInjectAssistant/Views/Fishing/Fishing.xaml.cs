@@ -78,14 +78,15 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
         private void button_setCoordinates_skillBar_Click(object sender, RoutedEventArgs e)
         {
             button_setCoordinates_skillBar.IsEnabled = false;
-            Common.GetMouseClickCoordinate((System.Drawing.Point point) => {
-                fishingController.Coord_Indicator_Regular_SkillBar = point;
+            Common.GetMouseClickCoordinate((System.Drawing.Point point, string mouseButton) => {
+                fishingController.ACDS.RegularSkillBar.Coordinates = point;
                 DColor color = ScreenPixelColor.GetPixelColor(point);
-                fishingController.Color_Indicator_Regular_SkillBar = color;
+                fishingController.ACDS.RegularSkillBar.PixelColor = color;
                 label_skillBar.Foreground = new SolidColorBrush(Common.ToMediaColor(DColor.FromArgb(color.ToArgb() ^ 0xffffff)));
-                label_skillBar.Content = point.ToString();
+                label_skillBar.Content = $"{point.ToString()} - {mouseButton}";
                 label_skillBar.Background = new SolidColorBrush(Common.ToMediaColor(color));
                 Console.WriteLine($"Got Regular_SkillBar: {point.ToString()}, {color.ToString()}");
+                fishingController.VerifyACDS();
                 button_setCoordinates_skillBar.IsEnabled = true;
             });
         }
@@ -93,11 +94,13 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
         private void button_setCoordinates_fishingMode_Click(object sender, RoutedEventArgs e)
         {
             button_setCoordinates_fishingMode.IsEnabled = false;
-            Common.GetMouseClickCoordinate((System.Drawing.Point point) => {
-                fishingController.Coord_Button_EnterFishingMode = point;
+            Common.GetMouseClickCoordinate((System.Drawing.Point point, string mouseButton) => {
+                fishingController.ACDS.EnterFishingMode.Coordinates = point;
+                fishingController.ACDS.EnterFishingMode.MouseAction = mouseButton;
                 label_enterFishing.Foreground = new SolidColorBrush(MColor.FromRgb(0,0,0));
-                label_enterFishing.Content = point.ToString();
+                label_enterFishing.Content = $"{point.ToString()} - {mouseButton}";
                 Console.WriteLine($"Got FishingMode_Button: {point.ToString()}");
+                fishingController.VerifyACDS();
                 button_setCoordinates_fishingMode.IsEnabled = true;
             });
         }
@@ -105,11 +108,13 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
         private void button_setCoordinates_startFishing_Click(object sender, RoutedEventArgs e)
         {
             button_setCoordinates_startFishing.IsEnabled = false;
-            Common.GetMouseClickCoordinate((System.Drawing.Point point) => {
-                fishingController.Coord_Button_StartFishing = point;
+            Common.GetMouseClickCoordinate((System.Drawing.Point point, string mouseButton) => {
+                fishingController.ACDS.StartFishing.Coordinates = point;
+                fishingController.ACDS.StartFishing.MouseAction = mouseButton;
                 label_startFishing.Foreground = new SolidColorBrush(MColor.FromRgb(0, 0, 0));
-                label_startFishing.Content = point.ToString();
+                label_startFishing.Content = $"{point.ToString()} - {mouseButton}";
                 Console.WriteLine($"Got StartFishing_Button: {point.ToString()}");
+                fishingController.VerifyACDS();
                 button_setCoordinates_startFishing.IsEnabled = true;
             });
         }
@@ -117,14 +122,15 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
         private void button_setCoordinates_successIndicator_Click(object sender, RoutedEventArgs e)
         {
             button_setCoordinates_successIndicator.IsEnabled = false;
-            Common.GetMouseClickCoordinate((System.Drawing.Point point) => {
-                fishingController.Coord_Indicator_Success = point;
+            Common.GetMouseClickCoordinate((System.Drawing.Point point, string mouseButton) => {
+                fishingController.ACDS.SuccessIndicator.Coordinates = point;
                 DColor color = ScreenPixelColor.GetPixelColor(point);
-                fishingController.Color_Indicator_Success = color;
+                fishingController.ACDS.SuccessIndicator.PixelColor = color;
                 label_success.Foreground = new SolidColorBrush(Common.ToMediaColor(DColor.FromArgb(color.ToArgb() ^ 0xffffff)));
-                label_success.Content = point.ToString();
+                label_success.Content = $"{point.ToString()} - {mouseButton}";
                 label_success.Background = new SolidColorBrush(Common.ToMediaColor(color));
                 Console.WriteLine($"Got Success_Indicator: {point.ToString()}, {color.ToString()}");
+                fishingController.VerifyACDS();
                 button_setCoordinates_successIndicator.IsEnabled = true;
             });
         }
@@ -132,11 +138,13 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
         private void button_setCoordinates_endFishing_Click(object sender, RoutedEventArgs e)
         {
             button_setCoordinates_endFishing.IsEnabled = false;
-            Common.GetMouseClickCoordinate((System.Drawing.Point point) => {
-                fishingController.Coord_Button_EndFishing = point;
+            Common.GetMouseClickCoordinate((System.Drawing.Point point, string mouseButton) => {
+                fishingController.ACDS.StopFishing.Coordinates = point;
+                fishingController.ACDS.StopFishing.MouseAction = mouseButton;
                 label_endFishing.Foreground = new SolidColorBrush(MColor.FromRgb(0, 0, 0));
-                label_endFishing.Content = point.ToString();
+                label_endFishing.Content = $"{point.ToString()} - {mouseButton}";
                 Console.WriteLine($"Got StopFishing_Button: {point.ToString()}");
+                fishingController.VerifyACDS();
                 button_setCoordinates_endFishing.IsEnabled = true;
             });
         }

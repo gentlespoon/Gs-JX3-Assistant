@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows;
 using System.Threading;
-using System.Windows.Media;
-using MColor = System.Windows.Media.Color;
-using DColor = System.Drawing.Color;
 
 namespace GsJX3NonInjectAssistant
 {
     public static class Common
     {
 
+        public readonly static System.Drawing.Point NullPoint = new System.Drawing.Point(0, 0);
+        public readonly static System.Drawing.Color NullColor = System.Drawing.Color.Transparent;
 
-        public delegate void CallBack(System.Drawing.Point p);
+
+        public delegate void GetMouseEventCallBack(System.Drawing.Point p, string MouseButton);
 
         public static System.Drawing.Point GetVirtualScreenResolution()
         {
@@ -26,15 +26,15 @@ namespace GsJX3NonInjectAssistant
             );
         }
 
-        public static void GetMouseClickCoordinate(CallBack callback)
+        public static void GetMouseClickCoordinate(GetMouseEventCallBack callback)
         {
             MouseEvents me = new MouseEvents();
             me.Subscribe(callback);
         }
 
-        public static MColor ToMediaColor(this DColor color)
+        public static System.Windows.Media.Color ToMediaColor(this System.Drawing.Color color)
         {
-            return MColor.FromArgb(color.A, color.R, color.G, color.B);
+            return System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
         }
 
         

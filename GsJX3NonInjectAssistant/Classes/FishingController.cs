@@ -9,9 +9,14 @@ using System.Drawing;
 using System.Threading;
 
 using YariControl.RealCursorPosition;
+using GsJX3NonInjectAssistant;
 
 namespace GsJX3NonInjectAssistant.Fishing
 {
+
+
+    
+
     public class State
     {
         public bool RequiredCoords = false;
@@ -22,16 +27,31 @@ namespace GsJX3NonInjectAssistant.Fishing
         public bool Stopped = false;
         public bool Sleeping = false;
     }
+
+    public class ActionControl {
+        public Point Coordinates = Common.NullPoint;
+        public Color PixelColor = Common.NullColor;
+        public string MouseAction = "";
+    }
+
+    public class ActionControlDataSet
+    {
+        public ActionControl RegularSkillBar = new ActionControl();
+        public ActionControl SuccessIndicator = new ActionControl();
+        public ActionControl EnterFishingMode = new ActionControl();
+        public ActionControl StartFishing = new ActionControl();
+        public ActionControl StopFishing = new ActionControl();
+    }
     public class FishingController
     {
 
         // Check screen every x milliseconds
-        private const int timerInterval = 100;
+        private const int timerInterval = 50;
 
         // Fishing timeout
-        public int timer_timeout = 10; // seconds
+        public int timer_timeout = 22; // seconds
         public int timer_timeout_tick = 0;
-        public int timer_waitForPickup = 10;
+        public int timer_waitForPickup = 8;
         public int timer_waitForPickup_tick = 0;
 
         private State state = new State();
@@ -47,109 +67,21 @@ namespace GsJX3NonInjectAssistant.Fishing
         private System.Timers.Timer timer_checkScreen = new System.Timers.Timer(timerInterval);
         private System.Timers.Timer timer_seconds = new System.Timers.Timer(1000);
 
-        private readonly static Point nullPoint = new Point(0, 0);
-        private readonly static Color nullColor = Color.Transparent;
 
+        // Action Control Data Set
+        public ActionControlDataSet ACDS = new ActionControlDataSet();
 
-        // fishing mode detection
-        private Point coord_Indicator_Regular_SkillBar = nullPoint;
-        public Point Coord_Indicator_Regular_SkillBar
-        {
-            get => coord_Indicator_Regular_SkillBar;
-            set
-            {
-                coord_Indicator_Regular_SkillBar = value;
-                if (value != nullPoint)
-                {
-
-                }
-            }
-        }
-
-        private Color color_Indicator_Regular_SkillBar = nullColor;
-        public Color Color_Indicator_Regular_SkillBar
-        {
-            get => color_Indicator_Regular_SkillBar;
-            set
-            {
-                color_Indicator_Regular_SkillBar = value;
-                checkCoords();
-            }
-        }
-        
-
-        // successful fishing detection
-        private Point coord_Indicator_Success = nullPoint;
-        public Point Coord_Indicator_Success
-        { 
-            get => coord_Indicator_Success;
-            set
-            {
-                coord_Indicator_Success = value;
-                checkCoords();
-            }
-        }
-
-        private Color color_Indicator_Success = nullColor;
-        public Color Color_Indicator_Success
-        {
-            get => color_Indicator_Success;
-            set
-            {
-                color_Indicator_Success = value;
-                checkCoords();
-            }
-}
-
-
-        // enter fishing mode button
-        private Point coord_Button_EnterFishingMode = nullPoint;
-        public Point Coord_Button_EnterFishingMode
-        { 
-            get => coord_Button_EnterFishingMode;
-            set
-            {
-                coord_Button_EnterFishingMode = value;
-                checkCoords();
-            }
-        }
-        
-        // start fishing button
-        private Point coord_Button_StartFishing = nullPoint;
-        public Point Coord_Button_StartFishing 
-        {
-            get => coord_Button_StartFishing; 
-            set
-            {
-                coord_Button_StartFishing = value;
-                checkCoords();
-            }
-        }
-        
-        // end fishing button
-        private Point coord_Button_EndFishing = nullPoint;
-        public Point Coord_Button_EndFishing
-        {
-            get => coord_Button_EndFishing;
-            set
-            {
-                coord_Button_EndFishing = value;
-                checkCoords();
-            }
-        }
-
-
-        private void checkCoords()
+        public void VerifyACDS()
         {
             // required Coords
             if (
                 // successful fishing detection set
-                coord_Indicator_Success != nullPoint &&
-                color_Indicator_Success != nullColor &&
+                ACDS.SuccessIndicator.Coordinates != Common.NullPoint &&
+                ACDS.SuccessIndicator.PixelColor != Common.NullColor &&
                 // start fishing button set
-                coord_Button_StartFishing != nullPoint &&
-                // end fishing button set
-                coord_Button_EndFishing != nullPoint
+                ACDS.StartFishing.Coordinates != Common.NullPoint &&
+                // stop fishing button set
+                ACDS.StopFishing.Coordinates != Common.NullPoint
             )
                 state.RequiredCoords = true;
             else
@@ -158,10 +90,10 @@ namespace GsJX3NonInjectAssistant.Fishing
             // optional Coords
             if (
                 // skillBar coords
-                coord_Indicator_Regular_SkillBar != nullPoint &&
-                color_Indicator_Regular_SkillBar != nullColor &&
+                ACDS.RegularSkillBar.Coordinates != Common.NullPoint &&
+                ACDS.RegularSkillBar.PixelColor != Common.NullColor &&
                 // enter fishing button
-                coord_Button_EnterFishingMode != nullPoint
+                ACDS.EnterFishingMode.Coordinates != Common.NullPoint
             )
                 state.OptionalCoords = true;
             else
@@ -224,9 +156,9 @@ namespace GsJX3NonInjectAssistant.Fishing
             if (!state.Running) return;
             if (state.Stopped) return;
 
-            Color color = ScreenPixelColor.GetPixelColor(coord_Indicator_Success);
+            Color color = ScreenPixelColor.GetPixelColor(ACDS.SuccessIndicator.Coordinates);
             // if the color matches success color, we have a fish
-            if (color_Indicator_Success == color)
+            if (ACDS.SuccessIndicator.PixelColor == color)
             {
                 Action_StopFishing();
             }
@@ -240,9 +172,9 @@ namespace GsJX3NonInjectAssistant.Fishing
             // if we need to check fishing mode and re-enter fishing mode
             if (state.OptionalCoords)
             {
-                Color color = ScreenPixelColor.GetPixelColor(coord_Indicator_Regular_SkillBar);
+                Color color = ScreenPixelColor.GetPixelColor(ACDS.RegularSkillBar.Coordinates);
                 // if the color matches regular skill bar, it means we are out of fishing mode
-                if (color_Indicator_Regular_SkillBar == color)
+                if (ACDS.RegularSkillBar.PixelColor == color)
                 {
                     Console.WriteLine("* Not in fishing mode");
                     state.FishingMode = false;
@@ -259,6 +191,7 @@ namespace GsJX3NonInjectAssistant.Fishing
             // if we are not fishing
             if (!state.Started)
             {
+                Thread.Sleep(1000);
                 Action_StartFishing();
             }
             // if we are fishing and we are not waiting for UI delay,
@@ -290,7 +223,7 @@ namespace GsJX3NonInjectAssistant.Fishing
         private void Action_EnterFishingMode()
         {
             Console.WriteLine("* Enter Fishing Mode");
-            MouseEvents.SimulateMouseClick(coord_Button_EnterFishingMode, 1);
+            MouseEvents.SimulateMouseClick(ACDS.EnterFishingMode.Coordinates, ACDS.EnterFishingMode.MouseAction);
             state.Started = false;
             state.Stopped = false;
 
@@ -302,7 +235,7 @@ namespace GsJX3NonInjectAssistant.Fishing
         private void Action_StartFishing()
         {
             Console.WriteLine("* Start Fishing");
-            MouseEvents.SimulateMouseClick(coord_Button_StartFishing, 2);
+            MouseEvents.SimulateMouseClick(ACDS.StartFishing.Coordinates, ACDS.StartFishing.MouseAction);
             state.Stopped = false;
             state.Started = true;
             timer_timeout_tick = timer_timeout;
@@ -312,7 +245,7 @@ namespace GsJX3NonInjectAssistant.Fishing
         private void Action_StopFishing()
         {
             Console.WriteLine("* Stop Fishing");
-            MouseEvents.SimulateMouseClick(coord_Button_EndFishing, 2);
+            MouseEvents.SimulateMouseClick(ACDS.StopFishing.Coordinates, ACDS.StopFishing.MouseAction);
             state.Stopped = true;
             timer_waitForPickup_tick = timer_waitForPickup;
             counterSuccess++;
