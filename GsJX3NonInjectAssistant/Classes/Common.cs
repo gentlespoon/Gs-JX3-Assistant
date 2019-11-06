@@ -11,7 +11,6 @@ namespace GsJX3NonInjectAssistant
 {
     public static class Common
     {
-
         public readonly static System.Drawing.Point NullPoint = new System.Drawing.Point(0, 0);
         public readonly static System.Drawing.Color NullColor = System.Drawing.Color.Transparent;
 
@@ -37,6 +36,18 @@ namespace GsJX3NonInjectAssistant
             return System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
         }
 
+
+        public static int? ParsePositiveInt(string text)
+        {
+            try
+            {
+                int n = Convert.ToInt32(text);
+                return n;
+            }
+            catch
+            { /* suppress error */ }
+            return null;
+        }
         
 
     }

@@ -83,7 +83,7 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 DColor color = ScreenPixelColor.GetPixelColor(point);
                 fishingController.ACDS.RegularSkillBar.PixelColor = color;
                 label_skillBar.Foreground = new SolidColorBrush(Common.ToMediaColor(DColor.FromArgb(color.ToArgb() ^ 0xffffff)));
-                label_skillBar.Content = $"{point.ToString()} - {mouseButton}";
+                label_skillBar.Content = $"{mouseButton} - {point.ToString()}";
                 label_skillBar.Background = new SolidColorBrush(Common.ToMediaColor(color));
                 Console.WriteLine($"Got Regular_SkillBar: {point.ToString()}, {color.ToString()}");
                 fishingController.VerifyACDS();
@@ -98,7 +98,7 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 fishingController.ACDS.EnterFishingMode.Coordinates = point;
                 fishingController.ACDS.EnterFishingMode.MouseAction = mouseButton;
                 label_enterFishing.Foreground = new SolidColorBrush(MColor.FromRgb(0,0,0));
-                label_enterFishing.Content = $"{point.ToString()} - {mouseButton}";
+                label_enterFishing.Content = $"{mouseButton} - {point.ToString()}";
                 Console.WriteLine($"Got FishingMode_Button: {point.ToString()}");
                 fishingController.VerifyACDS();
                 button_setCoordinates_fishingMode.IsEnabled = true;
@@ -112,7 +112,7 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 fishingController.ACDS.StartFishing.Coordinates = point;
                 fishingController.ACDS.StartFishing.MouseAction = mouseButton;
                 label_startFishing.Foreground = new SolidColorBrush(MColor.FromRgb(0, 0, 0));
-                label_startFishing.Content = $"{point.ToString()} - {mouseButton}";
+                label_startFishing.Content = $"{mouseButton} - {point.ToString()}";
                 Console.WriteLine($"Got StartFishing_Button: {point.ToString()}");
                 fishingController.VerifyACDS();
                 button_setCoordinates_startFishing.IsEnabled = true;
@@ -127,7 +127,7 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 DColor color = ScreenPixelColor.GetPixelColor(point);
                 fishingController.ACDS.SuccessIndicator.PixelColor = color;
                 label_success.Foreground = new SolidColorBrush(Common.ToMediaColor(DColor.FromArgb(color.ToArgb() ^ 0xffffff)));
-                label_success.Content = $"{point.ToString()} - {mouseButton}";
+                label_success.Content = $"{mouseButton} - {point.ToString()}";
                 label_success.Background = new SolidColorBrush(Common.ToMediaColor(color));
                 Console.WriteLine($"Got Success_Indicator: {point.ToString()}, {color.ToString()}");
                 fishingController.VerifyACDS();
@@ -142,7 +142,7 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 fishingController.ACDS.StopFishing.Coordinates = point;
                 fishingController.ACDS.StopFishing.MouseAction = mouseButton;
                 label_endFishing.Foreground = new SolidColorBrush(MColor.FromRgb(0, 0, 0));
-                label_endFishing.Content = $"{point.ToString()} - {mouseButton}";
+                label_endFishing.Content = $"{mouseButton} - {point.ToString()}";
                 Console.WriteLine($"Got StopFishing_Button: {point.ToString()}");
                 fishingController.VerifyACDS();
                 button_setCoordinates_endFishing.IsEnabled = true;
@@ -157,6 +157,48 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
         private void button_stop_Click(object sender, RoutedEventArgs e)
         {
             fishingController.Stop();
+        }
+
+        private void textBox_timeout_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string txt = textBox_fishingTimeout.Text;
+            if (txt.Trim() == "")
+            {
+                textBox_fishingTimeout.Text = fishingController.timer_timeout.ToString();
+                return;
+            }
+            int? n = Common.ParsePositiveInt(txt);
+            if (null != n && n > 0)
+                fishingController.timer_timeout = (int)n;
+            else
+                MessageBox.Show($"{txt} 不是有效的数字");
+        }
+
+        private void textBox_pickupDelay_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string txt = textBox_pickupDelay.Text;
+            if (txt.Trim() == "")
+            {
+                textBox_pickupDelay.Text = fishingController.timer_waitForPickup.ToString();
+                return;
+            }
+            int? n = Common.ParsePositiveInt(txt);
+            if (null != n && n > 0)
+                fishingController.timer_waitForPickup = (int)n;
+            else
+                MessageBox.Show($"{txt} 不是有效的数字");
+        }
+
+        private void textBox_pickupDelay_GotFocus(object sender, RoutedEventArgs e)
+        {
+            textBox_pickupDelay.SelectionStart = 0;
+            textBox_pickupDelay.SelectionLength = textBox_pickupDelay.Text.Length;
+        }
+
+        private void textBox_timeout_GotFocus(object sender, RoutedEventArgs e)
+        {
+            textBox_fishingTimeout.SelectionStart = 0;
+            textBox_fishingTimeout.SelectionLength = textBox_fishingTimeout.Text.Length;
         }
     }
 }

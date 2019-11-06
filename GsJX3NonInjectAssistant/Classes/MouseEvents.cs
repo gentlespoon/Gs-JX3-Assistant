@@ -80,6 +80,9 @@ namespace GsJX3NonInjectAssistant
 
         public static void SimulateMouseClick(Point point, string mouseButton)
         {
+            // JX3 does not like SendMessage() API...
+            // So fall back to the deprecated mouse_event API.
+
             Console.WriteLine($"{mouseButton} Click at {point.ToString()}");
 
             Point currentMousePosition = Cursor.Position;
