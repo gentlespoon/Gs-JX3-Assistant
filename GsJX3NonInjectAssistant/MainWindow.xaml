@@ -22,7 +22,7 @@
         </TabControl>
         <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,0">
             <CheckBox x:Name="checkbox_topMost" Content="保持窗口可见" Click="checkbox_topMost_Click"/>
-            <Label>Ver. 2019-11-05T16:59:00-07:00</Label>
+            <Label>Ver. 20191106</Label>
         </StatusBar>
     </Grid>
 </Window>
