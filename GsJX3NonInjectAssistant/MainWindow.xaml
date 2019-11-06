@@ -9,20 +9,20 @@
         Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,30">
-            <TabItem x:Name="tab_fishing" Header="钓鱼">
-                <Grid>
-                    <Frame Source="Views/Fishing/Fishing.xaml" NavigationUIVisibility="Hidden"></Frame>
-                </Grid>
-            </TabItem>
             <TabItem x:Name="tab_session" Header="?" Height="22" VerticalAlignment="Top">
                 <Grid>
                     <Frame Source="Views/Misc/About.xaml" NavigationUIVisibility="Hidden"></Frame>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="tab_fishing" Header="钓鱼">
+                <Grid>
+                    <Frame Source="Views/Fishing/Fishing.xaml" NavigationUIVisibility="Hidden"></Frame>
+                </Grid>
+            </TabItem>
         </TabControl>
         <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,0">
             <CheckBox x:Name="checkbox_topMost" Content="保持窗口可见" Click="checkbox_topMost_Click"/>
-            <Label>© GentleSpoon 2019-11-05T16:59:00-07:00</Label>
+            <Label>Ver. 2019-11-05T16:59:00-07:00</Label>
         </StatusBar>
     </Grid>
 </Window>

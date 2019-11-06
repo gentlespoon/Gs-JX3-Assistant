@@ -10,6 +10,7 @@ using System.Threading;
 
 using YariControl.RealCursorPosition;
 using GsJX3NonInjectAssistant;
+using System.Threading.Tasks;
 
 namespace GsJX3NonInjectAssistant.Fishing
 {
@@ -46,7 +47,7 @@ namespace GsJX3NonInjectAssistant.Fishing
     {
 
         // Check screen every x milliseconds
-        private const int timerInterval = 50;
+        private const int timerInterval = 5;
 
         // Fishing timeout
         public int timer_timeout = 22; // seconds
@@ -167,8 +168,8 @@ namespace GsJX3NonInjectAssistant.Fishing
 
         private void Timer_Seconds_Ticker(Object source, ElapsedEventArgs e)
         {
-            if (!state.Running || state.Sleeping) return;
-
+            if (!state.Running) return;
+            
             // if we need to check fishing mode and re-enter fishing mode
             if (state.OptionalCoords)
             {
@@ -191,7 +192,6 @@ namespace GsJX3NonInjectAssistant.Fishing
             // if we are not fishing
             if (!state.Started)
             {
-                Thread.Sleep(1000);
                 Action_StartFishing();
             }
             // if we are fishing and we are not waiting for UI delay,
@@ -218,23 +218,35 @@ namespace GsJX3NonInjectAssistant.Fishing
 
 
 
+        private void Sleep(int milliseconds = 3000)
+        {
+            state.Sleeping = true;
+            System.Timers.Timer t = new System.Timers.Timer();
+            t.Interval = milliseconds; // In milliseconds
+            t.AutoReset = false; // Stops it from repeating
+            t.Elapsed += new ElapsedEventHandler(Wake);
+            t.Start();
+        }
+        private void Wake(object sender, ElapsedEventArgs e)
+        {
+            state.Sleeping = false;
+        }
+
 
 
         private void Action_EnterFishingMode()
         {
-            Console.WriteLine("* Enter Fishing Mode");
+            if (state.Sleeping) return;
+            Sleep(3000);
             MouseEvents.SimulateMouseClick(ACDS.EnterFishingMode.Coordinates, ACDS.EnterFishingMode.MouseAction);
             state.Started = false;
             state.Stopped = false;
-
-            state.Sleeping = true;
-            Thread.Sleep(1000);
-            state.Sleeping = false;
         }
 
         private void Action_StartFishing()
         {
-            Console.WriteLine("* Start Fishing");
+            if (state.Sleeping) return;
+            Sleep(3000);
             MouseEvents.SimulateMouseClick(ACDS.StartFishing.Coordinates, ACDS.StartFishing.MouseAction);
             state.Stopped = false;
             state.Started = true;
@@ -244,9 +256,10 @@ namespace GsJX3NonInjectAssistant.Fishing
 
         private void Action_StopFishing()
         {
-            Console.WriteLine("* Stop Fishing");
-            MouseEvents.SimulateMouseClick(ACDS.StopFishing.Coordinates, ACDS.StopFishing.MouseAction);
+            if (state.Sleeping) return;
+            Sleep(3000);
             state.Stopped = true;
+            MouseEvents.SimulateMouseClick(ACDS.StopFishing.Coordinates, ACDS.StopFishing.MouseAction);
             timer_waitForPickup_tick = timer_waitForPickup;
             counterSuccess++;
         }

@@ -8,9 +8,28 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using Gma.System.MouseKeyHook;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.ComponentModel;
 
 namespace GsJX3NonInjectAssistant
 {
+
+    internal struct MouseInput
+    {
+        public int X;
+        public int Y;
+        public uint MouseData;
+        public uint Flags;
+        public uint Time;
+        public IntPtr ExtraInfo;
+    }
+
+    internal struct Input
+    {
+        public int Type;
+        public MouseInput MouseInput;
+    }
+
     class MouseEvents
     {
         private IKeyboardMouseEvents m_GlobalHook;
@@ -66,7 +85,7 @@ namespace GsJX3NonInjectAssistant
         }
 
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
         
 
@@ -78,32 +97,44 @@ namespace GsJX3NonInjectAssistant
         private const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
         private const int MOUSEEVENTF_MIDDLEUP = 0x0040;
 
-        public static void SimulateMouseClick(Point point, string mouseButton)
+        public static void SimulateMouseClick(Point point, string mouseButton, bool doubleClick = false)
         {
             // JX3 does not like SendMessage() API...
             // So fall back to the deprecated mouse_event API.
 
             Console.WriteLine($"{mouseButton} Click at {point.ToString()}");
 
-            Point currentMousePosition = Cursor.Position;
-            Cursor.Position = point;
-                        
             // for some reason this coordinates does not work
             // mouse movement relies on the Cursor.Position assignment.
             uint X = (uint)point.X;
             uint Y = (uint)point.Y;
 
+            Point currentMousePosition = Cursor.Position;
+            Cursor.Position = point;
+
             switch (mouseButton)
             {
-                case "L":     mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0);         break;
-                case "R":     mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, X, Y, 0, 0);       break;
-                case "M":     mouse_event(MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP, X, Y, 0, 0);     break;
+                case "L": mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0); break;
+                case "R": mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, X, Y, 0, 0); break;
+                case "M": mouse_event(MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP, X, Y, 0, 0); break;
                 default: break;
+            }
+
+            if (doubleClick)
+            {
+                switch (mouseButton)
+                {
+                    case "L": mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, X, Y, 0, 0); break;
+                    case "R": mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, X, Y, 0, 0); break;
+                    case "M": mouse_event(MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP, X, Y, 0, 0); break;
+                    default: break;
+                }
             }
 
             // reset mouse position
             Cursor.Position = currentMousePosition;
         }
+
 
     }
 }
