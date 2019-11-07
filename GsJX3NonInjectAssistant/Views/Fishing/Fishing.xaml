@@ -18,11 +18,11 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <GroupBox x:Name="groupBox_configuration" Header="设置 - 开始钓鱼前先绑定屏幕坐标" HorizontalAlignment="Stretch" Grid.Column="0" Padding="5">
+                <GroupBox x:Name="groupBox_configuration" Header="设置 - 开始钓鱼前先绑定屏幕坐标" HorizontalAlignment="Stretch" Grid.Column="0">
                     <StackPanel>
                         <GroupBox Header="必填">
                             <StackPanel HorizontalAlignment="Stretch">
-                                <GroupBox Header="按钮 - 钓鱼 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5">
+                                <GroupBox Header="按钮 - 钓鱼 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
                                     <GroupBox.ToolTip>
                                         <ToolTip MaxWidth="400">
                                             <TextBlock TextWrapping="Wrap">
@@ -34,11 +34,11 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_startFishing" Content="设置坐标" Padding="5" Click="button_setCoordinates_startFishing_Click"/>
+                                        <Button x:Name="button_setCoordinates_startFishing" Content="设置坐标" Click="button_setCoordinates_startFishing_Click"/>
                                         <Label x:Name="label_startFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="上钩提示 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5">
+                                <GroupBox Header="上钩提示 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
                                     <GroupBox.ToolTip>
                                         <ToolTip MaxWidth="400">
                                             <TextBlock TextWrapping="Wrap">
@@ -50,11 +50,11 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_successIndicator" Content="设置坐标" Padding="5" Click="button_setCoordinates_successIndicator_Click"/>
+                                        <Button x:Name="button_setCoordinates_successIndicator" Content="设置坐标" Click="button_setCoordinates_successIndicator_Click"/>
                                         <Label x:Name="label_success" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="按钮 - 收杆 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5">
+                                <GroupBox Header="按钮 - 收杆 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
                                     <GroupBox.ToolTip>
                                         <ToolTip MaxWidth="400">
                                             <TextBlock TextWrapping="Wrap">
@@ -66,7 +66,7 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_endFishing" Content="设置坐标" Padding="5" Click="button_setCoordinates_endFishing_Click"/>
+                                        <Button x:Name="button_setCoordinates_endFishing" Content="设置坐标" Click="button_setCoordinates_endFishing_Click"/>
                                         <Label x:Name="label_endFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
@@ -74,7 +74,7 @@
                         </GroupBox>
                         <GroupBox Header="选填">
                             <StackPanel HorizontalAlignment="Stretch">
-                                <GroupBox Header="普通技能栏 - 钓鱼状态监控" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5">
+                                <GroupBox Header="普通技能栏 - 钓鱼状态监控" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
                                     <GroupBox.ToolTip>
                                         <ToolTip MaxWidth="400">
                                             <TextBlock TextWrapping="Wrap">
@@ -87,11 +87,11 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_skillBar" Content="设置坐标" Padding="5" Click="button_setCoordinates_skillBar_Click"/>
+                                        <Button x:Name="button_setCoordinates_skillBar" Content="设置坐标" Click="button_setCoordinates_skillBar_Click"/>
                                         <Label x:Name="label_skillBar" Content="未设置" Foreground="Red" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="按钮 - 进入钓鱼模式" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5">
+                                <GroupBox Header="按钮 - 进入钓鱼模式" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
                                     <GroupBox.ToolTip>
                                         <ToolTip MaxWidth="400">
                                             <TextBlock TextWrapping="Wrap">
@@ -104,50 +104,70 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_fishingMode" Content="设置坐标" Padding="5" Click="button_setCoordinates_fishingMode_Click"/>
+                                        <Button x:Name="button_setCoordinates_fishingMode" Content="设置坐标" Click="button_setCoordinates_fishingMode_Click"/>
                                         <Label x:Name="label_enterFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="延时">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Column="0">
-                                            <StackPanel.ToolTip>
-                                                <ToolTip MaxWidth="400">
-                                                    <TextBlock TextWrapping="Wrap">
-                                                    每次钓鱼时间<LineBreak/>
-                                                    <LineBreak/>
-                                                    超出时间未上钩则重新开始钓鱼。可根据实际情况做调整。默认22秒。
-                                                    </TextBlock>
-                                                </ToolTip>
-                                            </StackPanel.ToolTip>
-                                            <Label Content="垂钓超时时间"/>
-                                            <TextBox x:Name="textBox_fishingTimeout" Width="50" Text="22" LostFocus="textBox_timeout_LostFocus" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                                            <Label Content="秒"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                            <StackPanel.ToolTip>
-                                                <ToolTip MaxWidth="400">
-                                                    <TextBlock TextWrapping="Wrap">
-                                                    拾取延时<LineBreak/>
-                                                    <LineBreak/>
-                                                    根据自己的延迟调整。默认8秒。
-                                                    </TextBlock>
-                                                </ToolTip>
-                                            </StackPanel.ToolTip>
-                                            <Label Content="拾取延迟时间"/>
-                                            <TextBox x:Name="textBox_pickupDelay" Width="50" LostFocus="textBox_pickupDelay_LostFocus" Text="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textBox_pickupDelay_GotFocus"/>
-                                            <Label Content="秒"/>
-                                        </StackPanel>
+                                <GroupBox Header="按钮 - 原地复活" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
+                                    <GroupBox.ToolTip>
+                                        <ToolTip MaxWidth="400">
+                                            <TextBlock TextWrapping="Wrap">
+                                                当游戏自动退出钓鱼模式后，将自动点击此坐标重新开始钓鱼。苍山洱海钓鱼可直接点击技能栏上的钓竿开始钓鱼。帮会领地和野外钓鱼可右键鱼篓开始钓鱼。<LineBreak />
+                                                <LineBreak />
+                                                设置方法：<LineBreak />
+                                                野外/帮会领地：右键点击场景中的鱼篓。<LineBreak />
+                                                苍山洱海：点击普通技能栏上的鱼竿。
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </GroupBox.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="button_setCoordinates_revive" Content="设置坐标" Click="button_setCoordinates_revive_Click"/>
+                                        <Label x:Name="label_revive" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
+                                
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox x:Name="groupBox_progress" Header="进度" HorizontalAlignment="Stretch" Grid.Column="1" Padding="5">
+                <GroupBox x:Name="groupBox_progress" Header="进度" HorizontalAlignment="Stretch" Grid.Column="1">
                     <StackPanel HorizontalAlignment="Stretch">
-                        <GroupBox Header="控制" Height="80">
+                        <GroupBox Header="延时" Padding="0, 2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                    <StackPanel.ToolTip>
+                                        <ToolTip MaxWidth="400">
+                                            <TextBlock TextWrapping="Wrap">
+                                                    每次钓鱼时间<LineBreak/>
+                                                    <LineBreak/>
+                                                    超出时间未上钩则重新开始钓鱼。可根据实际情况做调整。默认22秒。
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </StackPanel.ToolTip>
+                                    <Label Content="垂钓超时"/>
+                                    <TextBox x:Name="textBox_fishingTimeout" Width="40" Text="22" LostFocus="textBox_timeout_LostFocus" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textBox_timeout_GotFocus"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                    <StackPanel.ToolTip>
+                                        <ToolTip MaxWidth="400">
+                                            <TextBlock TextWrapping="Wrap">
+                                                    拾取延时<LineBreak/>
+                                                    <LineBreak/>
+                                                    根据自己的延迟调整。默认8秒。
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </StackPanel.ToolTip>
+                                    <Label Content="拾取延迟"/>
+                                    <TextBox x:Name="textBox_pickupDelay" Width="40" LostFocus="textBox_pickupDelay_LostFocus" Text="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textBox_pickupDelay_GotFocus"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="控制" Padding="0, 2" Height="60">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -157,8 +177,11 @@
                                 <Button x:Name="button_stop" Content="停止" IsEnabled="False" Click="button_stop_Click" Grid.Column="1" Margin="5, 0"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="钓鱼次数">
-                            <Label x:Name="label_loopCounter" Content="0"></Label>
+                        <GroupBox Header="钓鱼次数" Padding="5, 2">
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="button_resetStatistics" Content="重置统计" Click="button_resetStatistics_Click"/>
+                                <Label x:Name="label_loopCounter" Content="0 / 0"></Label>
+                            </StackPanel>
                         </GroupBox>
                         <GroupBox Header="钓鱼状态">
                             <StackPanel>

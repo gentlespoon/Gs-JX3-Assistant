@@ -42,6 +42,7 @@ namespace GsJX3NonInjectAssistant.Fishing
         public ActionControl EnterFishingMode = new ActionControl();
         public ActionControl StartFishing = new ActionControl();
         public ActionControl StopFishing = new ActionControl();
+        public ActionControl Revive = new ActionControl();
     }
     public class FishingController
     {
@@ -145,6 +146,10 @@ namespace GsJX3NonInjectAssistant.Fishing
             state.Sleeping = false;
             timer_timeout_tick = 0;
             timer_waitForPickup_tick = 0;
+        }
+
+        public void ResetStatistics()
+        {
             counterSuccess = 0;
             counterTotal = 0;
         }
@@ -171,7 +176,10 @@ namespace GsJX3NonInjectAssistant.Fishing
             if (!state.Running) return;
             
             // if we need to check fishing mode and re-enter fishing mode
-            if (state.OptionalCoords)
+            if (
+                ACDS.EnterFishingMode.Coordinates != Common.NullPoint &&
+                ACDS.RegularSkillBar.Coordinates != Common.NullPoint
+                )
             {
                 Color color = ScreenPixelColor.GetPixelColor(ACDS.RegularSkillBar.Coordinates);
                 // if the color matches regular skill bar, it means we are out of fishing mode
@@ -186,6 +194,18 @@ namespace GsJX3NonInjectAssistant.Fishing
                 {
                     Console.WriteLine("Fishing...");
                     state.FishingMode = true;
+                }
+            }
+
+            // if we need to automatically revive
+            if (ACDS.Revive.Coordinates != Common.NullPoint)
+            {
+                Color color = ScreenPixelColor.GetPixelColor(ACDS.Revive.Coordinates);
+                if (ACDS.Revive.PixelColor == color)
+                {
+                    Console.WriteLine("* Dead. Reviving");
+                    Action_Revive();
+                    return;
                 }
             }
 
@@ -262,6 +282,12 @@ namespace GsJX3NonInjectAssistant.Fishing
             MouseEvents.SimulateMouseClick(ACDS.StopFishing.Coordinates, ACDS.StopFishing.MouseAction);
             timer_waitForPickup_tick = timer_waitForPickup;
             counterSuccess++;
+        }
+
+        private void Action_Revive()
+        {
+            if (state.Sleeping) return;
+            MouseEvents.SimulateMouseClick(ACDS.Revive.Coordinates, ACDS.StartFishing.MouseAction);
         }
 
     }
