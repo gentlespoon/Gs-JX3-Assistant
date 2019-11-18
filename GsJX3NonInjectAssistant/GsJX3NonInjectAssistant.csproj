@@ -99,7 +99,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\CheckUpdate.cs" />
     <Compile Include="Classes\Common.cs" />
+    <Compile Include="Classes\Features\Exam\ExamController.cs" />
     <Compile Include="Classes\HID\Display\DisplayHelper_GDI.cs" />
     <Compile Include="Classes\Features\Fishing\FishingController.cs" />
     <Compile Include="Classes\HID\Display\IDisplayHelper.cs" />
@@ -108,6 +110,10 @@
     <Compile Include="Classes\HID\Mouse\MouseReader_MouseKeyHook.cs" />
     <Compile Include="Classes\HID\Mouse\MouseSimulator_MouseEvent.cs" />
     <Compile Include="Classes\HID\Mouse\MouseSimulator_SendMessage.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Views\Exam\Exam.xaml.cs">
+      <DependentUpon>Exam.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Fishing\Fishing.xaml.cs">
       <DependentUpon>Fishing.xaml</DependentUpon>
     </Compile>
@@ -126,6 +132,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Exam\Exam.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Fishing\Fishing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

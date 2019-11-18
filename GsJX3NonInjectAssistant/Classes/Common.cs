@@ -12,7 +12,6 @@ namespace GsJX3NonInjectAssistant
 {
     public static class Common
     {
-        public const string Version = "19.11.17";
             
         public readonly static System.Drawing.Point NullPoint = new System.Drawing.Point(0, 0);
         public readonly static System.Drawing.Color NullColor = System.Drawing.Color.Transparent;

@@ -28,7 +28,11 @@ namespace GsJX3NonInjectAssistant
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
             setTopMost(true);
-            version.Content = "Ver. " + Common.Version;
+            version.Content = "Ver. " + Constants.Version;
+            if (CheckUpdate.HasUpdate())
+            {
+                MessageBox.Show("有版本更新，下载最新版本？", "更新", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            }
         }
 
         private void checkbox_topMost_Click(object sender, RoutedEventArgs e)

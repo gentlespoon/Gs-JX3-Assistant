@@ -19,10 +19,15 @@
                     <Frame Source="Views/Fishing/Fishing.xaml" NavigationUIVisibility="Hidden"></Frame>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="tab_exam" Header="科举">
+                <Grid>
+                    <Frame Source="Views/Exam/Exam.xaml" NavigationUIVisibility="Hidden"></Frame>
+                </Grid>
+            </TabItem>
         </TabControl>
         <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,0">
             <CheckBox x:Name="checkbox_topMost" Content="保持窗口可见" Click="checkbox_topMost_Click"/>
-            <Label x:Name="version"></Label>
+            <Label x:Name="version">Version</Label>
         </StatusBar>
     </Grid>
 </Window>

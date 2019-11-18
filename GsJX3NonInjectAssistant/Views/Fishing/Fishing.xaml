@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GsJX3NonInjectAssistant.Views.Fishing"
       mc:Ignorable="d" 
-      d:DesignHeight="480" d:DesignWidth="640"
+      d:DesignHeight="400" d:DesignWidth="500"
       Title="Page1"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       >
