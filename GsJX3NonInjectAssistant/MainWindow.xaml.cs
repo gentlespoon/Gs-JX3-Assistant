@@ -28,7 +28,7 @@ namespace GsJX3NonInjectAssistant
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
             setTopMost(true);
-            
+            version.Content = "Ver. " + Common.Version;
         }
 
         private void checkbox_topMost_Click(object sender, RoutedEventArgs e)

@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,6 +50,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>GsJX3NonInjectAssistant.App</StartupObject>
@@ -91,9 +93,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="YariControl.RealCursorPosition, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YariControl.RealCursorPosition.1.0.2.2\lib\net30\YariControl.RealCursorPosition.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -101,8 +100,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Common.cs" />
-    <Compile Include="Classes\FishingController.cs" />
-    <Compile Include="Classes\MouseEvents.cs" />
+    <Compile Include="Classes\HID\Display\DisplayHelper_GDI.cs" />
+    <Compile Include="Classes\Features\Fishing\FishingController.cs" />
+    <Compile Include="Classes\HID\Display\IDisplayHelper.cs" />
+    <Compile Include="Classes\HID\Mouse\IMouseReader.cs" />
+    <Compile Include="Classes\HID\Mouse\IMouseSimulator.cs" />
+    <Compile Include="Classes\HID\Mouse\MouseReader_MouseKeyHook.cs" />
+    <Compile Include="Classes\HID\Mouse\MouseSimulator_MouseEvent.cs" />
+    <Compile Include="Classes\HID\Mouse\MouseSimulator_SendMessage.cs" />
     <Compile Include="Views\Fishing\Fishing.xaml.cs">
       <DependentUpon>Fishing.xaml</DependentUpon>
     </Compile>

@@ -34,7 +34,7 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_startFishing" Content="设置坐标" Click="button_setCoordinates_startFishing_Click"/>
+                                        <Button x:Name="button_setCoordinates_startFishing" Content="设置" Click="button_setCoordinates_startFishing_Click" Padding="5, 0"/>
                                         <Label x:Name="label_startFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
@@ -45,12 +45,12 @@
                                                 鱼上钩的提示判定。当判定成功时将自动点击收杆键收杆。<LineBreak />
                                                 <LineBreak />
                                                 设置方法：<LineBreak />
-                                                手动开始垂钓，开始钓鱼后立即点击设置坐标，当出现上钩提示时点击提示栏上任意与背景颜色反差大的位置。
+                                                手动开始垂钓，开始钓鱼后立即点击设置，当出现上钩提示时点击提示栏上任意与背景颜色反差大的位置。
                                             </TextBlock>
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_successIndicator" Content="设置坐标" Click="button_setCoordinates_successIndicator_Click"/>
+                                        <Button x:Name="button_setCoordinates_successIndicator" Content="设置" Click="button_setCoordinates_successIndicator_Click" Padding="5, 0"/>
                                         <Label x:Name="label_success" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
@@ -66,7 +66,7 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_endFishing" Content="设置坐标" Click="button_setCoordinates_endFishing_Click"/>
+                                        <Button x:Name="button_setCoordinates_endFishing" Content="设置" Click="button_setCoordinates_endFishing_Click" Padding="5, 0"/>
                                         <Label x:Name="label_endFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
@@ -87,7 +87,7 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_skillBar" Content="设置坐标" Click="button_setCoordinates_skillBar_Click"/>
+                                        <Button x:Name="button_setCoordinates_skillBar" Content="设置" Click="button_setCoordinates_skillBar_Click" Padding="5, 0"/>
                                         <Label x:Name="label_skillBar" Content="未设置" Foreground="Red" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
@@ -104,7 +104,7 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_fishingMode" Content="设置坐标" Click="button_setCoordinates_fishingMode_Click"/>
+                                        <Button x:Name="button_setCoordinates_fishingMode" Content="设置" Click="button_setCoordinates_fishingMode_Click" Padding="5, 0"/>
                                         <Label x:Name="label_enterFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
@@ -121,7 +121,7 @@
                                         </ToolTip>
                                     </GroupBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_revive" Content="设置坐标" Click="button_setCoordinates_revive_Click"/>
+                                        <Button x:Name="button_setCoordinates_revive" Content="设置" Click="button_setCoordinates_revive_Click" Padding="5, 0"/>
                                         <Label x:Name="label_revive" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
@@ -167,6 +167,12 @@
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
+                        <GroupBox Header="钓鱼次数" Padding="5, 2">
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="button_resetStatistics" Content="重置" Click="button_resetStatistics_Click"  Padding="5, 0"/>
+                                <Label x:Name="label_loopCounter" Content="0 / 0"></Label>
+                            </StackPanel>
+                        </GroupBox>
                         <GroupBox Header="控制" Padding="0, 2" Height="60">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -177,36 +183,34 @@
                                 <Button x:Name="button_stop" Content="停止" IsEnabled="False" Click="button_stop_Click" Grid.Column="1" Margin="5, 0"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="钓鱼次数" Padding="5, 2">
-                            <StackPanel Orientation="Horizontal">
-                                <Button x:Name="button_resetStatistics" Content="重置统计" Click="button_resetStatistics_Click"/>
-                                <Label x:Name="label_loopCounter" Content="0 / 0"></Label>
-                            </StackPanel>
-                        </GroupBox>
                         <GroupBox Header="钓鱼状态">
                             <StackPanel>
                                 <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_requiredCoordsSet" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content="x"/>
-                                    <Label DockPanel.Dock="Right">必填坐标</Label>
+                                    <Label x:Name="label_progressMonitor_requiredCoordsSet" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                    <Label DockPanel.Dock="Right">按键坐标(必填)</Label>
                                 </DockPanel>
                                 <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_optionalCoordsSet" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content="x"/>
-                                    <Label DockPanel.Dock="Right">选填坐标</Label>
+                                    <Label x:Name="label_progressMonitor_fishingModeMonitor" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                    <Label DockPanel.Dock="Right">状态监控(选填)</Label>
                                 </DockPanel>
                                 <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingMode" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content="x"/>
+                                    <Label x:Name="label_progressMonitor_autoRevive" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                    <Label DockPanel.Dock="Right">自动复活(选填)</Label>
+                                </DockPanel>
+                                <DockPanel HorizontalAlignment="Stretch">
+                                    <Label x:Name="label_progressMonitor_fishingMode" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
                                     <Label DockPanel.Dock="Right">开启钓鱼模式</Label>
                                 </DockPanel>
                                 <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingStarted" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content="x"/>
+                                    <Label x:Name="label_progressMonitor_fishingStarted" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
                                     <Label DockPanel.Dock="Right">垂钓</Label>
                                 </DockPanel>
                                 <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingSuccess" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content="x"/>
+                                    <Label x:Name="label_progressMonitor_fishingSuccess" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
                                     <Label DockPanel.Dock="Right">收杆</Label>
                                 </DockPanel>
                                 <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingStopped" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content="x"/>
+                                    <Label x:Name="label_progressMonitor_fishingStopped" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
                                     <Label DockPanel.Dock="Right">拾取</Label>
                                 </DockPanel>
                             </StackPanel>

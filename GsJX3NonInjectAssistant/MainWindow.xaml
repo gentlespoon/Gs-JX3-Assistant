@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GsJX3NonInjectAssistant"
         mc:Ignorable="d"
-        Title="Gs-JX3-NonInject-Assistant" Height="560" Width="500" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="CanMinimize"
+        Title="Gs-JX3-NonInject-Assistant" Height="500" Width="500" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="CanMinimize"
         Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,30">
@@ -22,7 +22,7 @@
         </TabControl>
         <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,0">
             <CheckBox x:Name="checkbox_topMost" Content="保持窗口可见" Click="checkbox_topMost_Click"/>
-            <Label>Ver. 20191107</Label>
+            <Label x:Name="version"></Label>
         </StatusBar>
     </Grid>
 </Window>
