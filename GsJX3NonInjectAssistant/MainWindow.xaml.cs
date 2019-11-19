@@ -121,7 +121,8 @@ namespace GsJX3NonInjectAssistant
 
             if (EnableAutoHide)
             {
-                Top = -Height + 2;
+                Height = 3;
+                //Top = -Height + 2;
             }
         }
 
@@ -129,7 +130,8 @@ namespace GsJX3NonInjectAssistant
         {
             if (EnableAutoHide)
             {
-                Top = 0;
+                Height = 502;
+                //Top = 0;
             }
         }
 
