@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Forms = System.Windows.Forms;
 
 namespace GsJX3NonInjectAssistant
 {
@@ -25,32 +26,103 @@ namespace GsJX3NonInjectAssistant
             InitializeComponent();
         }
 
+        static Label static_label_versionStatus = null;
+
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            setTopMost(true);
-            version.Content = "Ver. " + Constants.Version;
-            if (CheckUpdate.HasUpdate())
-            {
-                MessageBox.Show("有版本更新，下载最新版本？", "更新", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            }
+            //setTopMost(true);
+            Top = 0;
+            static_label_versionStatus = label_versionStatus;
+            label_version.Content = Constants.Version;
+            CheckUpdate.Check();
         }
 
         private void checkbox_topMost_Click(object sender, RoutedEventArgs e)
         {
-            setTopMost((bool)checkbox_topMost.IsChecked);
         }
 
-        private void setTopMost(bool topMost)
+        //private void setTopMost(bool topMost)
+        //{
+        //    if (topMost)
+        //    {
+        //        this.Topmost = true;
+        //        this.label_topMost.Content = "√ 保持窗口可见";
+        //    } else
+        //    {
+        //        this.Topmost = false;
+        //        this.label_topMost.Content = "x 保持窗口可见";
+        //    }
+        //}
+
+        public static void SetVersionStatus(string msg)
         {
-            if (topMost)
+            if (null != static_label_versionStatus)
             {
-                this.Topmost = true;
-                this.checkbox_topMost.IsChecked = true;
-            } else
-            {
-                this.Topmost = false;
-                this.checkbox_topMost.IsChecked = false;
+                static_label_versionStatus.Content = msg;
             }
         }
+
+        //private void label_topMost_MouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    setTopMost(!Topmost);
+        //}
+
+        private void label_versionStatus_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (CheckUpdate.newerVersions.Count > 0)
+            {
+                var newestVersion = CheckUpdate.newerVersions[CheckUpdate.newerVersions.Count - 1];
+                var response = MessageBox.Show(
+                    $"{newestVersion.Key}\n" +
+                    $"{newestVersion.Value}\n\n" +
+                    $"下载新版本？", "更新", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (response == MessageBoxResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(CheckUpdate.ReleaseUrl);
+                }
+            }
+        }
+
+        // Borderless Window Movements
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DragMove();
+            }
+        }
+
+        private void CloseButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Close();
+        }
+
+        // Auto Hide
+        bool EnableAutoHide = false;
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (Top <= 0)
+            {
+                EnableAutoHide = true;
+            }
+            else
+            {
+                EnableAutoHide = false;
+            }
+
+            if (EnableAutoHide)
+            {
+                Top = -Height + 2;
+            }
+        }
+
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (EnableAutoHide)
+            {
+                Top = 0;
+            }
+        }
+
     }
 }

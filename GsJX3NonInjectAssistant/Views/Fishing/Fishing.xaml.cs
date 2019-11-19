@@ -74,9 +74,6 @@ namespace GsJX3NonInjectAssistant.Views.Fishing
                 button_start.IsEnabled = state.RequiredCoords && !state.Running;
                 button_stop.IsEnabled = state.RequiredCoords && state.Running;
 
-                label_progressMonitor_requiredCoordsSet.Content = state.RequiredCoords ? "√" : "x";
-                label_progressMonitor_fishingModeMonitor.Content = state.FishingModeMonitor ? "√" : "-";
-                label_progressMonitor_autoRevive.Content = state.AutoRevive ? "√" : "-";
                 if (state.Running)
                 {
                     label_progressMonitor_fishingMode.Content = state.FishingModeMonitor ? (state.FishingMode ? "√" : "x") : "-";

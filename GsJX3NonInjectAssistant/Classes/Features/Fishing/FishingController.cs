@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 using GsJX3NonInjectAssistant.Classes.HID.Display;
 using GsJX3NonInjectAssistant.Classes.HID.Mouse;
+using GsJX3NonInjectAssistant.Classes.HID;
 
 namespace GsJX3NonInjectAssistant.Classes.Features.Fishing
 {
@@ -27,20 +28,14 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Fishing
         public bool Sleeping = false;
     }
 
-    public class ActionControl {
-        public Point Coordinates = Common.NullPoint;
-        public Color PixelColor = Common.NullColor;
-        public int MouseAction = 0;
-    }
-
     public class ActionControlDataSet
     {
-        public ActionControl RegularSkillBar = new ActionControl();
-        public ActionControl SuccessIndicator = new ActionControl();
-        public ActionControl EnterFishingMode = new ActionControl();
-        public ActionControl StartFishing = new ActionControl();
-        public ActionControl StopFishing = new ActionControl();
-        public ActionControl Revive = new ActionControl();
+        public MouseScreenEvent RegularSkillBar = new MouseScreenEvent();
+        public MouseScreenEvent SuccessIndicator = new MouseScreenEvent();
+        public MouseScreenEvent EnterFishingMode = new MouseScreenEvent();
+        public MouseScreenEvent StartFishing = new MouseScreenEvent();
+        public MouseScreenEvent StopFishing = new MouseScreenEvent();
+        public MouseScreenEvent Revive = new MouseScreenEvent();
     }
     public class FishingController
     {
@@ -106,51 +101,18 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Fishing
         public void VerifyACDS()
         {
             // required Coords
-            if (
-                // successful fishing detection set
-                ACDS.SuccessIndicator.Coordinates != Common.NullPoint &&
-                ACDS.SuccessIndicator.PixelColor != Common.NullColor &&
-                // start fishing button set
-                ACDS.StartFishing.Coordinates != Common.NullPoint &&
-                // stop fishing button set
-                ACDS.StopFishing.Coordinates != Common.NullPoint
-            )
-            {
-                state.RequiredCoords = true;
-            }
-            else
-            {
-                state.RequiredCoords = false;
-            }
+            state.RequiredCoords = 
+                Common.NullPoint != ACDS.SuccessIndicator.Coordinates &&
+                Common.NullPoint != ACDS.StartFishing.Coordinates &&
+                Common.NullPoint != ACDS.StopFishing.Coordinates;
 
-            // fishing mode monitor
-            if (
-                // skillBar coords
-                ACDS.RegularSkillBar.Coordinates != Common.NullPoint &&
-                ACDS.RegularSkillBar.PixelColor != Common.NullColor &&
-                // enter fishing button
-                ACDS.EnterFishingMode.Coordinates != Common.NullPoint
-            )
-            {
-                state.FishingModeMonitor = true;
-            }
-            else
-            {
-                state.FishingModeMonitor = false;
-            }
+            state.FishingModeMonitor =
+                Common.NullPoint != ACDS.RegularSkillBar.Coordinates &&
+                Common.NullPoint != ACDS.EnterFishingMode.Coordinates;
 
-            // auto revive
-            if (
-                ACDS.Revive.Coordinates != Common.NullPoint &&
-                ACDS.Revive.PixelColor != Common.NullColor
-            )
-            {
-                state.AutoRevive = true;
-            }
-            else
-            {
-                state.AutoRevive = false;
-            }
+            state.AutoRevive =
+                Common.NullPoint != ACDS.Revive.Coordinates;
+
         }
 
 
@@ -208,23 +170,18 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Fishing
             if (!state.Running) return;
             
             // if we need to check fishing mode and re-enter fishing mode
-            if (
-                ACDS.EnterFishingMode.Coordinates != Common.NullPoint &&
-                ACDS.RegularSkillBar.Coordinates != Common.NullPoint
-                )
+            if (state.FishingModeMonitor)
             {
                 Color color = displayHelper.GetColorAt(ACDS.RegularSkillBar.Coordinates);
                 // if the color matches regular skill bar, it means we are out of fishing mode
                 if (ACDS.RegularSkillBar.PixelColor == color)
                 {
-                    Console.WriteLine("* Not in fishing mode");
                     state.FishingMode = false;
                     Action_EnterFishingMode();
                     return;
                 }
                 else
                 {
-                    Console.WriteLine("Fishing...");
                     state.FishingMode = true;
                 }
             }
@@ -235,7 +192,6 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Fishing
                 Color color = displayHelper.GetColorAt(ACDS.Revive.Coordinates);
                 if (ACDS.Revive.PixelColor == color)
                 {
-                    Console.WriteLine("* Dead. Reviving");
                     Action_Revive();
                     return;
                 }
@@ -310,10 +266,10 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Fishing
         {
             if (state.Sleeping) return;
             Sleep(3000);
-            state.Stopped = true;
             mouseSimulator.Click(ACDS.StopFishing.Coordinates, ACDS.StopFishing.MouseAction);
             timer_waitForPickup_tick = timer_waitForPickup;
             counterSuccess++;
+            state.Stopped = true;
         }
 
         private void Action_Revive()

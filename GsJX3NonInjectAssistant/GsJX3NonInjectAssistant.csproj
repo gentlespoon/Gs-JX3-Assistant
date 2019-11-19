@@ -77,6 +77,9 @@
     <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -99,8 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\CheckUpdate.cs" />
+    <Compile Include="Classes\CheckUpdate\CheckUpdate.cs" />
+    <Compile Include="Classes\CheckUpdate\GitHubApiResponse.cs" />
     <Compile Include="Classes\Common.cs" />
+    <Compile Include="Classes\Features\Dancer\DancerController.cs" />
     <Compile Include="Classes\Features\Exam\ExamController.cs" />
     <Compile Include="Classes\HID\Display\DisplayHelper_GDI.cs" />
     <Compile Include="Classes\Features\Fishing\FishingController.cs" />
@@ -108,11 +113,15 @@
     <Compile Include="Classes\HID\Mouse\IMouseReader.cs" />
     <Compile Include="Classes\HID\Mouse\IMouseSimulator.cs" />
     <Compile Include="Classes\HID\Mouse\MouseReader_MouseKeyHook.cs" />
+    <Compile Include="Classes\HID\Mouse\MouseScreenEvent.cs" />
     <Compile Include="Classes\HID\Mouse\MouseSimulator_MouseEvent.cs" />
     <Compile Include="Classes\HID\Mouse\MouseSimulator_SendMessage.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Views\Exam\Exam.xaml.cs">
       <DependentUpon>Exam.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dancer\Dancer.xaml.cs">
+      <DependentUpon>Dancer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Fishing\Fishing.xaml.cs">
       <DependentUpon>Fishing.xaml</DependentUpon>
@@ -135,6 +144,10 @@
     <Page Include="Views\Exam\Exam.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dancer\Dancer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Fishing\Fishing.xaml">
       <SubType>Designer</SubType>

@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <GroupBox x:Name="groupBox_configuration" Header="设置 - 开始钓鱼前先绑定屏幕坐标" HorizontalAlignment="Stretch" Grid.Column="0">
+                <GroupBox x:Name="groupBox_configuration" Header="设置 - 开始前先设置屏幕坐标" HorizontalAlignment="Stretch" Grid.Column="0">
                     <StackPanel>
                         <GroupBox Header="必填">
                             <StackPanel HorizontalAlignment="Stretch">
@@ -131,92 +131,86 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox x:Name="groupBox_progress" Header="进度" HorizontalAlignment="Stretch" Grid.Column="1">
-                    <StackPanel HorizontalAlignment="Stretch">
-                        <GroupBox Header="延时" Padding="0, 2">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Orientation="Horizontal" Grid.Column="0">
-                                    <StackPanel.ToolTip>
-                                        <ToolTip MaxWidth="400">
-                                            <TextBlock TextWrapping="Wrap">
+                <StackPanel Grid.Column="1">
+                    <GroupBox Header="延时" Padding="0, 2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                <StackPanel.ToolTip>
+                                    <ToolTip MaxWidth="400">
+                                        <TextBlock TextWrapping="Wrap">
                                                     每次钓鱼时间<LineBreak/>
                                                     <LineBreak/>
                                                     超出时间未上钩则重新开始钓鱼。可根据实际情况做调整。默认22秒。
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </StackPanel.ToolTip>
-                                    <Label Content="垂钓超时"/>
-                                    <TextBox x:Name="textBox_fishingTimeout" Width="40" Text="22" LostFocus="textBox_timeout_LostFocus" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textBox_timeout_GotFocus"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                    <StackPanel.ToolTip>
-                                        <ToolTip MaxWidth="400">
-                                            <TextBlock TextWrapping="Wrap">
+                                        </TextBlock>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
+                                <Label Content="垂钓超时"/>
+                                <TextBox x:Name="textBox_fishingTimeout" Width="40" Text="22" LostFocus="textBox_timeout_LostFocus" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textBox_timeout_GotFocus"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <StackPanel.ToolTip>
+                                    <ToolTip MaxWidth="400">
+                                        <TextBlock TextWrapping="Wrap">
                                                     拾取延时<LineBreak/>
                                                     <LineBreak/>
                                                     根据自己的延迟调整。默认8秒。
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </StackPanel.ToolTip>
-                                    <Label Content="拾取延迟"/>
-                                    <TextBox x:Name="textBox_pickupDelay" Width="40" LostFocus="textBox_pickupDelay_LostFocus" Text="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textBox_pickupDelay_GotFocus"/>
+                                        </TextBlock>
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
+                                <Label Content="拾取延迟"/>
+                                <TextBox x:Name="textBox_pickupDelay" Width="40" LostFocus="textBox_pickupDelay_LostFocus" Text="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textBox_pickupDelay_GotFocus"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox x:Name="groupBox_progress" Header="进度" HorizontalAlignment="Stretch">
+                        <StackPanel HorizontalAlignment="Stretch">
+
+                            <GroupBox Header="钓鱼次数" Padding="5, 2">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="button_resetStatistics" Content="重置" Click="button_resetStatistics_Click"  Padding="5, 0"/>
+                                    <Label x:Name="label_loopCounter" Content="0 / 0"></Label>
                                 </StackPanel>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox Header="钓鱼次数" Padding="5, 2">
-                            <StackPanel Orientation="Horizontal">
-                                <Button x:Name="button_resetStatistics" Content="重置" Click="button_resetStatistics_Click"  Padding="5, 0"/>
-                                <Label x:Name="label_loopCounter" Content="0 / 0"></Label>
-                            </StackPanel>
-                        </GroupBox>
-                        <GroupBox Header="控制" Padding="0, 2" Height="60">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button x:Name="button_start" Content="开始" IsEnabled="False" Click="button_start_Click" Grid.Column="0" Margin="5, 0"/>
-                                <Button x:Name="button_stop" Content="停止" IsEnabled="False" Click="button_stop_Click" Grid.Column="1" Margin="5, 0"/>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox Header="钓鱼状态">
-                            <StackPanel>
-                                <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_requiredCoordsSet" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
-                                    <Label DockPanel.Dock="Right">按键坐标(必填)</Label>
-                                </DockPanel>
-                                <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingModeMonitor" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
-                                    <Label DockPanel.Dock="Right">状态监控(选填)</Label>
-                                </DockPanel>
-                                <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_autoRevive" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
-                                    <Label DockPanel.Dock="Right">自动复活(选填)</Label>
-                                </DockPanel>
-                                <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingMode" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
-                                    <Label DockPanel.Dock="Right">开启钓鱼模式</Label>
-                                </DockPanel>
-                                <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingStarted" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
-                                    <Label DockPanel.Dock="Right">垂钓</Label>
-                                </DockPanel>
-                                <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingSuccess" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
-                                    <Label DockPanel.Dock="Right">收杆</Label>
-                                </DockPanel>
-                                <DockPanel HorizontalAlignment="Stretch">
-                                    <Label x:Name="label_progressMonitor_fishingStopped" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
-                                    <Label DockPanel.Dock="Right">拾取</Label>
-                                </DockPanel>
-                            </StackPanel>
-                        </GroupBox>
-                    </StackPanel>
-                </GroupBox>
+                            </GroupBox>
+                            <GroupBox Header="控制" Padding="0, 2" Height="60">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="button_start" Content="开始" IsEnabled="False" Click="button_start_Click" Grid.Column="0" Margin="5, 0"/>
+                                    <Button x:Name="button_stop" Content="停止" IsEnabled="False" Click="button_stop_Click" Grid.Column="1" Margin="5, 0"/>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Header="钓鱼状态">
+                                <StackPanel>
+                                    <DockPanel HorizontalAlignment="Stretch">
+                                        <Label x:Name="label_progressMonitor_fishingMode" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                        <Label DockPanel.Dock="Right">开启钓鱼模式</Label>
+                                    </DockPanel>
+                                    <DockPanel HorizontalAlignment="Stretch">
+                                        <Label x:Name="label_progressMonitor_fishingStarted" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                        <Label DockPanel.Dock="Right">垂钓</Label>
+                                    </DockPanel>
+                                    <DockPanel HorizontalAlignment="Stretch">
+                                        <Label x:Name="label_progressMonitor_fishingSuccess" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                        <Label DockPanel.Dock="Right">收杆</Label>
+                                    </DockPanel>
+                                    <DockPanel HorizontalAlignment="Stretch">
+                                        <Label x:Name="label_progressMonitor_fishingStopped" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                        <Label DockPanel.Dock="Right">拾取</Label>
+                                    </DockPanel>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </GroupBox>
+                    
+                </StackPanel>
+                
 
             </Grid>
         </Grid>

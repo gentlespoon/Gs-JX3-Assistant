@@ -5,10 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GsJX3NonInjectAssistant"
         mc:Ignorable="d"
-        Title="Gs-JX3-NonInject-Assistant" Height="500" Width="500" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="CanMinimize"
-        Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,30">
+        Title="Gs-JX3-NonInject-Assistant"
+        Height="502" Width="502" 
+        ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+        ResizeMode="NoResize" Topmost="True"
+        Loaded="Window_Loaded" 
+        WindowStyle="None"
+        Background="DarkGray"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave" ShowInTaskbar="False"
+        >
+    <Grid Margin="1">
+        <Border Background="LightGray" MouseDown="Border_MouseDown">
+            <Grid HorizontalAlignment="Stretch">
+                <Label HorizontalAlignment="Stretch">Gs JX3 Non-Injection Assistant</Label>
+
+                <Label
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Top"
+                    BorderBrush="Transparent"
+                    FontSize="18"
+                    Padding="18, 0"
+                    FontWeight="Bold"
+                    MouseDown="CloseButton_MouseDown"
+                    Content="×">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Background" Value="DarkGray" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                
+            </Grid>
+        </Border>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,30">
             <TabItem x:Name="tab_session" Header="关于" Height="22" VerticalAlignment="Top">
                 <Grid>
                     <Frame Source="Views/Misc/About.xaml" NavigationUIVisibility="Hidden"></Frame>
@@ -19,15 +56,21 @@
                     <Frame Source="Views/Fishing/Fishing.xaml" NavigationUIVisibility="Hidden"></Frame>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="tab_dancer" Header="艺人">
+                <Grid>
+                    <Frame Source="Views/Dancer/Dancer.xaml" NavigationUIVisibility="Hidden"></Frame>
+                </Grid>
+            </TabItem>
             <TabItem x:Name="tab_exam" Header="科举">
                 <Grid>
                     <Frame Source="Views/Exam/Exam.xaml" NavigationUIVisibility="Hidden"></Frame>
                 </Grid>
             </TabItem>
         </TabControl>
-        <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom" Margin="0,0,0,0">
-            <CheckBox x:Name="checkbox_topMost" Content="保持窗口可见" Click="checkbox_topMost_Click"/>
-            <Label x:Name="version">Version</Label>
+        <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom">
+            <!--<Label x:Name="label_topMost" MouseUp="label_topMost_MouseUp">√ 保持窗口可见</Label>-->
+            <Label x:Name="label_version">版本</Label>
+            <Label x:Name="label_versionStatus" MouseUp="label_versionStatus_MouseUp">正在检查更新</Label>
         </StatusBar>
     </Grid>
 </Window>
