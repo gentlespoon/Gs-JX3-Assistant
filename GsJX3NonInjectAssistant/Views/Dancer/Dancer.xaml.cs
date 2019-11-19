@@ -39,7 +39,6 @@ namespace GsJX3NonInjectAssistant.Views.Dancer
 
         public Dancer()
         {
-            InitializeComponent();
             displayHelper = new DisplayHelper_GDI();
             mouseReader = new MouseReader_MouseKeyHook();
             mouseSimulator = new MouseSimulator_MouseEvent();
@@ -50,6 +49,8 @@ namespace GsJX3NonInjectAssistant.Views.Dancer
             timer_pollStatus.Elapsed += Timer_PollStatus_Ticker;
             timer_pollStatus.AutoReset = true;
             timer_pollStatus.Start();
+
+            InitializeComponent();
         }
 
 
@@ -133,7 +134,7 @@ namespace GsJX3NonInjectAssistant.Views.Dancer
                 label_stopDancing.Content = $"{mouseButton} {point.ToString()}";
                 //Console.WriteLine($"Got StopFishing_Button: {point.ToString()}");
                 dancerController.VerifyACDS();
-                button_setCoordinates_startDancing.IsEnabled = true;
+                button_setCoordinates_stopDancing.IsEnabled = true;
                 groupBox_timerConfiguration.IsEnabled = true;
             });
         }
@@ -152,6 +153,36 @@ namespace GsJX3NonInjectAssistant.Views.Dancer
         private void button_resetStatistics_Click(object sender, RoutedEventArgs e)
         {
             dancerController.ResetStatistics();
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            dancerController.timer_timeout = 2;
+        }
+
+        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+            dancerController.timer_timeout = 60 + 1;
+        }
+
+        private void RadioButton_Checked_2(object sender, RoutedEventArgs e)
+        {
+            dancerController.timer_timeout = 60 * 5 + 1;
+        }
+
+        private void RadioButton_Checked_3(object sender, RoutedEventArgs e)
+        {
+            dancerController.timer_timeout = 60 * 10 + 1;
+        }
+
+        private void RadioButton_Checked_4(object sender, RoutedEventArgs e)
+        {
+            dancerController.timer_timeout = 60 * 15 + 1;
+        }
+
+        private void RadioButton_Checked_5(object sender, RoutedEventArgs e)
+        {
+            dancerController.timer_timeout = 60 * 30 + 1;
         }
     }
 }

@@ -22,6 +22,22 @@
                     <StackPanel>
                         <GroupBox Header="必填">
                             <StackPanel HorizontalAlignment="Stretch">
+                                <GroupBox Header="按钮 - 收杆 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
+                                    <GroupBox.ToolTip>
+                                        <ToolTip MaxWidth="400">
+                                            <TextBlock TextWrapping="Wrap">
+                                                收杆按钮的坐标。将自动点击收杆键收杆。<LineBreak />
+                                                <LineBreak />
+                                                设置方法：<LineBreak />
+                                                点击垂钓技能栏上的收杆键。
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </GroupBox.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="button_setCoordinates_endFishing" Content="设置" Click="button_setCoordinates_endFishing_Click" Padding="5, 0"/>
+                                        <Label x:Name="label_endFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                </GroupBox>
                                 <GroupBox Header="按钮 - 钓鱼 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
                                     <GroupBox.ToolTip>
                                         <ToolTip MaxWidth="400">
@@ -54,22 +70,6 @@
                                         <Label x:Name="label_success" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="按钮 - 收杆 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
-                                    <GroupBox.ToolTip>
-                                        <ToolTip MaxWidth="400">
-                                            <TextBlock TextWrapping="Wrap">
-                                                收杆按钮的坐标。将自动点击收杆键收杆。<LineBreak />
-                                                <LineBreak />
-                                                设置方法：<LineBreak />
-                                                点击垂钓技能栏上的收杆键。
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </GroupBox.ToolTip>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="button_setCoordinates_endFishing" Content="设置" Click="button_setCoordinates_endFishing_Click" Padding="5, 0"/>
-                                        <Label x:Name="label_endFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
-                                    </StackPanel>
-                                </GroupBox>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="选填">
@@ -91,7 +91,7 @@
                                         <Label x:Name="label_skillBar" Content="未设置" Foreground="Red" Width="Auto" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="按钮 - 进入钓鱼模式" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
+                                <GroupBox Header="按钮 - 进入钓鱼状态" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
                                     <GroupBox.ToolTip>
                                         <ToolTip MaxWidth="400">
                                             <TextBlock TextWrapping="Wrap">
@@ -189,19 +189,19 @@
                             <GroupBox Header="钓鱼状态">
                                 <StackPanel>
                                     <DockPanel HorizontalAlignment="Stretch">
-                                        <Label x:Name="label_progressMonitor_fishingMode" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
-                                        <Label DockPanel.Dock="Right">开启钓鱼模式</Label>
+                                        <Label x:Name="label_progressMonitor_fishingMode" DockPanel.Dock="Left" Width="70" HorizontalContentAlignment="Right"/>
+                                        <Label DockPanel.Dock="Right">钓鱼状态</Label>
                                     </DockPanel>
                                     <DockPanel HorizontalAlignment="Stretch">
-                                        <Label x:Name="label_progressMonitor_fishingStarted" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                        <Label x:Name="label_progressMonitor_fishingStarted" DockPanel.Dock="Left" Width="70" HorizontalContentAlignment="Right"/>
                                         <Label DockPanel.Dock="Right">垂钓</Label>
                                     </DockPanel>
                                     <DockPanel HorizontalAlignment="Stretch">
-                                        <Label x:Name="label_progressMonitor_fishingSuccess" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                        <Label x:Name="label_progressMonitor_fishingSuccess" DockPanel.Dock="Left" Width="70" HorizontalContentAlignment="Right"/>
                                         <Label DockPanel.Dock="Right">收杆</Label>
                                     </DockPanel>
                                     <DockPanel HorizontalAlignment="Stretch">
-                                        <Label x:Name="label_progressMonitor_fishingStopped" DockPanel.Dock="Left" Width="30" HorizontalContentAlignment="Right" Content=""/>
+                                        <Label x:Name="label_progressMonitor_fishingStopped" DockPanel.Dock="Left" Width="70" HorizontalContentAlignment="Right"/>
                                         <Label DockPanel.Dock="Right">拾取</Label>
                                     </DockPanel>
                                 </StackPanel>

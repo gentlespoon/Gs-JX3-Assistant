@@ -87,9 +87,12 @@
                                     </GroupBox>
                                     <GroupBox x:Name="groupBox_timerConfiguration" Header="表演时间" Padding="0, 2" IsEnabled="False">
                                         <StackPanel>
-                                            <RadioButton>1 秒 - 频繁尝试触发乱世舞姬</RadioButton>
-                                            <RadioButton>15分钟</RadioButton>
-                                            <RadioButton IsChecked="True">30分钟 - 艺人升级</RadioButton>
+                                            <RadioButton Checked="RadioButton_Checked">1秒 - 频繁尝试触发乱世舞姬</RadioButton>
+                                            <RadioButton Checked="RadioButton_Checked_1">1分</RadioButton>
+                                            <RadioButton Checked="RadioButton_Checked_2">5分</RadioButton>
+                                            <RadioButton Checked="RadioButton_Checked_3">10分</RadioButton>
+                                            <RadioButton Checked="RadioButton_Checked_4">15分</RadioButton>
+                                            <RadioButton Checked="RadioButton_Checked_5" IsChecked="True">30分 - 艺人升级</RadioButton>
                                         </StackPanel>
                                     </GroupBox>
 
@@ -104,7 +107,7 @@
                             <GroupBox Header="表演次数" Padding="5, 2">
                                 <StackPanel Orientation="Horizontal">
                                     <Button x:Name="button_resetStatistics" Content="重置" Click="button_resetStatistics_Click"  Padding="5, 0"/>
-                                    <Label x:Name="label_loopCounter" Content="0 / 0"></Label>
+                                    <Label x:Name="label_loopCounter" Content="0"></Label>
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="控制" Padding="0, 2" Height="60">
@@ -121,7 +124,7 @@
                                 <StackPanel>
                                     <DockPanel HorizontalAlignment="Stretch">
                                         <Label x:Name="label_progressMonitor_dancingCountDown" DockPanel.Dock="Left" Width="70" HorizontalContentAlignment="Right"/>
-                                        <Label DockPanel.Dock="Right">正在表演</Label>
+                                        <Label DockPanel.Dock="Right">表演状态</Label>
                                     </DockPanel>
                                 </StackPanel>
                             </GroupBox>

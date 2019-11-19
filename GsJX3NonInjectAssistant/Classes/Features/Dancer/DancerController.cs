@@ -103,6 +103,7 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Dancer
         {
             state.Running = false;
             state.Started = false;
+            timer_timeout_tick = timer_timeout;
         }
 
         public void ResetStatistics()

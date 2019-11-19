@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using GsJX3NonInjectAssistant.Classes.CheckUpdate;
+using System.Windows.Media;
 
 namespace GsJX3NonInjectAssistant
 {
@@ -19,7 +20,7 @@ namespace GsJX3NonInjectAssistant
 
         public static List<KeyValuePair<string, string>> newerVersions = new List<KeyValuePair<string, string>>();
 
-        public static async void Check()
+        public static async Task<bool> Check()
         {
             try
             {
@@ -27,11 +28,12 @@ namespace GsJX3NonInjectAssistant
                 if (newerVersions.Count > 0)
                 {
                     newerVersions = newerVersions.OrderBy(release => release.Key).ToList();
-                    MainWindow.SetVersionStatus($"发现新版本：{newerVersions[newerVersions.Count-1].Key}");
+                    MainWindow.SetVersionStatus($"发现新版本：{newerVersions[newerVersions.Count-1].Key}", new SolidColorBrush(Colors.Red));
+                    return true;
                 }
                 else
                 {
-                    MainWindow.SetVersionStatus("已是最新版本");
+                    MainWindow.SetVersionStatus("已是最新版本", new SolidColorBrush(Colors.Black));
                 }
                 
             }
@@ -39,6 +41,7 @@ namespace GsJX3NonInjectAssistant
             {
                 Console.WriteLine(ex);
             }
+            return false;
 
         }
 

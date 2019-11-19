@@ -28,13 +28,16 @@ namespace GsJX3NonInjectAssistant
 
         static Label static_label_versionStatus = null;
 
-        public void Window_Loaded(object sender, RoutedEventArgs e)
+        public async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //setTopMost(true);
             Top = 0;
             static_label_versionStatus = label_versionStatus;
             label_version.Content = Constants.Version;
-            CheckUpdate.Check();
+            if (await CheckUpdate.Check())
+            {
+                GetUpdate();
+            }
         }
 
         private void checkbox_topMost_Click(object sender, RoutedEventArgs e)
@@ -54,11 +57,12 @@ namespace GsJX3NonInjectAssistant
         //    }
         //}
 
-        public static void SetVersionStatus(string msg)
+        public static void SetVersionStatus(string msg, Brush brush)
         {
             if (null != static_label_versionStatus)
             {
                 static_label_versionStatus.Content = msg;
+                static_label_versionStatus.Foreground = brush;
             }
         }
 
@@ -68,6 +72,11 @@ namespace GsJX3NonInjectAssistant
         //}
 
         private void label_versionStatus_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            GetUpdate();
+        }
+
+        private void GetUpdate()
         {
             if (CheckUpdate.newerVersions.Count > 0)
             {
