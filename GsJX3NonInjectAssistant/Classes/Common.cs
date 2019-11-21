@@ -42,6 +42,5 @@ namespace GsJX3NonInjectAssistant
             return null;
         }
         
-
     }
 }

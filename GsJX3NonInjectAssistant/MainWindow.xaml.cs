@@ -28,6 +28,8 @@ namespace GsJX3NonInjectAssistant
 
         static Label static_label_versionStatus = null;
 
+        private OverlayWindow overlayWindow = new OverlayWindow();
+
         public async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //setTopMost(true);
@@ -38,6 +40,8 @@ namespace GsJX3NonInjectAssistant
             {
                 GetUpdate();
             }
+
+            overlayWindow.Show();
         }
 
         private void checkbox_topMost_Click(object sender, RoutedEventArgs e)
@@ -103,6 +107,7 @@ namespace GsJX3NonInjectAssistant
 
         private void CloseButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            overlayWindow.Close();
             Close();
         }
 
