@@ -71,7 +71,11 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
                                     //}
                                 } while (iter.Next(PageIteratorLevel.TextLine, PageIteratorLevel.Word));
 
-                                results.Add(line);
+                                line = line.Trim();
+                                if (line.Length > 1)
+                                {
+                                    results.Add(line);
+                                }
 
                             } while (iter.Next(PageIteratorLevel.Para, PageIteratorLevel.TextLine));
                         } while (iter.Next(PageIteratorLevel.Block, PageIteratorLevel.Para));

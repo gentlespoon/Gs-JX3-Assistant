@@ -127,8 +127,7 @@ namespace GsJX3NonInjectAssistant.Views.Exam
         {
             if (examController.ScreenCaptureConfiguration.Size == Common.NullSize) return;
             if (CapturedScreen == null) return;
-            try
-            {
+
                 List<string> lines = examController.RunOCR(CapturedScreen);
 
                 List<string> keywords = new List<string>();
@@ -145,11 +144,7 @@ namespace GsJX3NonInjectAssistant.Views.Exam
                 }
 
                 textBox_KW.Text = String.Join(" ", keywords.ToArray());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

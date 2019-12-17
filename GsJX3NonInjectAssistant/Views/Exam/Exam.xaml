@@ -21,7 +21,7 @@
                     <GroupBox Header="设置 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2" Grid.Column="0">
 
                         <StackPanel Margin="5">
-                            <Button x:Name="button_selectArea" Content="1. 设置文字识别区域" Click="button_selectArea_Click" Padding="5, 0" Height="30"/>
+                            <Button x:Name="button_selectArea" Content="设置文字识别区域" Click="button_selectArea_Click" Padding="5, 0" Height="30"/>
                             <Label x:Name="label_selectedArea_TL" Content="未设置" Foreground="Red" Height="30"/>
                             <Label x:Name="label_selectedArea_BR" Content=" " Height="30"/>
                         </StackPanel>
@@ -44,8 +44,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="button_ocr" Click="button_ocr_Click" IsEnabled="False" Grid.Column="0">2. 识别文字</Button>
-                    <Button x:Name="button_search" Click="button_search_Click" Grid.Column="1">3. 查询关键字</Button>
+                    <Button x:Name="button_ocr" Click="button_ocr_Click" IsEnabled="False" Grid.Column="0">开始识别问题</Button>
+                    <Button x:Name="button_search" Click="button_search_Click" Grid.Column="1">停止</Button>
                 </Grid>
 
             </StackPanel>
