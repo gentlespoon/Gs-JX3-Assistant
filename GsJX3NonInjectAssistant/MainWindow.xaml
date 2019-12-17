@@ -8,12 +8,13 @@
         Title="Gs-JX3-NonInject-Assistant"
         Height="502" Width="502" 
         ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-        ResizeMode="NoResize" Topmost="True"
+        Topmost="True"
         Loaded="Window_Loaded" 
         WindowStyle="None"
         Background="DarkGray"
         MouseEnter="Window_MouseEnter"
-        MouseLeave="Window_MouseLeave" ShowInTaskbar="False"
+        MouseLeave="Window_MouseLeave" ShowInTaskbar="True"
+        ResizeMode="NoResize"
         >
     <Grid Margin="1">
         <Border Background="LightGray" MouseDown="Border_MouseDown">

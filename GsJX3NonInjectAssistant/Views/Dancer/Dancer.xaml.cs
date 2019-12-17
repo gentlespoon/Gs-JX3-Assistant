@@ -115,8 +115,8 @@ namespace GsJX3NonInjectAssistant.Views.Dancer
             mouseReader.GetCursorPosition((System.Drawing.Point point, int mouseButton) => {
                 dancerController.ACDS.StartDancing.Coordinates = point;
                 dancerController.ACDS.StartDancing.MouseAction = mouseButton;
-                label_startFishing.Foreground = new SolidColorBrush(MColor.FromRgb(0, 0, 0));
-                label_startFishing.Content = $"{mouseButton} {point.ToString()}";
+                label_startDancing.Foreground = new SolidColorBrush(MColor.FromRgb(0, 0, 0));
+                label_startDancing.Content = $"{mouseButton} {point.ToString()}";
                 //Console.WriteLine($"Got StartFishing_Button: {point.ToString()}");
                 dancerController.VerifyACDS();
                 button_setCoordinates_startDancing.IsEnabled = true;

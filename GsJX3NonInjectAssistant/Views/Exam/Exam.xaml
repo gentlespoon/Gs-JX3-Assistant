@@ -5,13 +5,66 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GsJX3NonInjectAssistant.Views.Exam"
       mc:Ignorable="d" 
-      d:DesignHeight="400" d:DesignWidth="500"
+      d:DesignHeight="400" d:DesignWidth="600"
       Title="Exam">
 
     <Grid Background="White">
-        <TextBlock TextWrapping="Wrap" Margin="50">
-            科举自动答题还没准备好呢 (ಥ﹏ಥ)<LineBreak/>
-            过几天再来看看吧。
-        </TextBlock>
+        <DockPanel LastChildFill="True">
+            <StackPanel Margin="5" DockPanel.Dock="Top">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Header="设置 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2" Grid.Column="0">
+
+                        <StackPanel Margin="5">
+                            <Button x:Name="button_selectArea" Content="1. 设置文字识别区域" Click="button_selectArea_Click" Padding="5, 0" Height="30"/>
+                            <Label x:Name="label_selectedArea_TL" Content="未设置" Foreground="Red" Height="30"/>
+                            <Label x:Name="label_selectedArea_BR" Content=" " Height="30"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="预览" Grid.Column="1">
+                        <StackPanel>
+                            <Image x:Name="image_preview" Stretch="Uniform" Height="100"></Image>
+
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+
+                <GroupBox Header="关键词">
+                    <TextBox x:Name="textBox_KW" HorizontalAlignment="Stretch"></TextBox>
+                </GroupBox>
+
+                <Grid Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="button_ocr" Click="button_ocr_Click" IsEnabled="False" Grid.Column="0">2. 识别文字</Button>
+                    <Button x:Name="button_search" Click="button_search_Click" Grid.Column="1">3. 查询关键字</Button>
+                </Grid>
+
+            </StackPanel>
+
+            <GroupBox Header="查询结果" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5, 2">
+                <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                    <ListBox Name="listBox" HorizontalContentAlignment="Stretch">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Label Content="{Binding Question}"/>
+                                    <Label Content="{Binding Answer}" FontWeight="Bold"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+            </GroupBox>
+
+        </DockPanel>
     </Grid>
 </Page>
