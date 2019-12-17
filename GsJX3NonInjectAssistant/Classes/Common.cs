@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows;
 using System.Threading;
 using GsJX3NonInjectAssistant.Classes.HID.Mouse;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using System.IO;
 
 namespace GsJX3NonInjectAssistant
 {
@@ -15,6 +19,7 @@ namespace GsJX3NonInjectAssistant
             
         public readonly static System.Drawing.Point NullPoint = new System.Drawing.Point(0, 0);
         public readonly static System.Drawing.Color NullColor = System.Drawing.Color.Transparent;
+        public readonly static System.Drawing.Size NullSize = new System.Drawing.Size(0, 0);
 
         public static System.Drawing.Point GetVirtualScreenResolution()
         {
@@ -41,6 +46,29 @@ namespace GsJX3NonInjectAssistant
             { /* suppress error */ }
             return null;
         }
-        
+
+        public static BitmapImage BitmapToImageSource(Bitmap bitmap)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                memory.Position = 0;
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.StreamSource = memory;
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.EndInit();
+
+                return bitmapimage;
+            }
+        }
+
+        public static byte[] BitmapToByteArray(Bitmap bitmap)
+        {
+            MemoryStream memStream = new MemoryStream();
+            bitmap.Save(memStream, ImageFormat.Jpeg);
+            return memStream.ToArray();
+        }
+
     }
 }

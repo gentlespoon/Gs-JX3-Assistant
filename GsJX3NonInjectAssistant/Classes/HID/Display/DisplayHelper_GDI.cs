@@ -7,9 +7,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using DColor = System.Drawing.Color;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace GsJX3NonInjectAssistant.Classes.HID.Display
 {
+    
+
     class DisplayHelper_GDI : IDisplayHelper
     {
 
@@ -33,6 +36,15 @@ namespace GsJX3NonInjectAssistant.Classes.HID.Display
             }
             return screenPixel.GetPixel(0, 0);
         }
+
+        public Bitmap CaptureScreen(ScreenCaptureConfiguration scConf)
+        {
+            Bitmap bitmap = new Bitmap(scConf.Size.Width, scConf.Size.Height);
+            using Graphics g = Graphics.FromImage(bitmap);
+            g.CopyFromScreen(scConf.TopLeft.X, scConf.TopLeft.Y, 0, 0, scConf.Size);
+            return bitmap;
+        }
+
 
     }
 }

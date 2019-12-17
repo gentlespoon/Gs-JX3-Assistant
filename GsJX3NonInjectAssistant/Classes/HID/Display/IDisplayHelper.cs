@@ -11,5 +11,6 @@ namespace GsJX3NonInjectAssistant.Classes.HID.Display
     public interface IDisplayHelper
     {
         DColor GetColorAt(Point point);
+        Bitmap CaptureScreen(ScreenCaptureConfiguration scConf);
     }
 }

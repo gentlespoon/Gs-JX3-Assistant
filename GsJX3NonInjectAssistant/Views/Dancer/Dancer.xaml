@@ -14,9 +14,6 @@
     <Grid Background="White">
         <Grid HorizontalAlignment="Stretch">
             <StackPanel>
-                <Label Foreground="Red">
-                     艺人功能暂时没有经过测试，可能有功能缺陷，请谨慎使用。
-                </Label>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -39,7 +36,7 @@
                                         </GroupBox.ToolTip>
                                         <StackPanel Orientation="Horizontal">
                                             <Button x:Name="button_setCoordinates_startDancing" Content="设置" Click="button_setCoordinates_startDancing_Click" Padding="5, 0"/>
-                                            <Label x:Name="label_startFishing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
+                                            <Label x:Name="label_startDancing" Content="未设置" Foreground="Red" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,0,0"/>
                                         </StackPanel>
                                     </GroupBox>
                                     <GroupBox Header="普通技能栏 - 表演状态监控 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2">
