@@ -62,10 +62,18 @@ namespace GsJX3NonInjectAssistant.Views.Exam
         {
             Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
-                CapturedScreen = displayHelper.CaptureScreen(examController.ScreenCaptureConfiguration);
-                image_preview.Source = Common.BitmapToImageSource(CapturedScreen);
-                TriggerOCR();
-                Search();
+                try
+                {
+                    CapturedScreen = displayHelper.CaptureScreen(examController.ScreenCaptureConfiguration);
+                    image_preview.Source = Common.BitmapToImageSource(CapturedScreen);
+                    TriggerOCR();
+                    Search();
+                }
+                catch (Exception ex)
+                {
+                    Stop();
+                    MessageBox.Show(ex.StackTrace, ex.Message);
+                }
             }));
 
         }
@@ -98,8 +106,11 @@ namespace GsJX3NonInjectAssistant.Views.Exam
                     label_selectedArea_TL.Foreground = new SolidColorBrush(MColor.FromRgb(0,0,0));
                     label_selectedArea_BR.Content = $"右下{examController.ScreenCaptureConfiguration.BottomRight.ToString()}";
 
+                    CapturedScreen = displayHelper.CaptureScreen(examController.ScreenCaptureConfiguration);
+                    image_preview.Source = Common.BitmapToImageSource(CapturedScreen);
+
                     button_selectArea.IsEnabled = true;
-                    button_ocr.IsEnabled = true;
+                    button_start.IsEnabled = true;
 
                 });
 
@@ -118,6 +129,7 @@ namespace GsJX3NonInjectAssistant.Views.Exam
             }
             catch (Exception ex)
             {
+                Stop();
                 MessageBox.Show(ex.Message);
             }
         }
@@ -128,8 +140,10 @@ namespace GsJX3NonInjectAssistant.Views.Exam
             if (examController.ScreenCaptureConfiguration.Size == Common.NullSize) return;
             if (CapturedScreen == null) return;
 
+            try
+            {
                 List<string> lines = examController.RunOCR(CapturedScreen);
-
+            
                 List<string> keywords = new List<string>();
                 Random random = new Random();
                 
@@ -137,13 +151,23 @@ namespace GsJX3NonInjectAssistant.Views.Exam
                 {
                     for (int i = 0; i < 6; i++)
                     {
-                        int rInt = random.Next(0, line.Length - 2);
-                        keywords.Add(line.Substring(rInt, 2));
+                        if (line.Length > 6)
+                        {
+                            int rInt = random.Next(0, line.Length - 5);
+                            keywords.Add(line.Substring(rInt, 5));
+                        }
                     }
 
                 }
 
                 textBox_KW.Text = String.Join(" ", keywords.ToArray());
+
+            }
+            catch (Exception ex)
+            {
+                Stop();
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
@@ -156,14 +180,28 @@ namespace GsJX3NonInjectAssistant.Views.Exam
 
 
 
-        private void button_ocr_Click(object sender, RoutedEventArgs e)
+        private void button_start_Click(object sender, RoutedEventArgs e)
         {
-            timer_captureScreen.Start();
+            Start();
         }
 
-        private void button_search_Click(object sender, RoutedEventArgs e)
+        private void button_stop_Click(object sender, RoutedEventArgs e)
+        {
+            Stop();
+        }
+
+        private void Start()
+        {
+            timer_captureScreen.Start();
+            button_start.IsEnabled = false;
+            button_stop.IsEnabled = true;
+        }
+
+        private void Stop()
         {
             timer_captureScreen.Stop();
+            button_start.IsEnabled = true;
+            button_stop.IsEnabled = false;
         }
     }
 }

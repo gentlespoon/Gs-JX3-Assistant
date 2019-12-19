@@ -44,8 +44,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="button_ocr" Click="button_ocr_Click" IsEnabled="False" Grid.Column="0">开始识别问题</Button>
-                    <Button x:Name="button_search" Click="button_search_Click" Grid.Column="1">停止</Button>
+                    <Button x:Name="button_start" Click="button_start_Click" IsEnabled="False" Grid.Column="0">开始识别问题</Button>
+                    <Button x:Name="button_stop" Click="button_stop_Click" IsEnabled="False" Grid.Column="1">停止</Button>
                 </Grid>
 
             </StackPanel>
@@ -57,7 +57,7 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <Label Content="{Binding Question}"/>
-                                    <Label Content="{Binding Answer}" FontWeight="Bold"/>
+                                    <Label Content="{Binding Answer}" FontWeight="Bold" FontSize="13"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

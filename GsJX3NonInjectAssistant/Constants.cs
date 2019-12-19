@@ -8,6 +8,6 @@ namespace GsJX3NonInjectAssistant
 {
     class Constants
     {
-        public const string Version = "v19.12.16";
+        public const string Version = "v19.12.16.4";
     }
 }

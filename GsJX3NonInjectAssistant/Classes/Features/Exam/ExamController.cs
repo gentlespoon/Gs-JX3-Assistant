@@ -35,11 +35,12 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
 
         public List<string> RunOCR(Bitmap bitmap_screenshot)
         {
-            List<string> results = new List<string>();
-
-            byte[] screenshot = Common.BitmapToByteArray(bitmap_screenshot);
             try
             {
+                List<string> results = new List<string>();
+
+                byte[] screenshot = Common.BitmapToByteArray(bitmap_screenshot);
+
                 // initialize TesseractEngine
                 using TesseractEngine engine = new TesseractEngine(@"./tessdata", "chi_sim", EngineMode.Default);
 
@@ -86,11 +87,19 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
             }
             catch (Exception e)
             {
-                Trace.TraceError(e.ToString());
-                Console.WriteLine("Unexpected Error: " + e.Message);
-                Console.WriteLine("Details: ");
-                Console.WriteLine(e.ToString());
-                throw e;
+                if (e.ToString().Contains("DllNotFoundException"))
+                {
+                    System.Diagnostics.Process.Start("https://aka.ms/vs/16/release/vc_redist.x64.exe");
+                    throw new Exception("这台电脑没有安装文字识别所需的运行环境。请安装自动下载的运行环境后重试");
+                }
+                else
+                {
+                    Trace.TraceError(e.ToString());
+                    Console.WriteLine("Unexpected Error: " + e.Message);
+                    Console.WriteLine("Details: ");
+                    Console.WriteLine(e.ToString());
+                    throw new Exception(e.ToString());
+                }
             }
 
         }
