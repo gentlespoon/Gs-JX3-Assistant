@@ -39,10 +39,19 @@ namespace GsJX3NonInjectAssistant.Classes.HID.Display
 
         public Bitmap CaptureScreen(ScreenCaptureConfiguration scConf)
         {
-            Bitmap bitmap = new Bitmap(scConf.Size.Width, scConf.Size.Height);
-            using Graphics g = Graphics.FromImage(bitmap);
-            g.CopyFromScreen(scConf.TopLeft.X, scConf.TopLeft.Y, 0, 0, scConf.Size);
-            return bitmap;
+            try
+            {
+                Bitmap bitmap = new Bitmap(scConf.Size.Width, scConf.Size.Height);
+                using Graphics g = Graphics.FromImage(bitmap);
+                g.CopyFromScreen(scConf.TopLeft.X, scConf.TopLeft.Y, 0, 0, scConf.Size);
+                return bitmap;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error capturing screen");
+                Console.WriteLine(ex.Message);
+                return new Bitmap(0,0);
+            }
         }
 
 

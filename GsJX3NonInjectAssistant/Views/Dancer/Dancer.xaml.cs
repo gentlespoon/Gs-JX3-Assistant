@@ -157,7 +157,7 @@ namespace GsJX3NonInjectAssistant.Views.Dancer
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            dancerController.timer_timeout = 2;
+            dancerController.timer_timeout = 1;
         }
 
         private void RadioButton_Checked_1(object sender, RoutedEventArgs e)

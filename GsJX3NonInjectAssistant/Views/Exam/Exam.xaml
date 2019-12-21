@@ -23,7 +23,7 @@
                         <StackPanel Margin="5">
                             <Button x:Name="button_selectArea" Content="设置文字识别区域" Click="button_selectArea_Click" Padding="5, 0" Height="30"/>
                             <Label x:Name="label_selectedArea_TL" Content="未设置" Foreground="Red" Height="30"/>
-                            <Label x:Name="label_selectedArea_BR" Content=" " Height="30"/>
+                            <Label x:Name="label_selectedArea_BR" Content="未设置" Foreground="Red" Height="30"/>
                         </StackPanel>
                     </GroupBox>
 
@@ -34,10 +34,6 @@
                         </StackPanel>
                     </GroupBox>
                 </Grid>
-
-                <GroupBox Header="关键词">
-                    <TextBox x:Name="textBox_KW" HorizontalAlignment="Stretch"></TextBox>
-                </GroupBox>
 
                 <Grid Height="30">
                     <Grid.ColumnDefinitions>
@@ -51,18 +47,16 @@
             </StackPanel>
 
             <GroupBox Header="查询结果" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5, 2">
-                <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-                    <ListBox Name="listBox" HorizontalContentAlignment="Stretch">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <Label Content="{Binding Question}"/>
-                                    <Label Content="{Binding Answer}" FontWeight="Bold" FontSize="13"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </ScrollViewer>
+                <ListBox Name="listBox" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Label Content="{Binding Question}"/>
+                                <Label Content="{Binding Answer}" FontWeight="Bold" FontSize="13"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </GroupBox>
 
         </DockPanel>

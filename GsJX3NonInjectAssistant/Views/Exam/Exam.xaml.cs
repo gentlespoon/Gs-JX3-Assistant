@@ -35,7 +35,6 @@ namespace GsJX3NonInjectAssistant.Views.Exam
         private ExamController examController;
         private IDisplayHelper displayHelper;
         private IQAProvider qAProvider;
-        private IMouseReader mouseReader;
         private System.Timers.Timer timer_captureScreen = new System.Timers.Timer(1000);
         Bitmap CapturedScreen;
 
@@ -76,17 +75,24 @@ namespace GsJX3NonInjectAssistant.Views.Exam
             }));
 
         }
-
+        
 
 
         private void button_selectArea_Click(object sender, RoutedEventArgs e)
         {
             button_selectArea.IsEnabled = false;
 
-            label_selectedArea_TL.Content = "设置文字识别框 左上角 坐标";
+            label_selectedArea_TL.Foreground = new SolidColorBrush(MColor.FromRgb(255, 0, 0));
+            label_selectedArea_BR.Foreground = new SolidColorBrush(MColor.FromRgb(255, 0, 0));
 
-            IMouseReader mouseReader_TL = new MouseReader_MouseKeyHook();
+
+            label_selectedArea_TL.Content = "设置文字识别框 左上角 坐标";
+            label_selectedArea_BR.Content = "未设置";
+
             examController.ScreenCaptureConfiguration.TopLeft = Common.NullPoint;
+            
+            IMouseReader mouseReader_TL = new MouseReader_MouseKeyHook();
+
             mouseReader_TL.GetCursorPosition((System.Drawing.Point TL, int mouseButton) =>
             {
                 examController.ScreenCaptureConfiguration.TopLeft = TL;
@@ -94,19 +100,39 @@ namespace GsJX3NonInjectAssistant.Views.Exam
 
                 label_selectedArea_BR.Content = "设置文字识别框 右下角 坐标";
 
-                IMouseReader mouseReader_BR = new MouseReader_MouseKeyHook();
                 examController.ScreenCaptureConfiguration.BottomRight = Common.NullPoint;
+            
+                IMouseReader mouseReader_BR = new MouseReader_MouseKeyHook();
+                
                 mouseReader_BR.GetCursorPosition((System.Drawing.Point BR, int mouseButton) =>
                 {
-                    examController.ScreenCaptureConfiguration.BottomRight = BR;
+                    if (
+                    BR.X > examController.ScreenCaptureConfiguration.TopLeft.X &&
+                    BR.Y > examController.ScreenCaptureConfiguration.TopLeft.Y
+                    )
+                    {
+                        examController.ScreenCaptureConfiguration.BottomRight = BR;
+                        
+                        Console.WriteLine(examController.ScreenCaptureConfiguration.Size);
+                        
+                        label_selectedArea_TL.Foreground = new SolidColorBrush(MColor.FromRgb(0, 0 ,0));
+                        label_selectedArea_BR.Foreground = new SolidColorBrush(MColor.FromRgb(0, 0, 0));
+                        label_selectedArea_BR.Content = $"右下{examController.ScreenCaptureConfiguration.BottomRight.ToString()}";
+                    
+                        CapturedScreen = displayHelper.CaptureScreen(examController.ScreenCaptureConfiguration);
+                        image_preview.Source = Common.BitmapToImageSource(CapturedScreen);
+                    
+                    }
+                    else
+                    {
+                        examController.ScreenCaptureConfiguration.TopLeft = Common.NullPoint;
+                        label_selectedArea_TL.Foreground = new SolidColorBrush(MColor.FromRgb(255, 0, 0));
+                        label_selectedArea_BR.Foreground = new SolidColorBrush(MColor.FromRgb(255, 0, 0));
 
-                    Console.WriteLine(examController.ScreenCaptureConfiguration.Size);
-
-                    label_selectedArea_TL.Foreground = new SolidColorBrush(MColor.FromRgb(0,0,0));
-                    label_selectedArea_BR.Content = $"右下{examController.ScreenCaptureConfiguration.BottomRight.ToString()}";
-
-                    CapturedScreen = displayHelper.CaptureScreen(examController.ScreenCaptureConfiguration);
-                    image_preview.Source = Common.BitmapToImageSource(CapturedScreen);
+                        label_selectedArea_TL.Content = "未设置";
+                        label_selectedArea_BR.Content = "未设置";
+                        MessageBox.Show("错误的文字识别区域");
+                    }
 
                     button_selectArea.IsEnabled = true;
                     button_start.IsEnabled = true;

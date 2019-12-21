@@ -14,7 +14,7 @@
         Background="DarkGray"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave" ShowInTaskbar="True"
-        ResizeMode="NoResize"
+        ResizeMode="NoResize" Activated="Window_Activated" Deactivated="Window_Deactivated"
         >
     <Grid Margin="1">
         <Border Background="LightGray" MouseDown="Border_MouseDown">

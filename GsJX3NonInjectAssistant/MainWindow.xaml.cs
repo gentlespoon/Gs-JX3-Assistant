@@ -115,6 +115,29 @@ namespace GsJX3NonInjectAssistant
         bool EnableAutoHide = false;
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
+            CheckHide();
+        }
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            CheckHide();
+        }
+
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            CheckShow();
+        }
+
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            CheckShow();
+        }
+
+        bool inMotion = false;
+
+        private void CheckHide()
+        {
+            if (inMotion) return;
             if (Top <= 0)
             {
                 EnableAutoHide = true;
@@ -126,19 +149,32 @@ namespace GsJX3NonInjectAssistant
 
             if (EnableAutoHide)
             {
-                Height = 3;
-                //Top = -Height + 2;
+                inMotion = true;
+                //Height = 3;
+                //Top = -Height + 3;
+                while (Top > -Height+3)
+                {
+                    Top-=4;
+                }
+                inMotion = false;
             }
         }
 
-        private void Window_MouseEnter(object sender, MouseEventArgs e)
+
+        private void CheckShow()
         {
+            if (inMotion) return;
+
             if (EnableAutoHide)
             {
-                Height = 502;
-                //Top = 0;
+                inMotion = true;
+                //Height = 502;
+                while(Top < 0)
+                {
+                    Top+=4;
+                }
+                inMotion = false;
             }
         }
-
     }
 }

@@ -46,8 +46,7 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
             Random random = new Random();
             int rInt;
             string keyword;
-
-            int kw_length = question.Length > 6 ? 6 : (question.Length > 2 ? 2 : 1);
+            int kw_length = 2;
 
             Task<Dictionary<QuestionAndAnswer, int>> searchTask = Task.Run(() =>
             {
@@ -55,8 +54,10 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
                 // each question
                 foreach (QuestionAndAnswer QA in QAs)
                 {
-                    // randomly get some keywords
-                    for (int i_kw = 0; i_kw < 8; i_kw++)
+
+                    // randomly get some keywords (short)
+                    
+                    for (int i_kw = 0; i_kw < 64; i_kw++)
                     {
                         rInt = random.Next(0, question.Length - kw_length);
                         keyword = question.Substring(rInt, kw_length);
@@ -81,6 +82,7 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
             while (i < 3 && i < result.Count)
             {
                 output.Add(result[i].Key);
+                i++;
             }
 
             return output;
