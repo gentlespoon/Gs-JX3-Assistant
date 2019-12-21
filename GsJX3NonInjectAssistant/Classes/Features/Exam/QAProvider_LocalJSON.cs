@@ -29,53 +29,61 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
 
         }
 
-        public async Task<List<QuestionAndAnswer>> Search(string keyword)
+        
+        public async Task<List<QuestionAndAnswer>> SearchAsync(string question)
         {
-            var QAs_kw = new List<QuestionAndAnswer>();
-            foreach(var QA in QAs)
-            {
-                if (QA.Question.Contains(keyword))
-                {
-                    QAs_kw.Add(QA);
-                }
-            }
-            return QAs_kw;
-        }
+            // dictionary<index_of_QAs, matching_score>
+            Dictionary<QuestionAndAnswer, int> MatchedQAs = new Dictionary<QuestionAndAnswer, int>();
+            
+            question = question.Replace("单选题：", "").Replace("单选题:", "");
 
-        public async Task<List<QuestionAndAnswer>> Search(List<string> keywords)
-        {
-            Dictionary<QuestionAndAnswer, int> QAs_kws_all = new Dictionary<QuestionAndAnswer, int>();
-            foreach (var keyword in keywords)
+            // Question too short. Skip search and return empty set;
+            if (question.Length < 2)
             {
-                var QAs_kws = await Search(keyword);
-                foreach (var QA in QAs_kws)
+                return new List<QuestionAndAnswer>();
+            }
+            
+            Random random = new Random();
+            int rInt;
+            string keyword;
+
+            int kw_length = question.Length > 6 ? 6 : (question.Length > 2 ? 2 : 1);
+
+            Task<Dictionary<QuestionAndAnswer, int>> searchTask = Task.Run(() =>
+            {
+                Dictionary<QuestionAndAnswer, int> MatchedQAs = new Dictionary<QuestionAndAnswer, int>();
+                // each question
+                foreach (QuestionAndAnswer QA in QAs)
                 {
-                    if (QAs_kws_all.Keys.Contains(QA))
+                    // randomly get some keywords
+                    for (int i_kw = 0; i_kw < 8; i_kw++)
                     {
-                        QAs_kws_all[QA]++;
-                    }
-                    else
-                    {
-                        QAs_kws_all.Add(QA, 1);
+                        rInt = random.Next(0, question.Length - kw_length);
+                        keyword = question.Substring(rInt, kw_length);
+                        if (QA.Question.Contains(keyword))
+                        {
+                            MatchedQAs[QA] = MatchedQAs.ContainsKey(QA) ? MatchedQAs[QA] + 1 : 1;
+                        }
                     }
                 }
-            }
+                return MatchedQAs;
+            });
 
-            var myList = QAs_kws_all.ToList();
-            myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
 
-            var resultList = new List<QuestionAndAnswer>();
-            for (int i = myList.Count - 1; i >= 0; i--)
+            MatchedQAs = await searchTask;
+            
+
+            var result = MatchedQAs.OrderByDescending(QA => QA.Value).ToList();
+
+            int i = 0;
+            List<QuestionAndAnswer> output = new List<QuestionAndAnswer>();
+
+            while (i < 3 && i < result.Count)
             {
-                if (resultList.Count > 2)
-                {
-                    break;
-                }
-                resultList.Add(myList[i].Key);
+                output.Add(result[i].Key);
             }
 
-
-            return resultList;
+            return output;
         }
 
     }

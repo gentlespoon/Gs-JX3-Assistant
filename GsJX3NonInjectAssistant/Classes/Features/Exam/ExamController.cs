@@ -24,20 +24,18 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
         {
             this.displayHelper = displayHelper;
             this.qAProvider = qAProvider;
-
         }
 
-        public async Task<List<QuestionAndAnswer>> Search(List<string> keywords)
+        public async Task<List<QuestionAndAnswer>> Search(string question)
         {
-            List<QuestionAndAnswer> QAs = await qAProvider.Search(keywords);
-            return QAs;
+            return await qAProvider.SearchAsync(question);
         }
 
-        public List<string> RunOCR(Bitmap bitmap_screenshot)
+        public string RunOCR(Bitmap bitmap_screenshot)
         {
             try
             {
-                List<string> results = new List<string>();
+                string question = "";
 
                 byte[] screenshot = Common.BitmapToByteArray(bitmap_screenshot);
 
@@ -53,29 +51,25 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
                 using (var iter = page.GetIterator())
                 {
                     iter.Begin();
-
+                    string line = "";
                     do
                     {
                         do
                         {
                             do
                             {
-                                var line = "";
+                                line = "";
                                 do
                                 {
                                     string keyword = iter.GetText(PageIteratorLevel.Word);
                                     line += keyword;
-                                    //if (keyword.Length > 1)
-                                    //{
-                                    //    results.Add(keyword);
-                                    //    Console.WriteLine(keyword);
-                                    //}
+
                                 } while (iter.Next(PageIteratorLevel.TextLine, PageIteratorLevel.Word));
 
                                 line = line.Trim();
-                                if (line.Length > 1)
+                                if (line.Length > 0)
                                 {
-                                    results.Add(line);
+                                    question += line;
                                 }
 
                             } while (iter.Next(PageIteratorLevel.Para, PageIteratorLevel.TextLine));
@@ -83,7 +77,8 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
                     } while (iter.Next(PageIteratorLevel.Block));
                 }
 
-                return results.Distinct().ToList();
+                return question;
+
             }
             catch (Exception e)
             {

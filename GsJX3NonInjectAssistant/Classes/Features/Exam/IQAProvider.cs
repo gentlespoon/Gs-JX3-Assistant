@@ -8,7 +8,7 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
 {
     interface IQAProvider
     {
-        public Task<List<QuestionAndAnswer>> Search(string keyword);
-        public Task<List<QuestionAndAnswer>> Search(List<string> keywords);
+        public Task<List<QuestionAndAnswer>> SearchAsync(string question);
+        //public Task<List<QuestionAndAnswer>> Search(List<string> keywords);
     }
 }

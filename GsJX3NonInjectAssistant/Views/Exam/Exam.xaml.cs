@@ -67,7 +67,6 @@ namespace GsJX3NonInjectAssistant.Views.Exam
                     CapturedScreen = displayHelper.CaptureScreen(examController.ScreenCaptureConfiguration);
                     image_preview.Source = Common.BitmapToImageSource(CapturedScreen);
                     TriggerOCR();
-                    Search();
                 }
                 catch (Exception ex)
                 {
@@ -118,13 +117,11 @@ namespace GsJX3NonInjectAssistant.Views.Exam
 
         }
 
-        private async void Search()
+        private async void Search(string question)
         {
-            if (textBox_KW.Text == "") return;
-            List<string> keywords = textBox_KW.Text.Split(' ').ToList();
             try
             {
-                List<QuestionAndAnswer> matchedQAs = await examController.Search(keywords);
+                List<QuestionAndAnswer> matchedQAs = await examController.Search(question);
                 listBox.ItemsSource = matchedQAs;
             }
             catch (Exception ex)
@@ -142,26 +139,7 @@ namespace GsJX3NonInjectAssistant.Views.Exam
 
             try
             {
-                List<string> lines = examController.RunOCR(CapturedScreen);
-            
-                List<string> keywords = new List<string>();
-                Random random = new Random();
-                
-                foreach (var line in lines)
-                {
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (line.Length > 6)
-                        {
-                            int rInt = random.Next(0, line.Length - 5);
-                            keywords.Add(line.Substring(rInt, 5));
-                        }
-                    }
-
-                }
-
-                textBox_KW.Text = String.Join(" ", keywords.ToArray());
-
+                Search(examController.RunOCR(CapturedScreen));
             }
             catch (Exception ex)
             {

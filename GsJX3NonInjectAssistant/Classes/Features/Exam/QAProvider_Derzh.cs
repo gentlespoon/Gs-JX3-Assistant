@@ -20,7 +20,7 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
             httpClient.DefaultRequestHeaders.Add("accept", "application/json");
         }
 
-        public async Task<List<QuestionAndAnswer>> Search(string keyword)
+        public async Task<List<QuestionAndAnswer>> SearchAsync(string keyword)
         {
             List<QuestionAndAnswer> QAs = new List<QuestionAndAnswer>();
 
@@ -48,7 +48,7 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
             var QAs = new List<QuestionAndAnswer>();
             foreach(var keyword in keywords)
             {
-                var QAs_kw = await Search(keyword);
+                var QAs_kw = await SearchAsync(keyword);
                 foreach (var QA in QAs_kw)
                 {
                     QAs.Add(QA);
