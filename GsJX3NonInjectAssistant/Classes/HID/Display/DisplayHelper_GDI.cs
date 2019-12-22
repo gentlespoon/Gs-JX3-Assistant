@@ -50,7 +50,7 @@ namespace GsJX3NonInjectAssistant.Classes.HID.Display
             {
                 Console.WriteLine("Error capturing screen");
                 Console.WriteLine(ex.Message);
-                return new Bitmap(0,0);
+                return new Bitmap(1, 1);
             }
         }
 

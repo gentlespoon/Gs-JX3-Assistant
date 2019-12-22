@@ -107,8 +107,8 @@ namespace GsJX3NonInjectAssistant.Views.Exam
                 mouseReader_BR.GetCursorPosition((System.Drawing.Point BR, int mouseButton) =>
                 {
                     if (
-                    BR.X > examController.ScreenCaptureConfiguration.TopLeft.X &&
-                    BR.Y > examController.ScreenCaptureConfiguration.TopLeft.Y
+                        BR.X > examController.ScreenCaptureConfiguration.TopLeft.X &&
+                        BR.Y > examController.ScreenCaptureConfiguration.TopLeft.Y
                     )
                     {
                         examController.ScreenCaptureConfiguration.BottomRight = BR;
@@ -121,7 +121,9 @@ namespace GsJX3NonInjectAssistant.Views.Exam
                     
                         CapturedScreen = displayHelper.CaptureScreen(examController.ScreenCaptureConfiguration);
                         image_preview.Source = Common.BitmapToImageSource(CapturedScreen);
-                    
+
+                        button_start.IsEnabled = true;
+
                     }
                     else
                     {
@@ -129,13 +131,14 @@ namespace GsJX3NonInjectAssistant.Views.Exam
                         label_selectedArea_TL.Foreground = new SolidColorBrush(MColor.FromRgb(255, 0, 0));
                         label_selectedArea_BR.Foreground = new SolidColorBrush(MColor.FromRgb(255, 0, 0));
 
-                        label_selectedArea_TL.Content = "未设置";
-                        label_selectedArea_BR.Content = "未设置";
-                        MessageBox.Show("错误的文字识别区域");
+                        label_selectedArea_TL.Content = "错误的文字识别区坐标";
+                        label_selectedArea_BR.Content = "请重新设置";
+
+                        button_start.IsEnabled = false;
+                        
                     }
 
                     button_selectArea.IsEnabled = true;
-                    button_start.IsEnabled = true;
 
                 });
 

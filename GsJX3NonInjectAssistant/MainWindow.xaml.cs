@@ -48,18 +48,6 @@ namespace GsJX3NonInjectAssistant
         {
         }
 
-        //private void setTopMost(bool topMost)
-        //{
-        //    if (topMost)
-        //    {
-        //        this.Topmost = true;
-        //        this.label_topMost.Content = "√ 保持窗口可见";
-        //    } else
-        //    {
-        //        this.Topmost = false;
-        //        this.label_topMost.Content = "x 保持窗口可见";
-        //    }
-        //}
 
         public static void SetVersionStatus(string msg, Brush brush)
         {
@@ -69,11 +57,6 @@ namespace GsJX3NonInjectAssistant
                 static_label_versionStatus.Foreground = brush;
             }
         }
-
-        //private void label_topMost_MouseUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    setTopMost(!Topmost);
-        //}
 
         private void label_versionStatus_MouseUp(object sender, MouseButtonEventArgs e)
         {

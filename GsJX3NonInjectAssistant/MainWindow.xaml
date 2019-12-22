@@ -46,7 +46,7 @@
                 
             </Grid>
         </Border>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,30">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2,30,2,30">
             <TabItem x:Name="tab_session" Header="关于" Height="22" VerticalAlignment="Top">
                 <Grid>
                     <Frame Source="Views/Misc/About.xaml" NavigationUIVisibility="Hidden"></Frame>
