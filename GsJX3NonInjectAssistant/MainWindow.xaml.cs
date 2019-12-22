@@ -27,13 +27,9 @@ namespace GsJX3NonInjectAssistant
         }
 
         static Label static_label_versionStatus = null;
-
-        //private OverlayWindow overlayWindow = new OverlayWindow();
-
+        
         public async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //setTopMost(true);
-            //Top = 0;
             static_label_versionStatus = label_versionStatus;
             label_version.Content = Constants.Version;
             if (await CheckUpdate.Check())
@@ -41,7 +37,6 @@ namespace GsJX3NonInjectAssistant
                 GetUpdate();
             }
 
-            //overlayWindow.Show();
         }
 
         private void checkbox_topMost_Click(object sender, RoutedEventArgs e)
@@ -69,7 +64,7 @@ namespace GsJX3NonInjectAssistant
             {
                 var newestVersion = CheckUpdate.newerVersions[CheckUpdate.newerVersions.Count - 1];
                 var response = MessageBox.Show(
-                    $"{newestVersion.Key}\n" +
+                    $"{newestVersion.Key}\n\n" +
                     $"{newestVersion.Value}\n\n" +
                     $"下载新版本？", "更新", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (response == MessageBoxResult.Yes)
@@ -90,7 +85,6 @@ namespace GsJX3NonInjectAssistant
 
         private void CloseButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //overlayWindow.Close();
             Close();
         }
 
@@ -133,8 +127,6 @@ namespace GsJX3NonInjectAssistant
             if (EnableAutoHide)
             {
                 inMotion = true;
-                //Height = 3;
-                //Top = -Height + 3;
                 while (Top > -Height+3)
                 {
                     Top-=4;
@@ -151,7 +143,6 @@ namespace GsJX3NonInjectAssistant
             if (EnableAutoHide)
             {
                 inMotion = true;
-                //Height = 502;
                 while(Top < 0)
                 {
                     Top+=4;

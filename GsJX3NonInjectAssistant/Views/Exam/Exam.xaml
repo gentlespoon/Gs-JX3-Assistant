@@ -10,7 +10,7 @@
 
     <Grid Background="White">
         <DockPanel LastChildFill="True">
-            <StackPanel Margin="5" DockPanel.Dock="Top">
+            <StackPanel DockPanel.Dock="Top">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -18,16 +18,18 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
 
-                    <GroupBox Header="设置 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2" Grid.Column="0">
-
-                        <StackPanel Margin="5">
-                            <Button x:Name="button_selectArea" Content="设置文字识别区域" Click="button_selectArea_Click" Padding="5, 0" Height="30"/>
+                    <GroupBox Header="设置 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2" Grid.Column="0" Height="125">
+                        <StackPanel>
+                            <DockPanel LastChildFill="True">
+                                <Button x:Name="button_howTo" Content="怎么设置？" DockPanel.Dock="Right" Width="80" Click="button_howTo_Click"/>
+                                <Button x:Name="button_selectArea" Content="设置文字识别区域" Click="button_selectArea_Click" Padding="5, 0" Height="30" DockPanel.Dock="Left" HorizontalAlignment="Stretch"/>
+                            </DockPanel>
                             <Label x:Name="label_selectedArea_TL" Content="未设置" Foreground="Red" Height="30"/>
                             <Label x:Name="label_selectedArea_BR" Content="未设置" Foreground="Red" Height="30"/>
                         </StackPanel>
                     </GroupBox>
 
-                    <GroupBox Header="预览" Grid.Column="1">
+                    <GroupBox Header="预览" Grid.Column="1" Height="125">
                         <StackPanel>
                             <Image x:Name="image_preview" Stretch="Uniform" Height="100"></Image>
 
@@ -35,14 +37,16 @@
                     </GroupBox>
                 </Grid>
 
-                <Grid Height="30">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="button_start" Click="button_start_Click" IsEnabled="False" Grid.Column="0">开始识别问题</Button>
-                    <Button x:Name="button_stop" Click="button_stop_Click" IsEnabled="False" Grid.Column="1">停止</Button>
-                </Grid>
+                <GroupBox Header="控制">
+                    <Grid Height="30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="button_start" Click="button_start_Click" IsEnabled="False" Grid.Column="0">开始识别问题</Button>
+                        <Button x:Name="button_stop" Click="button_stop_Click" IsEnabled="False" Grid.Column="1">停止</Button>
+                    </Grid>
+                </GroupBox>
 
             </StackPanel>
 

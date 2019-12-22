@@ -11,27 +11,29 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using DPoint = System.Drawing.Point;
+using System.Windows.Forms;
 
-namespace GsJX3NonInjectAssistant
+
+namespace GsJX3NonInjectAssistant.Views.Exam
 {
     /// <summary>
-    /// Interaction logic for OverlayWindow.xaml
+    /// Interaction logic for HowToSetExamOcrArea.xaml
     /// </summary>
-    public partial class OverlayWindow : Window
+    public partial class HowToSetExamOcrArea : Window
     {
-        public OverlayWindow()
+        public HowToSetExamOcrArea()
         {
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Top = 0;
-            Left = 0;
-            DPoint resolution = Common.GetVirtualScreenResolution();
-            Width = resolution.X;
-            Height = resolution.Y;
         }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            Close();
+        }
+
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GsJX3NonInjectAssistant"
         mc:Ignorable="d"
         Title="Gs-JX3-NonInject-Assistant"
-        Height="502" Width="502" 
+        Height="502" Width="602" 
         ScrollViewer.VerticalScrollBarVisibility="Disabled" 
         Topmost="True"
         Loaded="Window_Loaded" 
@@ -69,7 +69,6 @@
             </TabItem>
         </TabControl>
         <StatusBar HorizontalAlignment="Stretch" Height="30" VerticalAlignment="Bottom">
-            <!--<Label x:Name="label_topMost" MouseUp="label_topMost_MouseUp">√ 保持窗口可见</Label>-->
             <Label x:Name="label_version">版本</Label>
             <Label x:Name="label_versionStatus" MouseUp="label_versionStatus_MouseUp">正在检查更新</Label>
         </StatusBar>

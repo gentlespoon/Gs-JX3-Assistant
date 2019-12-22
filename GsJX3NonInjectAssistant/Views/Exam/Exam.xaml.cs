@@ -210,5 +210,11 @@ namespace GsJX3NonInjectAssistant.Views.Exam
             button_start.IsEnabled = true;
             button_stop.IsEnabled = false;
         }
+
+        private void button_howTo_Click(object sender, RoutedEventArgs e)
+        {
+            Window howToSetExamOcrArea = new HowToSetExamOcrArea();
+            howToSetExamOcrArea.Show();
+        }
     }
 }
