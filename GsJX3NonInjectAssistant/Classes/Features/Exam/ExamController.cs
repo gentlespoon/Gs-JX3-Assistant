@@ -85,7 +85,7 @@ namespace GsJX3NonInjectAssistant.Classes.Features.Exam
                 if (e.ToString().Contains("DllNotFoundException"))
                 {
                     System.Diagnostics.Process.Start("https://aka.ms/vs/16/release/vc_redist.x64.exe");
-                    throw new Exception("这台电脑没有安装文字识别所需的运行环境。请安装自动下载的运行环境后重试");
+                    throw new Exception("这台电脑没有安装文字识别所需的运行环境。\n请安装Visual C++ Redistributable for Visual Studio 2019后重试\nhttps://aka.ms/vs/16/release/vc_redist.x64.exe");
                 }
                 else
                 {
