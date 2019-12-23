@@ -2,6 +2,10 @@
 
 自用的一些不用注入JX3进程的辅助
 
+## 下载链接
+https://github.com/gentlespoon/Gs-JX3-NonInjection-Assistant/releases/latest
+
+## 更新记录
 v2019.12.22
 - 科举 - 新增设置帮助
 - 科举 - 修复设置文字识别区域不合法（TopLeft坐标>BottomRight坐标）时异常退出的缺陷
