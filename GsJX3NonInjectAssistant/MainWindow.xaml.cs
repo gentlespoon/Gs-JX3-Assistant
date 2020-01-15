@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Forms = System.Windows.Forms;
 
-namespace GsJX3NonInjectAssistant
+namespace GsJX3NIA
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

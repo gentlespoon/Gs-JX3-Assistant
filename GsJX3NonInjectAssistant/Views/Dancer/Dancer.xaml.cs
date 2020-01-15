@@ -19,12 +19,12 @@ using MColor = System.Windows.Media.Color;
 using DColor = System.Drawing.Color;
 using System.Threading;
 
-using GsJX3NonInjectAssistant;
-using GsJX3NonInjectAssistant.Classes.HID.Display;
-using GsJX3NonInjectAssistant.Classes.HID.Mouse;
-using GsJX3NonInjectAssistant.Classes.Features.Dancer;
+using GsJX3NIA;
+using GsJX3NIA.Classes.HID.Display;
+using GsJX3NIA.Classes.HID.Mouse;
+using GsJX3NIA.Classes.Features.Dancer;
 
-namespace GsJX3NonInjectAssistant.Views.Dancer
+namespace GsJX3NIA.Views.Dancer
 {
     /// <summary>
     /// Interaction logic for FishingPage.xaml

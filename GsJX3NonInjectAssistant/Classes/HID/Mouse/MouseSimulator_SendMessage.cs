@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using System.Drawing;
 
-namespace GsJX3NonInjectAssistant.Classes.HID.Mouse
+namespace GsJX3NIA.Classes.HID.Mouse
 {
     class MouseSimulator_SendMessage : IMouseSimulator
     {

@@ -56,7 +56,7 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>GsJX3NonInjectAssistant.App</StartupObject>
+    <StartupObject>GsJX3NIA.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>E5ECCC0D21D8C80F7A2EEE4572D1D043DB832068</ManifestCertificateThumbprint>

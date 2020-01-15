@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GsJX3NonInjectAssistant.Classes.HID.Mouse
+namespace GsJX3NIA.Classes.HID.Mouse
 {
     class MouseSimulator_MouseEvent : IMouseSimulator
     {

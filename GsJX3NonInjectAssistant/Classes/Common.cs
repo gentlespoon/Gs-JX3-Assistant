@@ -7,12 +7,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
 using System.Threading;
-using GsJX3NonInjectAssistant.Classes.HID.Mouse;
+using GsJX3NIA.Classes.HID.Mouse;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.IO;
 
-namespace GsJX3NonInjectAssistant
+namespace GsJX3NIA
 {
     public static class Common
     {

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GsJX3NonInjectAssistant.Views.Misc
+namespace GsJX3NIA.Views.Misc
 {
     /// <summary>
     /// Interaction logic for About.xaml

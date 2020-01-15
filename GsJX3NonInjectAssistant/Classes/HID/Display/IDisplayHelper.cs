@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using DColor = System.Drawing.Color;
 
-namespace GsJX3NonInjectAssistant.Classes.HID.Display
+namespace GsJX3NIA.Classes.HID.Display
 {
     public interface IDisplayHelper
     {

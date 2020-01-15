@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GsJX3NonInjectAssistant.Classes.HID.Display
+namespace GsJX3NIA.Classes.HID.Display
 {
     public class ScreenCaptureConfiguration
     {

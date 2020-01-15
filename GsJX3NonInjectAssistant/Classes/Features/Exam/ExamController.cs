@@ -1,5 +1,5 @@
-﻿using GsJX3NonInjectAssistant.Classes.HID.Display;
-using GsJX3NonInjectAssistant.Classes.HID.Mouse;
+﻿using GsJX3NIA.Classes.HID.Display;
+using GsJX3NIA.Classes.HID.Mouse;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tesseract;
 
-namespace GsJX3NonInjectAssistant.Classes.Features.Exam
+namespace GsJX3NIA.Classes.Features.Exam
 {
 
     class ExamController

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GsJX3NonInjectAssistant.Classes.CheckUpdate
+namespace GsJX3NIA.Classes.CheckUpdate
 {
     public class Author
     {

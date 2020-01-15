@@ -15,16 +15,16 @@ using System.Windows.Shapes;
 using MColor = System.Windows.Media.Color;
 using DColor = System.Drawing.Color;
 
-using GsJX3NonInjectAssistant;
-using GsJX3NonInjectAssistant.Classes.HID.Display;
-using GsJX3NonInjectAssistant.Classes.HID.Mouse;
-using GsJX3NonInjectAssistant.Classes.Features.Exam;
+using GsJX3NIA;
+using GsJX3NIA.Classes.HID.Display;
+using GsJX3NIA.Classes.HID.Mouse;
+using GsJX3NIA.Classes.Features.Exam;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
 using System.Data;
 
-namespace GsJX3NonInjectAssistant.Views.Exam
+namespace GsJX3NIA.Views.Exam
 {
     /// <summary>
     /// Interaction logic for Exam.xaml

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using GsJX3NonInjectAssistant.Classes.CheckUpdate;
+using GsJX3NIA.Classes.CheckUpdate;
 using System.Windows.Media;
 
-namespace GsJX3NonInjectAssistant
+namespace GsJX3NIA
 {
     public static class CheckUpdate
     {

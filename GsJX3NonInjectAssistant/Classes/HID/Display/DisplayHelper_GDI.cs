@@ -9,7 +9,7 @@ using DColor = System.Drawing.Color;
 using System.Runtime.InteropServices;
 using System.IO;
 
-namespace GsJX3NonInjectAssistant.Classes.HID.Display
+namespace GsJX3NIA.Classes.HID.Display
 {
     
 

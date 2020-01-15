@@ -10,11 +10,11 @@ using System.Threading;
 
 using System.Threading.Tasks;
 
-using GsJX3NonInjectAssistant.Classes.HID.Display;
-using GsJX3NonInjectAssistant.Classes.HID.Mouse;
-using GsJX3NonInjectAssistant.Classes.HID;
+using GsJX3NIA.Classes.HID.Display;
+using GsJX3NIA.Classes.HID.Mouse;
+using GsJX3NIA.Classes.HID;
 
-namespace GsJX3NonInjectAssistant.Classes.Features.Dancer
+namespace GsJX3NIA.Classes.Features.Dancer
 {
     public class State
     {

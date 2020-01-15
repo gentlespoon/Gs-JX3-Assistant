@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.ComponentModel;
 
-namespace GsJX3NonInjectAssistant.Classes.HID.Mouse
+namespace GsJX3NIA.Classes.HID.Mouse
 {
     class MouseReader_MouseKeyHook : IMouseReader
     {

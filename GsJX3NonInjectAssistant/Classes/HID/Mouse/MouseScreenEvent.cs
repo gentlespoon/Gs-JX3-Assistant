@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace GsJX3NonInjectAssistant.Classes.HID
+namespace GsJX3NIA.Classes.HID
 {
     public class MouseScreenEvent
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GsJX3NonInjectAssistant.Classes.Features.Exam
+namespace GsJX3NIA.Classes.Features.Exam
 {
     public class QuestionAndAnswer
     {
