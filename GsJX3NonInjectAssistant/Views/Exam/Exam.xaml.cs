@@ -33,17 +33,37 @@ namespace GsJX3NIA.Views.Exam
     {
 
         private ExamController examController;
+
         private IDisplayHelper displayHelper;
-        private IQAProvider qAProvider;
+        private IQAProvider activeQAProvider;
+
         private System.Timers.Timer timer_captureScreen = new System.Timers.Timer(1000);
         Bitmap CapturedScreen;
+
+        private Dictionary<string, IQAProvider> availableQAProviders = new Dictionary<string, IQAProvider>();
+
+        public List<string> AvailableQAProviderNames {
+            get
+            {
+                return availableQAProviders.Keys.ToList();
+            }
+        }
 
         public Exam()
         {
             InitializeComponent();
             displayHelper = new DisplayHelper_GDI();
-            qAProvider = new QAProvider_LocalJSON();
-            examController = new ExamController(displayHelper, qAProvider);
+
+            var qAProvider_LocalJSON = new QAProvider_LocalJSON();
+            availableQAProviders[qAProvider_LocalJSON.Name] = qAProvider_LocalJSON;
+
+            var qAProvider_Derzh = new QAProvider_Derzh();
+            availableQAProviders[qAProvider_Derzh.Name] = qAProvider_Derzh;
+
+            activeQAProvider = qAProvider_Derzh;
+
+            examController = new ExamController(activeQAProvider);
+
             timer_captureScreen.Elapsed += Timer_captureScreen_Elapsed;
             timer_captureScreen.AutoReset = true;
             //timer_captureScreen.Start();

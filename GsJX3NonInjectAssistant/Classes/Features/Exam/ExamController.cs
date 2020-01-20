@@ -17,12 +17,10 @@ namespace GsJX3NIA.Classes.Features.Exam
 
         public ScreenCaptureConfiguration ScreenCaptureConfiguration = new ScreenCaptureConfiguration();
 
-        private IDisplayHelper displayHelper;
         private IQAProvider qAProvider;
 
-        public ExamController(IDisplayHelper displayHelper, IQAProvider qAProvider)
+        public ExamController(IQAProvider qAProvider)
         {
-            this.displayHelper = displayHelper;
             this.qAProvider = qAProvider;
         }
 

@@ -21,6 +21,10 @@
                     <GroupBox Header="设置 *" HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="5, 2" Grid.Column="0" Height="125">
                         <StackPanel>
                             <DockPanel LastChildFill="True">
+                                <Label>题库来源</Label>
+                                <ComboBox x:Name="comboBox_qaProvider" Width="220" Height="30" />
+                            </DockPanel>
+                            <DockPanel LastChildFill="True">
                                 <Button x:Name="button_howTo" Content="怎么设置？" DockPanel.Dock="Right" Width="80" Click="button_howTo_Click"/>
                                 <Button x:Name="button_selectArea" Content="设置文字识别区域" Click="button_selectArea_Click" Padding="5, 0" Height="30" DockPanel.Dock="Left" HorizontalAlignment="Stretch"/>
                             </DockPanel>

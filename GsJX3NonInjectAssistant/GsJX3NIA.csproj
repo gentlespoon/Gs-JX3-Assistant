@@ -114,6 +114,8 @@
     <Compile Include="Classes\Features\Dancer\DancerController.cs" />
     <Compile Include="Classes\Features\Exam\ExamController.cs" />
     <Compile Include="Classes\Features\Exam\IQAProvider.cs" />
+    <Compile Include="Classes\Features\Exam\QAProvider_Derzh.cs" />
+    <Compile Include="Classes\Features\Exam\QAProvider_Derzh_Response.cs" />
     <Compile Include="Classes\Features\Exam\QAProvider_LocalJSON.cs" />
     <Compile Include="Classes\Features\Exam\QuestionAndAnswer.cs" />
     <Compile Include="Classes\HID\Display\DisplayHelper_GDI.cs" />

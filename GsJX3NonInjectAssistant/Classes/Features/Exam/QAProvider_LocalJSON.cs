@@ -10,9 +10,12 @@ namespace GsJX3NIA.Classes.Features.Exam
 {
     class QAProvider_LocalJSON : IQAProvider
     {
-
+        private readonly string _name = "本地JSON";
         private string jsonPath = "QA.json";
         private List<QuestionAndAnswer> QAs = new List<QuestionAndAnswer>();
+
+        public string Name { get { return _name; } }
+
         public QAProvider_LocalJSON()
         {
             using (StreamReader r = new StreamReader(jsonPath))

@@ -11,9 +11,11 @@ namespace GsJX3NIA.Classes.Features.Exam
 {
     class QAProvider_Derzh : IQAProvider
     {
-
+        private readonly string _name = "茗伊API";
         private static readonly HttpClient httpClient = new HttpClient();
         private const string baseURL = "https://jx3.derzh.com/exam/?m=1&csrf=&q=";
+
+        public string Name { get { return _name; } }
 
         public QAProvider_Derzh()
         {

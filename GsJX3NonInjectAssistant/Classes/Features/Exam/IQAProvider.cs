@@ -8,6 +8,7 @@ namespace GsJX3NIA.Classes.Features.Exam
 {
     interface IQAProvider
     {
+        public string Name { get; }
         public Task<List<QuestionAndAnswer>> SearchAsync(string question);
         //public Task<List<QuestionAndAnswer>> Search(List<string> keywords);
     }

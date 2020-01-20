@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Forms;
 
 
-namespace GsJX3NonInjectAssistant.Views.Exam
+namespace GsJX3NIA.Views.Exam
 {
     /// <summary>
     /// Interaction logic for HowToSetExamOcrArea.xaml
