@@ -1,0 +1,16 @@
+<h2>
+  JX3生活技能助手
+</h2>
+<ul ngbNav #nav="ngbNav" class="nav-tabs">
+  <li ngbNavItem>
+    <a ngbNavLink>物品大全</a>
+    <ng-template ngbNavContent>
+      <app-item-list></app-item-list>
+    </ng-template>
+  </li>
+  <li ngbNavItem>
+    <a ngbNavLink>梓匠</a>
+    <ng-template ngbNavContent>梓匠 内容</ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav"></div>
