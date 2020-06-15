@@ -4,17 +4,16 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { ItemsService } from './items.service';
 
 describe('ItemsService', () => {
   let service: ItemsService;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [ItemsService],
     });
-    service = TestBed.inject(ItemsService);
+    service = TestBed.get(ItemsService);
   });
 
   it('should be created', () => {

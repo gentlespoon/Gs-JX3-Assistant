@@ -1,4 +1,4 @@
-@import "../../..//colors.scss";
+@import "../../../../colors.scss";
 
 .item-filter {
   border: none;
@@ -69,4 +69,21 @@
     background-color: $bright-color-orange;
     color: white;
   }
+}
+
+ul {
+  border-radius: 5px;
+  border: 1px solid darkgray;
+  width: 720px;
+  max-width: 100%;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: inset 0 0 1px white;
+  min-height: 200px;
+}
+
+li {
+  margin: 1px;
+  display: inline-block;
 }

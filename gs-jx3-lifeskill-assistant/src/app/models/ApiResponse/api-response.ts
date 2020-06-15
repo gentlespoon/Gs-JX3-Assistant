@@ -5,7 +5,11 @@ export class ApiResponse {
     if (rawApiResponse['success'] === 1) {
       Object.assign(this, rawApiResponse);
     } else {
-      throw new Error('API failure: ' + rawApiResponse['data']);
+      throw new Error(
+        `API failure: ${
+          rawApiResponse['data'] ? rawApiResponse['data'] : 'invalid response'
+        }`
+      );
     }
   }
 }

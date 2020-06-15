@@ -12,8 +12,8 @@ body {
   // background-color: #555555;
   // color: white;
   padding: 10px;
-  font-family: "Microsoft JhengHei", "Microsoft YaHei", Roboto, "Helvetica",
-    sans-serif;
+  font-family: "Microsoft YaHei", Roboto, "Helvetica", sans-serif;
+  text-align: center;
 }
 
 .tab-pane {
@@ -24,10 +24,11 @@ body {
   text-shadow: 1px 1px 1px black;
 }
 
-.centerAlign {
-  text-align: center;
-}
-
 .pagination {
   margin: 10px;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }

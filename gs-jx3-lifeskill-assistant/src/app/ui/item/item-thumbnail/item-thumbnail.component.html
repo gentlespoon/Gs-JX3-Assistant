@@ -1,0 +1,7 @@
+<div
+  class="itemThumbnail {{ colors[item.Color] }}"
+  style.background-image="url('/assets/images/{{ item.ID }}.gif')"
+  (click)="showItemInfo(item.ID)"
+>
+  {{ item.Name }}
+</div>

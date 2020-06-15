@@ -1,16 +1,21 @@
 <h2>
   JX3生活技能助手
 </h2>
-<ul ngbNav #nav="ngbNav" class="nav-tabs">
-  <li ngbNavItem>
-    <a ngbNavLink>物品大全</a>
-    <ng-template ngbNavContent>
-      <app-item-list></app-item-list>
-    </ng-template>
-  </li>
-  <li ngbNavItem>
-    <a ngbNavLink>梓匠</a>
-    <ng-template ngbNavContent>梓匠 内容</ng-template>
-  </li>
-</ul>
-<div [ngbNavOutlet]="nav"></div>
+
+<div
+  class="btn-group btn-group-toggle"
+  ngbRadioGroup
+  name="radioBasic"
+  [(ngModel)]="currentRoute"
+>
+  <label ngbButtonLabel class="btn-primary">
+    <input ngbButton type="radio" value="itemList" />物品百科
+  </label>
+  <label *ngFor="let skill of skills" ngbButtonLabel class="btn-primary">
+    <input ngbButton type="radio" value="{{ skill.abbr }}" />
+    {{ skill.name }}
+  </label>
+</div>
+
+<router-outlet></router-outlet>
+<app-item-info></app-item-info>

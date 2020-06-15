@@ -1,12 +1,13 @@
+import { Source } from '../source/source';
+import { Component } from '../component/component';
+
 export class Item {
   ID: number;
   IsBounded: boolean = false;
   Name: string = '';
   Color: number;
-  // JX3 使用了IconID，个人认为使用ItemID命名图标文件即可
-  // IconID: number;
-  Source: string;
-  Components: number[];
+  Source: string[];
+  Components: Component[];
 
   constructor(partialItem: Partial<Item>) {
     if (
@@ -14,11 +15,20 @@ export class Item {
       !isNaN(partialItem['ID']) &&
       partialItem['Name'] &&
       !isNaN(partialItem['Color'])
-      // && partialItem['IconID']
     ) {
-      Object.assign(this, partialItem);
+      this.ID = parseInt(partialItem.ID + '');
+      this.IsBounded = partialItem.IsBounded == true ? true : false;
+      this.Name = partialItem.Name;
+      this.Color = parseInt(partialItem.Color + '');
+      this.Source = partialItem.Source;
+      if (partialItem.Components) {
+        this.Components = [];
+        for (let component of partialItem.Components) {
+          this.Components.push(new Component(component));
+        }
+      }
     } else {
-      throw new Error('Missing critical Item information');
+      throw new Error('Missing critical item information');
     }
   }
 }

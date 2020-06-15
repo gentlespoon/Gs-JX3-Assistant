@@ -1,0 +1,64 @@
+@import "../../../../colors.scss";
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  margin: auto;
+  width: 720px;
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.modal-title {
+  &.gray {
+    color: $bright-color-gray;
+  }
+  &.white {
+    color: $bright-color-white;
+  }
+  &.green {
+    color: $bright-color-green;
+  }
+  &.blue {
+    color: $bright-color-blue;
+  }
+  &.purple {
+    color: $bright-color-purple;
+  }
+  &.orange {
+    color: $bright-color-orange;
+  }
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding-left: 55px;
+}
+
+h4 {
+  width: 100%;
+  text-align: left;
+  & > .craft {
+    float: right;
+  }
+}
+table {
+  width: 100%;
+}
+tr {
+  border-bottom: 1px dashed darkgray;
+}

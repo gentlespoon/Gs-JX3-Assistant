@@ -1,0 +1,54 @@
+<div *ngIf="item != null" class="backdrop"></div>
+<div *ngIf="item != null" class="modal">
+  <div class="modal-header">
+    <h4
+      class="modal-title {{ colors[item.Color] }}"
+      style.background-image="url('/assets/images/{{ item.ID }}.gif')"
+    >
+      {{ item.Name }}
+      <button
+        *ngIf="isCraftable(item.Source)"
+        type="button"
+        class="btn-primary btn-sm craft"
+        (click)="craft(item.ID, item.Source)"
+      >
+        制作
+      </button>
+    </h4>
+
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table>
+      <tr *ngIf="item.IsBounded">
+        <th>绑定</th>
+        <td><span style="color: red;">拾取后绑定</span></td>
+      </tr>
+      <tr>
+        <th>来源</th>
+        <td>
+          <span *ngFor="let source of item.Source">
+            {{ getSourceByAbbr(source).name }}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th>制作材料</th>
+        <td>
+          <table>
+            <tr *ngFor="let component of item.Components">
+              <td>
+                <app-item-thumbnail
+                  [itemId]="component.itemId"
+                ></app-item-thumbnail>
+              </td>
+              <td>x {{ component.amount }}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
