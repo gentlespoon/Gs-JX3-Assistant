@@ -26,12 +26,6 @@
     <input type="text" [(ngModel)]="filteredKeyword" placeholder="搜索" />
   </p>
 
-  <ngb-pagination
-    [(page)]="page"
-    [pageSize]="pageSize"
-    [collectionSize]="filteredItems.length"
-    class="d-flex justify-content-center"
-  ></ngb-pagination>
   <ul>
     <li
       *ngFor="
@@ -42,6 +36,7 @@
       <app-item-thumbnail [itemId]="item.ID"></app-item-thumbnail>
     </li>
   </ul>
+
   <ngb-pagination
     [(page)]="page"
     [pageSize]="pageSize"

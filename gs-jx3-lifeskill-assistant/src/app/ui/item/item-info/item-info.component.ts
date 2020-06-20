@@ -1,10 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Item } from 'src/app/models/Item/item';
-import { ItemInfoService } from 'src/app/services/itemInfo/item-info.service';
 import { ColorService } from 'src/app/services/color/color.service';
-import { SourceService } from 'src/app/services/source/source.service';
-import { Source } from 'src/app/models/source/source';
-import { SkillService } from 'src/app/services/skill/skill.service';
+import { ItemsService } from 'src/app/services/item/items/items.service';
 
 @Component({
   selector: 'app-item-info',
@@ -13,43 +10,32 @@ import { SkillService } from 'src/app/services/skill/skill.service';
 })
 export class ItemInfoComponent implements OnInit {
   constructor(
-    private itemInfoService: ItemInfoService,
-    private colorService: ColorService,
-    private sourceService: SourceService,
-    private skillService: SkillService
+    private itemsService: ItemsService,
+    private colorService: ColorService
   ) {}
 
   ngOnInit(): void {}
 
   close() {
-    this.itemInfoService.itemId = null;
+    this._item = null;
+  }
+
+  _item: Item = null;
+  @Input() set itemId(itemId: number) {
+    this._item = this.itemsService.getItemById(itemId);
+  }
+
+  public get item(): Item {
+    return this._item;
   }
 
   // itemInfoService passthrough
-  public get item(): Item {
-    return this.itemInfoService.item;
-  }
+  // public get item(): Item {
+  //   return this.itemInfoService.item;
+  // }
   // colorService passthrough
-  public get colors(): string[] {
+  public get colors(): object {
     return this.colorService.colors;
-  }
-  // sourceService passthrough
-  public get sources(): Source[] {
-    return this.sourceService.sources;
-  }
-
-  public getSourceByAbbr(abbr: string): Source {
-    return this.sourceService.getSourceByAbbr(abbr);
-  }
-
-  public isCraftable(abbr: string[]): boolean {
-    for (let abb of abbr) {
-      try {
-        this.skillService.getSkillByAbbr(abb);
-        return true;
-      } catch {}
-    }
-    return false;
   }
 
   public craft(itemId: number, skill: string[]) {

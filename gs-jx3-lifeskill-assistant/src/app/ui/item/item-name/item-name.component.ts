@@ -5,11 +5,11 @@ import { Item } from 'src/app/models/Item/item';
 import { ItemPreviewService } from 'src/app/services/item/preview/item-preview.service';
 
 @Component({
-  selector: 'app-item-thumbnail',
-  templateUrl: './item-thumbnail.component.html',
-  styleUrls: ['./item-thumbnail.component.scss'],
+  selector: 'app-item-name',
+  templateUrl: './item-name.component.html',
+  styleUrls: ['./item-name.component.scss'],
 })
-export class ItemThumbnailComponent implements OnInit {
+export class ItemNameComponent implements OnInit {
   constructor(
     private itemsService: ItemsService,
     private colorService: ColorService,

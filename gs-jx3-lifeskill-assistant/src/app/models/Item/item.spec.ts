@@ -12,7 +12,7 @@ describe('Item', () => {
   });
 
   it('should throw error when one or more critical partial item information is missing', () => {
-    var expectedError = new Error('Missing critical Item information');
+    var expectedError = new Error('Missing critical item information');
     expect(() => {
       new Item({
         // ID: 0,

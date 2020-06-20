@@ -15,7 +15,7 @@ import { YsComponent } from './ui/skill/ys/ys.component';
 import { PrComponent } from './ui/skill/pr/pr.component';
 import { FrComponent } from './ui/skill/fr/fr.component';
 import { ItemThumbnailComponent } from './ui/item/item-thumbnail/item-thumbnail.component';
-import { ItemDetailComponent } from './ui/item/item-detail/item-detail.component';
+import { ItemNameComponent } from './ui/item/item-name/item-name.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { ItemDetailComponent } from './ui/item/item-detail/item-detail.component
     PrComponent,
     FrComponent,
     ItemThumbnailComponent,
-    ItemDetailComponent,
+    ItemNameComponent,
   ],
   imports: [
     BrowserModule,

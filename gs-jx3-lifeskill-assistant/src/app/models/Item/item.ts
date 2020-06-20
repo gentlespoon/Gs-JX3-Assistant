@@ -1,30 +1,27 @@
 import { Source } from '../source/source';
-import { Component } from '../component/component';
 
 export class Item {
-  ID: number;
-  IsBounded: boolean = false;
-  Name: string = '';
-  Color: number;
-  Source: string[];
-  Components: Component[];
+  id: number;
+  isBounded: boolean = false;
+  name: string = '';
+  color: number;
+  sources: Source[];
 
-  constructor(partialItem: Partial<Item>) {
+  constructor(partialItem: object) {
     if (
       partialItem &&
       !isNaN(partialItem['ID']) &&
       partialItem['Name'] &&
-      !isNaN(partialItem['Color'])
+      partialItem['Color']
     ) {
-      this.ID = parseInt(partialItem.ID + '');
-      this.IsBounded = partialItem.IsBounded == true ? true : false;
-      this.Name = partialItem.Name;
-      this.Color = parseInt(partialItem.Color + '');
-      this.Source = partialItem.Source;
-      if (partialItem.Components) {
-        this.Components = [];
-        for (let component of partialItem.Components) {
-          this.Components.push(new Component(component));
+      this.id = parseInt(partialItem['ID'] + '');
+      this.isBounded = partialItem['IsBounded'] == true ? true : false;
+      this.name = partialItem['Name'];
+      this.color = partialItem['Color'];
+      let sources = partialItem['Source'];
+      if (sources) {
+        for (let source of sources) {
+          this.sources.push(new Source(source));
         }
       }
     } else {

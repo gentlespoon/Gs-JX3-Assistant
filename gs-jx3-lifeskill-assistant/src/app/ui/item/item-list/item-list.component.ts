@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemsService } from 'src/app/services/items/items.service';
+import { ItemsService } from 'src/app/services/item/items/items.service';
 import { ColorService } from 'src/app/services/color/color.service';
 import { Item } from 'src/app/models/Item/item';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemInfoComponent } from '../item-info/item-info.component';
-import { ItemInfoService } from 'src/app/services/itemInfo/item-info.service';
 
 @Component({
   selector: 'app-item-list',
@@ -28,8 +27,7 @@ export class ItemListComponent implements OnInit {
 
   constructor(
     private itemsService: ItemsService,
-    private colorService: ColorService,
-    private itemInfoService: ItemInfoService
+    private colorService: ColorService
   ) {}
 
   ngOnInit(): void {}
@@ -39,15 +37,15 @@ export class ItemListComponent implements OnInit {
     return this.itemsService.items;
   }
   // colorService passthrough
-  public get colors(): string[] {
+  public get colors(): object {
     return this.colorService.colors;
   }
 
   public get filteredItems(): Item[] {
     return this.itemsService.items.filter((x) => {
       return (
-        x.Name.indexOf(this.filteredKeyword) !== -1 &&
-        this.filteredColor[this.colors[x.Color]]
+        x.name.indexOf(this.filteredKeyword) !== -1 &&
+        this.filteredColor[this.colors[x.color]]
       );
     });
   }

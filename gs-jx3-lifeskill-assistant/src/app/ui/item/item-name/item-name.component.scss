@@ -1,12 +1,7 @@
 @import "../../../../colors.scss";
 
-.itemThumbnail {
-  &:hover {
-    background-color: $bright-background-color;
-  }
+.itemName {
   cursor: pointer;
-  border-radius: 3px;
-  text-align: left;
   font-size: 0.9em;
   padding: 3px;
   width: 170px;
@@ -37,5 +32,11 @@
   }
   &.orange {
     color: $text-color-orange;
+  }
+  &::before {
+    content: "[";
+  }
+  &::after {
+    content: "]";
   }
 }
