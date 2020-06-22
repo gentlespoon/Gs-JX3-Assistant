@@ -1,0 +1,37 @@
+@import "../../../../colors.scss";
+
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: $color-background-light;
+  height: 60px;
+  text-align: center;
+}
+
+.brand {
+  height: 35px;
+  & > a {
+    font-weight: bold;
+    font-size: 22px;
+    height: 35px;
+    line-height: 35px;
+  }
+}
+
+.menu {
+  height: 25px;
+  & > a {
+    height: 25px;
+    line-height: 25px;
+    font-size: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}

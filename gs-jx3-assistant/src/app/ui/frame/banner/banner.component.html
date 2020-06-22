@@ -1,0 +1,16 @@
+<div class="banner">
+  <div class="brand">
+    <a [routerLink]="['/']">
+      JX3伪基百科
+    </a>
+  </div>
+
+  <div class="menu">
+    <a [routerLink]="['/itemList']">物品列表</a>
+    <a
+      *ngFor="let skill of Object.keys(skills)"
+      [routerLink]="['/skill/', skill]"
+      >{{ skills[skill] }}</a
+    >
+  </div>
+</div>
