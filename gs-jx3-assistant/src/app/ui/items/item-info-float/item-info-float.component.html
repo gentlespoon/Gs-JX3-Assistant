@@ -1,0 +1,11 @@
+<div class="float" #float cdkDrag>
+  <div class="topRightButtons">
+    <a class="detail" href="/itemInfo/{{ item.id }}" target="_blank">
+      <fa-icon [icon]="faExternalLinkAlt"></fa-icon> 详细信息
+    </a>
+    <a class="close" (click)="close()"><fa-icon [icon]="faTimes"></fa-icon></a>
+  </div>
+  <div class="title item-color-{{ item.color }}" #title>{{ item.name }}</div>
+  <div class="bond" *ngIf="item.bond">绑定</div>
+  <div class="description">{{ item.description }}</div>
+</div>
