@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="card notConnected" *ngIf="!automatorService.isConnected">
+    <h2>未连接</h2>
+    <p>
+      端口(2000-65535)
+      <input
+        type="number"
+        min="2000"
+        max="65535"
+        [(ngModel)]="automatorService.nhPort"
+      />
+    </p>
+    <p>
+      <button class="launchButton" (click)="launch()">
+        <fa-icon [icon]="faPlay"></fa-icon> 启动
+      </button>
+    </p>
+    <p>
+      第一次使用？
+    </p>
+    <p>
+      <button class="downloadButton" (click)="download()">
+        <fa-icon [icon]="faDownload"></fa-icon> 下载
+      </button>
+    </p>
+    <p>
+      打开一次即可完成初始化。
+    </p>
+  </div>
+
+  <div class="card" *ngIf="automatorService.isConnected">
+    <div class="connectionFailed" *ngIf="automatorService.heartBeatFailure > 0">
+      <p>连接中断：重试 {{ automatorService.heartBeatFailure }} / 5</p>
+    </div>
+    <h2>已连接</h2>
+
+    <button (click)="hideWindow(false)">显示</button>
+    <button (click)="hideWindow(true)">隐藏</button>
+  </div>
+</div>

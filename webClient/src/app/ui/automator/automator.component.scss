@@ -1,0 +1,49 @@
+@import "../../../colors.scss";
+
+.container {
+  text-align: center;
+}
+
+.card {
+  position: relative;
+  color: white;
+  background-color: $color-background-light;
+  border-radius: 3px;
+  box-shadow: 1px 1px 2px black;
+  padding: 5px;
+  min-height: 250px;
+}
+
+* {
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+input[type="text"],
+input[type="number"] {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background-color: transparent;
+  color: white;
+}
+
+.downloadButton,
+.launchButton {
+  font-size: 1.25em;
+}
+
+.notConnected {
+  background-color: #aa6600;
+}
+
+.connectionFailed {
+  background-color: darkred;
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  left: 0;
+  top: 0;
+}

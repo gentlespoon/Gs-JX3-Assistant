@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./colors.scss";
+@import "./items.scss";
+
+* {
+  white-space: nowrap;
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei", "PingFangSC-Regular", Helvetica, Arial,
+    sans-serif !important;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+p {
+  white-space: normal;
+}
