@@ -26,4 +26,12 @@ export class AutomatorComponent implements OnInit {
   download() {
     this.automatorService.download();
   }
+
+  getCursorCoordinates() {
+    this.automatorService.getCursorCoordinates();
+  }
+
+  mouseClickAt(x: number, y: number) {
+    this.automatorService.mouseClickAt(x, y);
+  }
 }

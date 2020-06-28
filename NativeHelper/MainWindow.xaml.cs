@@ -37,6 +37,8 @@ namespace GsJX3AssistantNativeHelper
         private ShutDownDelegate shutdownDelegate;
 
 
+        public HttpServerKit httpServerKit;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -51,7 +53,9 @@ namespace GsJX3AssistantNativeHelper
             shutdownDelegate = app.Terminate;
             _loggingKit = app.loggingKit;
 
-            _loggingKit.addNotifyLogListener(NotifyLogUpdated);
+
+            httpServerKit = new HttpServerKit(_loggingKit);
+            httpServerKit.start(app.httpPort);
 
             // terminate self if not getting heartbeat
             resetSuicideCounter();
@@ -70,15 +74,6 @@ namespace GsJX3AssistantNativeHelper
 
         }
 
-
-        public string logs
-        {
-            get
-            {
-                return _loggingKit.logs;
-            }
-        }
-
         public string suicideCountdownString
         {
             get
@@ -95,11 +90,6 @@ namespace GsJX3AssistantNativeHelper
             }
         }
 
-        public void NotifyLogUpdated()
-        {
-            NotifyPropertyChanged("logs");
-        }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
@@ -111,6 +101,7 @@ namespace GsJX3AssistantNativeHelper
         {
             suicideTimer.Enabled = false;
             _loggingKit.warn("Shutting down: " + reason);
+            httpServerKit.stop();
             shutdownDelegate();
         }
 

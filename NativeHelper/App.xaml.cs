@@ -25,15 +25,13 @@ namespace GsJX3AssistantNativeHelper
 
 
         public LoggingKit loggingKit;
-        public HttpServerKit httpServerKit;
         public SchemeRegisterKit schemeRegisterKit;
 
         public App()
         {
             loggingKit = new LoggingKit(logFilePath);
             schemeRegisterKit = new SchemeRegisterKit(loggingKit);
-            httpServerKit = new HttpServerKit(loggingKit);
-
+            
             schemeRegisterKit.registerSchemeHandler();
 
             
@@ -81,12 +79,10 @@ namespace GsJX3AssistantNativeHelper
             {
                 
             }
-            httpServerKit.start(httpPort);
         }
 
         public void Terminate()
         {
-            httpServerKit.stop();
             Environment.Exit(Environment.ExitCode);
         }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -74,5 +74,42 @@ export class AutomatorService {
 
   download() {
     window.location.href = `/assets/binary/gs-jx3-native-helper-${this.expectedversion}.exe`;
+  }
+
+  getPixelColor(x: number, y: number) {
+    this.httpClient.get(this.makeURL(`getPixelColor?X=${x}&Y=${y}`)).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+        this.heartBeatFailure++;
+      }
+    );
+  }
+
+  getCursorCoordinates() {
+    this.httpClient.get(this.makeURL(`getCursorCoordinates`)).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+        this.heartBeatFailure++;
+      }
+    );
+  }
+
+  mouseClickAt(x: number, y: number, mb: number = 1) {
+    
+    this.httpClient.get(this.makeURL(`mouseClickAt?X=${x}&Y=${y}&MB=${mb}`)).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+        this.heartBeatFailure++;
+      }
+    );
   }
 }

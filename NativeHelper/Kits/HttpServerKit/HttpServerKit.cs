@@ -116,29 +116,72 @@ namespace GsJX3AssistantNativeHelper.Kits
             _loggingKit.info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
             string response = "";
 
-            switch(request.RawUrl)
+            if (request.RawUrl.StartsWith("/heartBeat"))
             {
-                case "/heartBeat":
-                    heartBeat();
-                    break;
-                case "/version":
-                    response = (Application.Current as App).nhVersion;
-                    break;
-                case "/window/show":
-                    Application.Current.Dispatcher.Invoke(() =>
+                heartBeat();
+            } else
+            
+            
+            if (request.RawUrl.StartsWith("/version")) {
+                response = (Application.Current as App).nhVersion;
+            } else
+            
+            
+            if (request.RawUrl.StartsWith("/visible"))
+            {
+                bool isVisible = request.QueryString.Get("visible") == "true";
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (isVisible)
                     {
                         (Application.Current.MainWindow).Show();
-                    });
-                    break;
-                case "/window/hide":
-                    Application.Current.Dispatcher.Invoke(() =>
+                    }
+                    else
                     {
                         (Application.Current.MainWindow).Hide();
-                    });
-                    break;
-                default:
+                    }
+                });
+            } else
+            
+            
+            if (request.RawUrl.StartsWith("/getPixelColor"))
+            {
+                int x = int.Parse(request.QueryString.Get("X"));
+                int y = int.Parse(request.QueryString.Get("Y"));
+                IDisplayHelper displayHelper = new DisplayHelper_GDI();
+                System.Drawing.Color pixelColor = displayHelper.GetColorAt(new System.Drawing.Point(x, y));
+                response = "{\"R\":"+pixelColor.R.ToString() + ",\"G\":" + pixelColor.G.ToString() + ",\"B\":" + pixelColor.B.ToString()+"}";
+                _loggingKit.info("Cursor Coordinates: " + response);
+            } else
+            
 
-                    break;
+            if (request.RawUrl.StartsWith("/getCursorCoordinates"))
+            {
+                AutoResetEvent stopWaitHandle = new AutoResetEvent(false);
+                // Must be done on UI thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ICursorReader cursorReader = new CursorReader_MouseKeyHook();
+                    cursorReader.GetCursorPosition((System.Drawing.Point point, int mouseButton) =>
+                    {
+                        response = "{\"X\":" + point.X + ",\"Y\":" + point.Y + ",\"MB\":" + mouseButton + "}";
+                        _loggingKit.info(response);
+                        stopWaitHandle.Set();
+                    });
+                });
+                stopWaitHandle.WaitOne();
+            }
+            else
+
+
+            if (request.RawUrl.StartsWith("/mouseClickAt"))
+            {
+                int x = int.Parse(request.QueryString.Get("X"));
+                int y = int.Parse(request.QueryString.Get("Y"));
+                int mb = int.Parse(request.QueryString.Get("MB"));
+
+                IMouseSimulator mouseSimulator = new MouseSimulator_MouseEvent();
+                mouseSimulator.Click(new System.Drawing.Point(x, y), mb);
             }
 
             return response;
