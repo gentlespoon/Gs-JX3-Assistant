@@ -10,20 +10,25 @@
       关于
     </a>
     <a
-      [class.activated]="activatedRoute == '/automator'"
+      [class.activated]="activatedRoute.startsWith('/automator')"
       [routerLink]="['/automator']"
-      >自动化</a
     >
+      自动化
+    </a>
     <a
-      [class.activated]="activatedRoute == '/itemList'"
+      [class.activated]="
+        activatedRoute == '/itemList' || activatedRoute.startsWith('/itemInfo')
+      "
       [routerLink]="['/itemList']"
-      >物品列表</a
     >
+      物品列表
+    </a>
     <a
-      *ngFor="let skill of Object.keys(skills)"
-      [class.activated]="activatedRoute == '/skill/' + skill"
-      [routerLink]="['/skill/', skill]"
-      >{{ skills[skill] }}</a
+      [class.activated]="activatedRoute.startsWith('/lifeSkill')"
+      [routerLink]="['lifeSkill']"
     >
+      生活技能
+      <fa-icon [icon]="faCaretDown"></fa-icon>
+    </a>
   </div>
 </div>

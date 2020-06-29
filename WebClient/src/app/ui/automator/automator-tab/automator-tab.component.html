@@ -1,0 +1,8 @@
+<div class="tab-bar">
+  <a [routerLink]="['/automator']" [class.activated]="!mode">
+    <fa-icon [icon]="faDownload"></fa-icon> 安装
+  </a>
+  <a [routerLink]="['/automator/dy']" [class.activated]="mode == 'dy'">
+    <fa-icon [icon]="faFish"></fa-icon> 钓鱼
+  </a>
+</div>

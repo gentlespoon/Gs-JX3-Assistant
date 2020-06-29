@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AutomatorService } from 'src/app/services/automator/automator.service';
-import { faDownload, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { AutomatorService } from '../../services/automator/automator.service';
+import {
+  faPlay,
+  faStop,
+  faQuestionCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import { ConnState } from '../../models/nativeHelper/connection/conn-state.enum';
+
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-automator',
@@ -8,30 +15,14 @@ import { faDownload, faPlay } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./automator.component.scss'],
 })
 export class AutomatorComponent implements OnInit {
-  faDownload = faDownload;
-  faPlay = faPlay;
-
-  constructor(public automatorService: AutomatorService) {}
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.params = this.activatedRoute.params.subscribe((params) => {
+      this.mode = params['mode'];
+    });
+  }
 
   ngOnInit(): void {}
 
-  launch() {
-    this.automatorService.launch();
-  }
-
-  hideWindow(hide: boolean) {
-    this.automatorService.hideWindow(hide);
-  }
-
-  download() {
-    this.automatorService.download();
-  }
-
-  getCursorCoordinates() {
-    this.automatorService.getCursorCoordinates();
-  }
-
-  mouseClickAt(x: number, y: number) {
-    this.automatorService.mouseClickAt(x, y);
-  }
+  private params: any;
+  public mode: string;
 }

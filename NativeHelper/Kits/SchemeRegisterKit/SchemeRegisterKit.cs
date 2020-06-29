@@ -50,7 +50,7 @@ namespace GsJX3AssistantNativeHelper.Kits
             }
             catch (Exception ex)
             {
-                _loggingKit.error(ex.ToString());
+                _loggingKit.Error(ex.ToString());
             }
                 
         }

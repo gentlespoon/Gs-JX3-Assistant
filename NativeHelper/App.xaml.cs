@@ -8,6 +8,8 @@ using System.Windows;
 using System.Timers;
 using GsJX3AssistantNativeHelper.Kits;
 using System.Web;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace GsJX3AssistantNativeHelper
 {
@@ -18,10 +20,10 @@ namespace GsJX3AssistantNativeHelper
     {
         public bool verboseLogging = false;
         public string logFilePath = DateTime.Now.ToString("yyyyMMdd") + ".log";
-        public int httpPort = 8080;
-        public bool hideMainWindow = false;
+        public int httpPort = 65512;
+        public bool visible = true;
 
-        public string nhVersion = "20.06.28.0042";
+        public string nhVersion = "20.06.28.1802";
 
 
         public LoggingKit loggingKit;
@@ -29,13 +31,26 @@ namespace GsJX3AssistantNativeHelper
 
         public App()
         {
+            
+            // Extract embedded DLL
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
             loggingKit = new LoggingKit(logFilePath);
             schemeRegisterKit = new SchemeRegisterKit(loggingKit);
             
             schemeRegisterKit.registerSchemeHandler();
+        }
 
-            
-            
+        // Extract embedded DLL
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            string resourceName = "GsJX3AssistantNativeHelper." + new AssemblyName(args.Name).Name + ".dll";
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+            {
+                byte[] assemblyData = new byte[stream.Length];
+                stream.Read(assemblyData, 0, assemblyData.Length);
+                return Assembly.Load(assemblyData);
+            }
 
         }
 
@@ -56,17 +71,17 @@ namespace GsJX3AssistantNativeHelper
 
                 foreach(string key in parsedQS)
                 {
-                    loggingKit.info("[StartUpArgs] " + key + ": " + parsedQS[key]);
+                    loggingKit.Info("[StartUpArgs] " + key + ": " + parsedQS[key]);
                     switch (key)
                     {
                         case "port":
                             //httpPort = int.Parse(parsedQS[key]);
                             int.TryParse(parsedQS[key], out httpPort);
                             break;
-                        case "window":
-                            if (parsedQS[key] == "hide")
+                        case "visible":
+                            if (parsedQS[key] == "false")
                             {
-                                hideMainWindow = true;
+                                visible = false;
                             }
                             break;
                         default:
@@ -77,7 +92,10 @@ namespace GsJX3AssistantNativeHelper
             }
             else
             {
-                
+                loggingKit.Error("Started without arguments. Opening webpage.");
+                Process.Start("https://jx3.gentlespoon.com/automator");
+                Terminate();
+
             }
         }
 

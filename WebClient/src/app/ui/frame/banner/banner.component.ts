@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SkillService } from 'src/app/services/skills/skill.service';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
@@ -9,13 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent implements OnInit {
-  constructor(public skillService: SkillService, public router: Router) {}
+  constructor(public router: Router) {}
 
   ngOnInit(): void {}
-
-  public get skills(): object {
-    return this.skillService.skills;
-  }
 
   public Object = Object;
 

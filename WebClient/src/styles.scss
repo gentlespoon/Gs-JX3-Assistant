@@ -7,6 +7,10 @@
   box-sizing: border-box;
   font-family: "Microsoft YaHei", "PingFangSC-Regular", Helvetica, Arial,
     sans-serif !important;
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 html,
@@ -16,4 +20,14 @@ body {
 
 p {
   white-space: normal;
+}
+
+.card {
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px black;
+  padding: 10px;
+  min-height: 250px;
+  overflow: hidden;
+  background-color: white;
 }

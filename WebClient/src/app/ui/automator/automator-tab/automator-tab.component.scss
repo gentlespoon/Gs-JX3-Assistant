@@ -1,0 +1,23 @@
+@import "../../../../colors.scss";
+
+.tab-bar {
+  text-align: center;
+  margin: 0 -10px;
+  height: 30px;
+  background-color: white;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+  & > a {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    text-decoration: none;
+    padding: 0 10px;
+    color: $color-background-dark;
+    &.activated {
+      color: white;
+      background-color: $color-background-light;
+    }
+  }
+}

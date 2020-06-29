@@ -19,6 +19,18 @@ import { HomeComponent } from './ui/frame/home/home.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AutomatorComponent } from './ui/automator/automator.component';
+import { LifeskillComponent } from './ui/lifeskill/lifeskill.component';
+import { LsprComponent } from './ui/lifeskill/lspr/lspr.component';
+import { LsfrComponent } from './ui/lifeskill/lsfr/lsfr.component';
+import { LszjComponent } from './ui/lifeskill/lszj/lszj.component';
+import { LszzComponent } from './ui/lifeskill/lszz/lszz.component';
+import { LsysComponent } from './ui/lifeskill/lsys/lsys.component';
+import { AutomatorHelpComponent } from './ui/automator/automator-help/automator-help.component';
+import { AutomatorDYComponent } from './ui/automator/automator-dy/automator-dy.component';
+import { AutomatorTabComponent } from './ui/automator/automator-tab/automator-tab.component';
+import { LifeskillTabComponent } from './ui/lifeskill/lifeskill-tab/lifeskill-tab.component';
+import { AutomatorSetupComponent } from './ui/automator/automator-setup/automator-setup.component';
+import { AutomatorStatusComponent } from './ui/automator/automator-status/automator-status.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +45,18 @@ import { AutomatorComponent } from './ui/automator/automator.component';
     BannerComponent,
     HomeComponent,
     AutomatorComponent,
+    LifeskillComponent,
+    LsprComponent,
+    LsfrComponent,
+    LszjComponent,
+    LszzComponent,
+    LsysComponent,
+    AutomatorHelpComponent,
+    AutomatorDYComponent,
+    AutomatorTabComponent,
+    LifeskillTabComponent,
+    AutomatorSetupComponent,
+    AutomatorStatusComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,33 +7,48 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class AutomatorService {
   constructor(private httpClient: HttpClient) {}
 
-  expectedversion = '20.06.28.0042';
+  expectedversion = '20.06.28.1843';
 
   public heartBeatFailure: number = 0;
-  private heartBeatInterval: any;
+  private _heartBeatInterval: any;
   public isConnected: boolean = false;
-  public nhPort: number = 65512;
+  public nhPort: number = this.getRandomPort();
+
+  private _visible: boolean = false;
+  public get visibility(): boolean {
+    return this._visible;
+  }
+  public set visibility(v: boolean) {
+    this._visible = v;
+    if (this.isConnected) {
+      this._setVisibility(v);
+    }
+  }
 
   private makeURL(queryString: string = ''): string {
     return 'http://localhost:' + this.nhPort + '/' + queryString;
   }
 
-  private get RandomPort() {
+  private getRandomPort(): number {
     return Math.floor(Math.random() * (65530 - 5000) + 5000);
   }
 
   startHeartBeat() {
     this.heartBeatFailure = 0;
-    this.heartBeatInterval = setInterval(() => {
+    this._heartBeatInterval = setInterval(() => {
       this.httpClient.get(this.makeURL('heartBeat')).subscribe(
         (response) => {
           // when a success heartbeat comes back, clear the failure counter;
           this.heartBeatFailure = 0;
-          this.isConnected = true;
+          if (!this.isConnected) {
+            // check version after first heartbeat
+            this.isConnected = true;
+            this.checkVersion();
+          }
         },
         (error) => {
           this.heartBeatFailure++;
-          if (this.heartBeatFailure > 5) {
+          if (this.heartBeatFailure > 3) {
             // on 5 successive failure, we lose connection to the NH.
             this.stopHeartBeat();
             console.error('lost connection to NH');
@@ -46,21 +61,21 @@ export class AutomatorService {
   stopHeartBeat() {
     this.isConnected = false;
     this.heartBeatFailure = 0;
-    clearInterval(this.heartBeatInterval);
+    clearInterval(this._heartBeatInterval);
   }
 
   launch() {
     this.stopHeartBeat();
-    window.location.href = `com.gentlespoon.jx3.nh://port=${this.nhPort}&window=show`;
+    window.location.href = `com.gentlespoon.jx3.nh://port=${this.nhPort}&visible=${this.visibility}`;
     this.startHeartBeat();
   }
 
-  hideWindow(hide: boolean) {
-    let url = 'window/';
-    if (hide) {
-      url += 'hide';
+  private _setVisibility(visibility: boolean) {
+    let url = 'visible?visible=';
+    if (this.visibility) {
+      url += 'true';
     } else {
-      url += 'show';
+      url += 'false';
     }
     this.httpClient.get(this.makeURL(url)).subscribe(
       (response) => {
@@ -100,16 +115,52 @@ export class AutomatorService {
     );
   }
 
-  mouseClickAt(x: number, y: number, mb: number = 1) {
-    
-    this.httpClient.get(this.makeURL(`mouseClickAt?X=${x}&Y=${y}&MB=${mb}`)).subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.error(error);
-        this.heartBeatFailure++;
-      }
-    );
+  mouseClick(x: number, y: number, mb: number = 1) {
+    this.httpClient
+      .get(this.makeURL(`mouseClickAt?X=${x}&Y=${y}&MB=${mb}`))
+      .subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.error(error);
+          this.heartBeatFailure++;
+        }
+      );
+  }
+
+  checkVersion() {
+    this.httpClient
+      .get(this.makeURL('version'), { responseType: 'text' })
+      .subscribe(
+        (response) => {
+          if (response !== this.expectedversion) {
+            window.alert(
+              `助手客户端已有新版本，请使用新版本。\n\n您的版本：${response}\n当前版本：${this.expectedversion}`
+            );
+            this.download();
+            this.shutdown();
+          }
+        },
+        (error) => {
+          this.heartBeatFailure++;
+        }
+      );
+  }
+
+  shutdown() {
+    this.httpClient
+      .get(this.makeURL('shutdown'), { responseType: 'text' })
+      .subscribe(
+        (response) => {
+          if (response !== '1') {
+            this.heartBeatFailure++;
+            this.stopHeartBeat();
+          }
+        },
+        (error) => {
+          this.heartBeatFailure++;
+        }
+      );
   }
 }

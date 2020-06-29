@@ -29,7 +29,7 @@ namespace GsJX3AssistantNativeHelper
     {
 
         private LoggingKit _loggingKit;
-        private int suicideTimeout = 15;
+        private int suicideTimeout = 10;
         public int suicideCounter;
         public System.Timers.Timer suicideTimer;
 
@@ -46,7 +46,7 @@ namespace GsJX3AssistantNativeHelper
 
             var app = Application.Current as App;
 
-            if (app.hideMainWindow)
+            if (!app.visible)
             {
                 this.Hide();
             }
@@ -55,7 +55,7 @@ namespace GsJX3AssistantNativeHelper
 
 
             httpServerKit = new HttpServerKit(_loggingKit);
-            httpServerKit.start(app.httpPort);
+            httpServerKit.Start(app.httpPort);
 
             // terminate self if not getting heartbeat
             resetSuicideCounter();
@@ -63,7 +63,7 @@ namespace GsJX3AssistantNativeHelper
             suicideTimer.Elapsed += (s, e) =>
             {
                 suicideCounter--;
-                _loggingKit.verbose("SuicideCounter = " + suicideCounter);
+                _loggingKit.Verbose("SuicideCounter = " + suicideCounter);
                 NotifyPropertyChanged("suicideCountdownString");
                 if (suicideCounter <= 0)
                 {
@@ -100,8 +100,8 @@ namespace GsJX3AssistantNativeHelper
         public void suicide(string reason)
         {
             suicideTimer.Enabled = false;
-            _loggingKit.warn("Shutting down: " + reason);
-            httpServerKit.stop();
+            _loggingKit.Warn("Shutting down: " + reason);
+            httpServerKit.Stop();
             shutdownDelegate();
         }
 
@@ -113,6 +113,12 @@ namespace GsJX3AssistantNativeHelper
         private void logfilePath_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Process.Start(System.IO.Path.GetFullPath(logFilePath));
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
         }
     }
 

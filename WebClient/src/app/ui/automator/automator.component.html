@@ -1,42 +1,11 @@
-<div class="container">
-  <div class="card notConnected" *ngIf="!automatorService.isConnected">
-    <h2>未连接</h2>
-    <p>
-      端口(2000-65535)
-      <input
-        type="number"
-        min="2000"
-        max="65535"
-        [(ngModel)]="automatorService.nhPort"
-      />
-    </p>
-    <p>
-      <button class="launchButton" (click)="launch()">
-        <fa-icon [icon]="faPlay"></fa-icon> 启动
-      </button>
-    </p>
-    <p>
-      第一次使用？
-    </p>
-    <p>
-      <button class="downloadButton" (click)="download()">
-        <fa-icon [icon]="faDownload"></fa-icon> 下载
-      </button>
-    </p>
-    <p>
-      打开一次即可完成初始化。
-    </p>
-  </div>
+<div class="card">
+  <!-- connection status -->
+  <app-automator-status></app-automator-status>
 
-  <div class="card" *ngIf="automatorService.isConnected">
-    <div class="connectionFailed" *ngIf="automatorService.heartBeatFailure > 0">
-      <p>连接中断：重试 {{ automatorService.heartBeatFailure }} / 5</p>
-    </div>
-    <h2>已连接</h2>
-
-    <button (click)="hideWindow(false)">显示</button>
-    <button (click)="hideWindow(true)">隐藏</button>
-    <button (click)="getCursorCoordinates()">getCursorCoordinates</button>
-    <button (click)="mouseClickAt(0,0)">12</button>
+  <!-- router -->
+  <app-automator-tab [mode]="mode"></app-automator-tab>
+  <div class="cardBody">
+    <app-automator-setup *ngIf="!mode"></app-automator-setup>
+    <app-automator-dy *ngIf="mode == 'dy'"></app-automator-dy>
   </div>
 </div>

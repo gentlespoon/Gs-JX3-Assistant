@@ -31,7 +31,7 @@ namespace GsJX3AssistantNativeHelper.Kits
         }
 
 
-        public void start(int port)
+        public void Start(int port)
         {
             _listener = new HttpListener();
             _listener.Prefixes.Add("http://localhost:" + port + "/");
@@ -40,7 +40,7 @@ namespace GsJX3AssistantNativeHelper.Kits
             // listen on a background thread
             Task.Run(() =>
             {
-                _loggingKit.info("Application started, listening on port " + port);
+                _loggingKit.Info("Application started, listening on port " + port);
 
                 try
                 {
@@ -62,7 +62,7 @@ namespace GsJX3AssistantNativeHelper.Kits
                                             // CORS request
                                             break;
                                         default:
-                                            string response = handleHttpRequest(ctx.Request);
+                                            string response = HandleHttpRequest(ctx.Request);
                                             var buf = Encoding.UTF8.GetBytes(response);
                                             ctx.Response.ContentLength64 = buf.Length;
                                             ctx.Response.OutputStream.Write(buf, 0, buf.Length);
@@ -71,7 +71,7 @@ namespace GsJX3AssistantNativeHelper.Kits
                                 }
                                 catch (Exception ex)
                                 {
-                                    _loggingKit.error(ex.ToString());
+                                    _loggingKit.Error(ex.ToString());
                                 }
                                 finally
                                 {
@@ -88,47 +88,57 @@ namespace GsJX3AssistantNativeHelper.Kits
                 }
                 catch (Exception ex)
                 {
-                    _loggingKit.error(ex.ToString());
+                    _loggingKit.Error(ex.ToString());
                 }
 
             });
         }
 
-        public void stop()
+        public void Stop()
         {
+            _loggingKit.Warn("Listener stopped.");
             _listener.Stop();
             _listener.Close();
         }
 
-        public void heartBeat()
+        public string HandleHttpRequest(HttpListenerRequest request)
         {
-            // heartbeat request
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                _loggingKit.verbose("Heartbeat detected. Resetting suicide countdown");
-                ((Application.Current as App).MainWindow as MainWindow).resetSuicideCounter();
-            });
-        }
-
-
-        public string handleHttpRequest(HttpListenerRequest request)
-        {
-            _loggingKit.info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
             string response = "";
 
             if (request.RawUrl.StartsWith("/heartBeat"))
             {
-                heartBeat();
+                _loggingKit.Verbose("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
+                // heartbeat request
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    _loggingKit.Verbose("Heartbeat detected. Resetting suicide countdown");
+                    ((Application.Current as App).MainWindow as MainWindow).resetSuicideCounter();
+                });
             } else
-            
-            
-            if (request.RawUrl.StartsWith("/version")) {
+
+
+            if (request.RawUrl.StartsWith("/shutdown"))
+            {
+                _loggingKit.Warn("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    response = "1";
+                    (Application.Current.MainWindow as MainWindow).suicide("Received shutdown request");
+                });
+            }
+            else
+
+
+            if (request.RawUrl.StartsWith("/version"))
+            {
+                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 response = (Application.Current as App).nhVersion;
             } else
             
             
             if (request.RawUrl.StartsWith("/visible"))
             {
+                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 bool isVisible = request.QueryString.Get("visible") == "true";
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -146,26 +156,28 @@ namespace GsJX3AssistantNativeHelper.Kits
             
             if (request.RawUrl.StartsWith("/getPixelColor"))
             {
+                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 int x = int.Parse(request.QueryString.Get("X"));
                 int y = int.Parse(request.QueryString.Get("Y"));
                 IDisplayHelper displayHelper = new DisplayHelper_GDI();
                 System.Drawing.Color pixelColor = displayHelper.GetColorAt(new System.Drawing.Point(x, y));
                 response = "{\"R\":"+pixelColor.R.ToString() + ",\"G\":" + pixelColor.G.ToString() + ",\"B\":" + pixelColor.B.ToString()+"}";
-                _loggingKit.info("Cursor Coordinates: " + response);
+                _loggingKit.Info(response);
             } else
             
 
             if (request.RawUrl.StartsWith("/getCursorCoordinates"))
             {
+                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 AutoResetEvent stopWaitHandle = new AutoResetEvent(false);
-                // Must be done on UI thread
+                // Must be done on UI thread or Garbage Collection will freeze the cursor
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     ICursorReader cursorReader = new CursorReader_MouseKeyHook();
                     cursorReader.GetCursorPosition((System.Drawing.Point point, int mouseButton) =>
                     {
                         response = "{\"X\":" + point.X + ",\"Y\":" + point.Y + ",\"MB\":" + mouseButton + "}";
-                        _loggingKit.info(response);
+                        _loggingKit.Info(response);
                         stopWaitHandle.Set();
                     });
                 });
@@ -176,6 +188,7 @@ namespace GsJX3AssistantNativeHelper.Kits
 
             if (request.RawUrl.StartsWith("/mouseClickAt"))
             {
+                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 int x = int.Parse(request.QueryString.Get("X"));
                 int y = int.Parse(request.QueryString.Get("Y"));
                 int mb = int.Parse(request.QueryString.Get("MB"));

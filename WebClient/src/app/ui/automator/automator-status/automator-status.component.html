@@ -1,0 +1,52 @@
+<div
+  class="connectionStatus"
+  [class.connected]="connState == ConnState.connected"
+  [class.connectionFailed]="connState == ConnState.disconnected"
+>
+  <!-- connection state -->
+  <div *ngIf="connState == ConnState.none">
+    <fa-icon [icon]="farTimesCircle"></fa-icon> 未连接
+  </div>
+  <div *ngIf="connState == ConnState.connected">
+    <fa-icon [icon]="farCheckCircle"></fa-icon>
+    已连接
+  </div>
+  <div *ngIf="connState == ConnState.disconnected">
+    <fa-icon [icon]="faExclamationCircle"></fa-icon>
+    连接中断 - 重试 {{ retryCounter }} / 3
+  </div>
+
+  <!-- start/stop -->
+  <a
+    *ngIf="connState == ConnState.none"
+    class="btn"
+    title="启动本地客户端"
+    (click)="launch()"
+  >
+    <fa-icon [icon]="faPlay"></fa-icon> 启动
+  </a>
+  <a
+    *ngIf="connState == ConnState.connected"
+    class="btn"
+    title="停止运行本地客户端"
+    (click)="shutdown()"
+  >
+    <fa-icon [icon]="faStop"></fa-icon> 停止
+  </a>
+  <div title="显示客户端可实时查看日志">
+    <input
+      id="visibility"
+      type="checkbox"
+      [(ngModel)]="visibility"
+      style="display: none;"
+    />
+    <label for="visibility">
+      <fa-icon [icon]="faEye" *ngIf="visibility"></fa-icon>
+      <fa-icon [icon]="farEyeSlash" *ngIf="!visibility"></fa-icon>
+      显示
+    </label>
+  </div>
+  <a class="btn firstUse" [routerLink]="['/automator']">
+    <fa-icon [icon]="faQuestionCircle"></fa-icon> 帮助
+  </a>
+</div>
