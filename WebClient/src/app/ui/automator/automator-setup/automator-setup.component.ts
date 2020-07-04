@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { AutomatorService } from '../../../services/automator/automator.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class AutomatorSetupComponent implements OnInit {
 
   ngOnInit(): void {}
   faDownload = faDownload;
+  faPlay = faPlay;
 
   public download() {
     this.automatorService.download();

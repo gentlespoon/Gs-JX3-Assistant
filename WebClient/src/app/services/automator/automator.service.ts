@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { ConnState } from '../../models/automator/conn-state.enum';
+import { MouseAction } from '../../models/automator/mouse-action';
+import { PixelColor } from '../../models/automator/pixel-color';
+import { Coordinates } from '../../models/automator/coordinates';
+import { Color } from '../../models/automator/color';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +12,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class AutomatorService {
   constructor(private httpClient: HttpClient) {}
 
-  expectedversion = '20.06.28.1843';
+  expectedversion = '20.06.28.1903';
 
   public heartBeatFailure: number = 0;
   private _heartBeatInterval: any;
@@ -22,6 +27,18 @@ export class AutomatorService {
     this._visible = v;
     if (this.isConnected) {
       this._setVisibility(v);
+    }
+  }
+
+  public get connState(): ConnState {
+    if (!this.isConnected) {
+      return ConnState.none;
+    } else {
+      if (this.heartBeatFailure == 0) {
+        return ConnState.connected;
+      } else {
+        return ConnState.disconnected;
+      }
     }
   }
 
@@ -79,7 +96,7 @@ export class AutomatorService {
     }
     this.httpClient.get(this.makeURL(url)).subscribe(
       (response) => {
-        console.log();
+        // console.log();
       },
       (error) => {
         this.heartBeatFailure++;
@@ -91,45 +108,71 @@ export class AutomatorService {
     window.location.href = `/assets/binary/gs-jx3-native-helper-${this.expectedversion}.exe`;
   }
 
-  getPixelColor(x: number, y: number) {
+  getPixelColor(
+    x: number,
+    y: number,
+    callback: (pixelColor: PixelColor) => void,
+    errcb: (err: any) => void = null
+  ): void {
     this.httpClient.get(this.makeURL(`getPixelColor?X=${x}&Y=${y}`)).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
+        callback(
+          new PixelColor(
+            new Coordinates(x, y),
+            new Color(response['R'], response['G'], response['B'])
+          )
+        );
       },
       (error) => {
         console.error(error);
-        this.heartBeatFailure++;
+        if (errcb) {
+          errcb(error);
+        }
+        // this.heartBeatFailure++;
       }
     );
   }
 
-  getCursorCoordinates() {
+  getCursorCoordinates(
+    callback: (mouseAction: MouseAction) => void,
+    errcb: (err: any) => void = null
+  ): void {
     this.httpClient.get(this.makeURL(`getCursorCoordinates`)).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
+        callback(
+          new MouseAction(
+            new Coordinates(response['X'], response['Y']),
+            response['MB']
+          )
+        );
       },
       (error) => {
         console.error(error);
-        this.heartBeatFailure++;
+        if (errcb) {
+          errcb(error);
+        }
+        // this.heartBeatFailure++;
       }
     );
   }
 
-  mouseClick(x: number, y: number, mb: number = 1) {
+  mouseClick(x: number, y: number, mb: number = 1): void {
     this.httpClient
       .get(this.makeURL(`mouseClickAt?X=${x}&Y=${y}&MB=${mb}`))
       .subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
         },
         (error) => {
           console.error(error);
-          this.heartBeatFailure++;
+          // this.heartBeatFailure++;
         }
       );
   }
 
-  checkVersion() {
+  checkVersion(): void {
     this.httpClient
       .get(this.makeURL('version'), { responseType: 'text' })
       .subscribe(
@@ -143,12 +186,13 @@ export class AutomatorService {
           }
         },
         (error) => {
-          this.heartBeatFailure++;
+          // this.heartBeatFailure++;
         }
       );
   }
 
   shutdown() {
+    this.stopHeartBeat();
     this.httpClient
       .get(this.makeURL('shutdown'), { responseType: 'text' })
       .subscribe(
@@ -159,7 +203,7 @@ export class AutomatorService {
           }
         },
         (error) => {
-          this.heartBeatFailure++;
+          // this.heartBeatFailure++;
         }
       );
   }

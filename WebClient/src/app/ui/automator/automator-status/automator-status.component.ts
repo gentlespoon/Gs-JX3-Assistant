@@ -12,7 +12,7 @@ import {
   faCheckCircle as farCheckCircle,
   faEyeSlash as farEyeSlash,
 } from '@fortawesome/free-regular-svg-icons';
-import { ConnState } from '../../../models/nativeHelper/connection/conn-state.enum';
+import { ConnState } from '../../../models/automator/conn-state.enum';
 
 @Component({
   selector: 'app-automator-status',
@@ -42,15 +42,7 @@ export class AutomatorStatusComponent implements OnInit {
   }
 
   public get connState(): ConnState {
-    if (!this.automatorService.isConnected) {
-      return ConnState.none;
-    } else {
-      if (this.automatorService.heartBeatFailure == 0) {
-        return ConnState.connected;
-      } else {
-        return ConnState.disconnected;
-      }
-    }
+    return this.automatorService.connState;
   }
 
   public get retryCounter(): number {

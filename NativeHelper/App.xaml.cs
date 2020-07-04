@@ -10,6 +10,7 @@ using GsJX3AssistantNativeHelper.Kits;
 using System.Web;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 
 namespace GsJX3AssistantNativeHelper
 {
@@ -23,7 +24,7 @@ namespace GsJX3AssistantNativeHelper
         public int httpPort = 65512;
         public bool visible = true;
 
-        public string nhVersion = "20.06.28.1802";
+        public string nhVersion = "20.06.28.1903";
 
 
         public LoggingKit loggingKit;
@@ -31,13 +32,13 @@ namespace GsJX3AssistantNativeHelper
 
         public App()
         {
-            
             // Extract embedded DLL
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
             loggingKit = new LoggingKit(logFilePath);
+
+            loggingKit.Info("version " + nhVersion);
+
             schemeRegisterKit = new SchemeRegisterKit(loggingKit);
-            
             schemeRegisterKit.registerSchemeHandler();
         }
 
@@ -94,6 +95,7 @@ namespace GsJX3AssistantNativeHelper
             {
                 loggingKit.Error("Started without arguments. Opening webpage.");
                 Process.Start("https://jx3.gentlespoon.com/automator");
+                
                 Terminate();
 
             }
@@ -101,6 +103,7 @@ namespace GsJX3AssistantNativeHelper
 
         public void Terminate()
         {
+            Thread.Sleep(500);
             Environment.Exit(Environment.ExitCode);
         }
 

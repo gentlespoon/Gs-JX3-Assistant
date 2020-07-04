@@ -24,10 +24,10 @@ p {
 
 .card {
   position: relative;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px black;
-  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 2px gray;
   min-height: 250px;
+  min-width: 340px;
   overflow: hidden;
   background-color: white;
 }

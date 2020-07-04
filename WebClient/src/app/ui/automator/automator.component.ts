@@ -5,7 +5,7 @@ import {
   faStop,
   faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ConnState } from '../../models/nativeHelper/connection/conn-state.enum';
+import { ConnState } from '../../models/automator/conn-state.enum';
 
 import { ActivatedRoute } from '@angular/router';
 

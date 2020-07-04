@@ -20,10 +20,10 @@
   <a
     *ngIf="connState == ConnState.none"
     class="btn"
-    title="启动本地客户端"
+    title="运行本地客户端"
     (click)="launch()"
   >
-    <fa-icon [icon]="faPlay"></fa-icon> 启动
+    <fa-icon [icon]="faPlay"></fa-icon> 运行
   </a>
   <a
     *ngIf="connState == ConnState.connected"
@@ -43,7 +43,7 @@
     <label for="visibility">
       <fa-icon [icon]="faEye" *ngIf="visibility"></fa-icon>
       <fa-icon [icon]="farEyeSlash" *ngIf="!visibility"></fa-icon>
-      显示
+      显示日志
     </label>
   </div>
   <a class="btn firstUse" [routerLink]="['/automator']">

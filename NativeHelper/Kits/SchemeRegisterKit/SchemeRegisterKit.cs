@@ -23,6 +23,7 @@ namespace GsJX3AssistantNativeHelper.Kits
 
         public void registerSchemeHandler()
         {
+            _loggingKit.Info("Registering scheme handler: com.gentlespoon.jx3.nh");
             try
             {
 
