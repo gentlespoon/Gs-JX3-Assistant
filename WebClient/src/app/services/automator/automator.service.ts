@@ -12,9 +12,10 @@ import { Color } from '../../models/automator/color';
 export class AutomatorService {
   constructor(private httpClient: HttpClient) {}
 
-  expectedversion = '20.06.28.1903';
+  expectedversion = '20.07.15.0147';
 
   public heartBeatFailure: number = 0;
+  public heartBeatFailureAllowance: number = 5;
   private _heartBeatInterval: any;
   public isConnected: boolean = false;
   public nhPort: number = this.getRandomPort();
@@ -65,14 +66,14 @@ export class AutomatorService {
         },
         (error) => {
           this.heartBeatFailure++;
-          if (this.heartBeatFailure > 3) {
+          if (this.heartBeatFailure > this.heartBeatFailureAllowance) {
             // on 5 successive failure, we lose connection to the NH.
             this.stopHeartBeat();
             console.error('lost connection to NH');
           }
         }
       );
-    }, 3000);
+    }, 5000);
   }
 
   stopHeartBeat() {
@@ -110,7 +111,7 @@ export class AutomatorService {
   }
 
   download() {
-    window.location.href = `/assets/binary/gs-jx3-native-helper-${this.expectedversion}.exe`;
+    window.location.href = `/assets/binary/GsJX3NH_${this.expectedversion}.exe`;
   }
 
   getPixelColor(
@@ -163,9 +164,11 @@ export class AutomatorService {
     );
   }
 
-  mouseClick(x: number, y: number, mb: number = 1): void {
+  mouseClick(x: number, y: number, mb: number = 1, dblClick = 0): void {
     this.httpClient
-      .get(this.makeURL(`mouseClickAt?X=${x}&Y=${y}&MB=${mb}`))
+      .get(
+        this.makeURL(`mouseClickAt?X=${x}&Y=${y}&MB=${mb}&dblClick=${dblClick}`)
+      )
       .subscribe(
         (response) => {
           // console.log(response);

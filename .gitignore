@@ -2,6 +2,9 @@
 _gitignored*
 # VS Code
 .vscode/
+# Inno Setup output
+NativeHelper/Output/
+
 
 
 

@@ -13,7 +13,7 @@
   </div>
   <div *ngIf="connState == ConnState.disconnected">
     <fa-icon [icon]="faExclamationCircle"></fa-icon>
-    连接中断 - 重试 {{ retryCounter }} / 3
+    连接中断 - 重试 {{ retryCounter }} / {{ retryAllowance }}
   </div>
 
   <!-- start/stop -->

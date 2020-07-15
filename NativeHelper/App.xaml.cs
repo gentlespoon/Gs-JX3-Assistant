@@ -22,7 +22,7 @@ namespace GsJX3AssistantNativeHelper
     public partial class App : Application
     {
         
-        internal string nhVersion = "20.06.28.1903";
+        internal string nhVersion = "20.07.15.0147";
 
         
         private LoggingKit loggingKit;
@@ -45,7 +45,7 @@ namespace GsJX3AssistantNativeHelper
             var schemeRegisterKit = new SchemeRegisterKit(loggingKit);
             schemeRegisterKit.registerSchemeHandler();
 
-            timeoutKit = new TimeoutKit(10, Terminate, notifyIconKit, loggingKit);
+            timeoutKit = new TimeoutKit(30, Terminate, notifyIconKit, loggingKit);
             timeoutKit.Start();
 
             
@@ -101,7 +101,7 @@ namespace GsJX3AssistantNativeHelper
 
             if (openBrowser)
             {
-                Process.Start($"https://jx3.gentlespoon.com/automator/connect?port={httpPort}");
+                Process.Start($"https://jx3.gentlespoon.com/automator?port={httpPort}");
             }
         }
 

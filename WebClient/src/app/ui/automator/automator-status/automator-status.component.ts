@@ -49,6 +49,10 @@ export class AutomatorStatusComponent implements OnInit {
     return this.automatorService.heartBeatFailure;
   }
 
+  public get retryAllowance(): number {
+    return this.automatorService.heartBeatFailureAllowance;
+  }
+
   launch() {
     this.automatorService.launch();
   }

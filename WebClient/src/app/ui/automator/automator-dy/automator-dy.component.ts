@@ -229,7 +229,8 @@ export class AutomatorDYComponent implements OnInit {
     this.automatorService.mouseClick(
       this.anglingAction.coordinates.X,
       this.anglingAction.coordinates.Y,
-      this.anglingAction.MB
+      this.anglingAction.MB,
+      1
     );
     this.startAngleCountdown();
     this._harvestCountdown = 0;
@@ -242,7 +243,8 @@ export class AutomatorDYComponent implements OnInit {
     this.automatorService.mouseClick(
       this.harvestAction.coordinates.X,
       this.harvestAction.coordinates.Y,
-      this.harvestAction.MB
+      this.harvestAction.MB,
+      1
     );
     this.startHarvestCountdown();
   }
