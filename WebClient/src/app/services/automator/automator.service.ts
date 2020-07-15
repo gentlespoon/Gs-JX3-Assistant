@@ -81,6 +81,11 @@ export class AutomatorService {
     clearInterval(this._heartBeatInterval);
   }
 
+  connect(port: number) {
+    this.nhPort = port;
+    this.startHeartBeat();
+  }
+
   launch() {
     this.stopHeartBeat();
     window.location.href = `com.gentlespoon.jx3.nh://port=${this.nhPort}&visible=${this.visibility}`;

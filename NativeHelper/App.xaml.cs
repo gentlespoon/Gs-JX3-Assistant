@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.IO;
+using System.Drawing;
 
 namespace GsJX3AssistantNativeHelper
 {
@@ -20,45 +21,40 @@ namespace GsJX3AssistantNativeHelper
     /// </summary>
     public partial class App : Application
     {
-        public bool verboseLogging = false;
-        public string path_logFileName = DateTime.Now.ToString("yyyyMMdd") + ".log";
-        public string path_AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        public int httpPort = 65512;
-        public bool visible = true;
+        
+        internal string nhVersion = "20.06.28.1903";
 
-        public string nhVersion = "20.06.28.1903";
-
-
-        public LoggingKit loggingKit;
-        public SchemeRegisterKit schemeRegisterKit;
+        
+        private LoggingKit loggingKit;
+        private HttpServerKit httpServerKit;
+        private TimeoutKit timeoutKit;
+        private NotifyIconKit notifyIconKit;
 
         public App()
         {
-            // Extract embedded DLL
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            loggingKit = new LoggingKit(path_logFileName);
+            Console.WriteLine(AppPaths.path_logFileFullPath);
 
-            loggingKit.Info("version " + nhVersion);
+            // Setup logging
+            loggingKit = new LoggingKit(AppPaths.path_logFileFullPath, false);
+            loggingKit.Info($"Application starting up (version {nhVersion}) at {AppPaths.path_AppPath}");
 
-            schemeRegisterKit = new SchemeRegisterKit(loggingKit);
+            notifyIconKit = new NotifyIconKit();
+            notifyIconKit.Normal();
+
+            // register scheme handler
+            var schemeRegisterKit = new SchemeRegisterKit(loggingKit);
             schemeRegisterKit.registerSchemeHandler();
-        }
 
-        // Extract embedded DLL
-        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            string resourceName = "GsJX3AssistantNativeHelper." + new AssemblyName(args.Name).Name + ".dll";
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
-            {
-                byte[] assemblyData = new byte[stream.Length];
-                stream.Read(assemblyData, 0, assemblyData.Length);
-                return Assembly.Load(assemblyData);
-            }
+            timeoutKit = new TimeoutKit(10, Terminate, notifyIconKit, loggingKit);
+            timeoutKit.Start();
 
+            
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            int httpPort = (new Random()).Next(5000, 65500);
+            bool openBrowser = true;
             if (e.Args.Length == 1)
             {
                 // if started by URL Scheme
@@ -72,19 +68,21 @@ namespace GsJX3AssistantNativeHelper
 
                 var parsedQS = HttpUtility.ParseQueryString(arg);
 
-                foreach(string key in parsedQS)
+                foreach (string key in parsedQS)
                 {
-                    loggingKit.Info("[StartUpArgs] " + key + ": " + parsedQS[key]);
+                    loggingKit.Info("[StartupArgs] " + key + ": " + parsedQS[key]);
                     switch (key)
                     {
                         case "port":
-                            //httpPort = int.Parse(parsedQS[key]);
-                            int.TryParse(parsedQS[key], out httpPort);
-                            break;
-                        case "visible":
-                            if (parsedQS[key] == "false")
+                            try
                             {
-                                visible = false;
+                                httpPort = int.Parse(parsedQS[key]);
+                                openBrowser = false;
+                            }
+                            catch
+                            {
+                                var errorMsg = $"Failed to parse HTTP port from {parsedQS[key]}";
+                                loggingKit.Error(errorMsg);
                             }
                             break;
                         default:
@@ -95,21 +93,30 @@ namespace GsJX3AssistantNativeHelper
             }
             else
             {
-                loggingKit.Error("Started without arguments. Opening webpage.");
-                Process.Start("https://jx3.gentlespoon.com/automator");
-                
-                Terminate();
+                loggingKit.Warn($"Started without arguments.");
+            }
 
+            httpServerKit = new HttpServerKit(httpPort, Terminate, timeoutKit, loggingKit);
+            httpServerKit.Start();
+
+            if (openBrowser)
+            {
+                Process.Start($"https://jx3.gentlespoon.com/automator/connect?port={httpPort}");
             }
         }
 
+        
+
         public void Terminate()
         {
-            Thread.Sleep(500);
+            httpServerKit?.Stop();
+            timeoutKit?.Stop();
+            notifyIconKit?.Hide();
+            Thread.Sleep(1000);
             Environment.Exit(Environment.ExitCode);
         }
 
-        
+
 
     }
 }

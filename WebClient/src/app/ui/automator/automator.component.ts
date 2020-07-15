@@ -15,14 +15,24 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./automator.component.scss'],
 })
 export class AutomatorComponent implements OnInit {
-  constructor(private activatedRoute: ActivatedRoute) {
-    this.params = this.activatedRoute.params.subscribe((params) => {
-      this.mode = params['mode'];
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private automatorService: AutomatorService
+  ) {
+    this.activatedRoute.params.subscribe((urlVariables) => {
+      this.mode = urlVariables['mode'];
+    });
+    this.activatedRoute.queryParams.subscribe((queryParams) => {
+      // console.log(params);
+      if (queryParams['port']) {
+        var port = parseInt(queryParams['port']);
+        console.log('Connect mode: port = ' + port);
+        this.automatorService.connect(port);
+      }
     });
   }
 
   ngOnInit(): void {}
 
-  private params: any;
   public mode: string;
 }

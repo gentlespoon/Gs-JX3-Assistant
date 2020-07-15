@@ -17,12 +17,21 @@ namespace GsJX3AssistantNativeHelper.Kits
 
     public class HttpServerKit
     {
-        private HttpListener _listener;
-        private LoggingKit _loggingKit;
+        private HttpListener listener;
+        private LoggingKit loggingKit;
+        private TimeoutKit timeoutKit;
 
-        public HttpServerKit(LoggingKit loggingKit)
+        public delegate void TerminateDelegate();
+        private TerminateDelegate terminate;
+
+        private int port;
+
+        public HttpServerKit(int port, TerminateDelegate terminate, TimeoutKit timeoutKit, LoggingKit loggingKit)
         {
-            _loggingKit = loggingKit;
+            this.loggingKit = loggingKit;
+            this.timeoutKit = timeoutKit;
+            this.port = port;
+            this.terminate = terminate;
 
             if (!HttpListener.IsSupported)
             {
@@ -31,22 +40,22 @@ namespace GsJX3AssistantNativeHelper.Kits
         }
 
 
-        public void Start(int port)
+        public void Start()
         {
-            _listener = new HttpListener();
-            _listener.Prefixes.Add("http://localhost:" + port + "/");
-            _listener.Start();
+            listener = new HttpListener();
+            listener.Prefixes.Add("http://localhost:" + port + "/");
+            listener.Start();
 
             // listen on a background thread
             Task.Run(() =>
             {
-                _loggingKit.Info("Application started, listening on port " + port);
+                loggingKit.Info("HTTP server started, listening on port " + port);
 
                 try
                 {
-                    while (_listener.IsListening)
+                    while (listener.IsListening)
                     {
-                        var requestContext = _listener.GetContext();
+                        var requestContext = listener.GetContext();
                         if (requestContext != null)
                         {
                             Task.Run(() =>
@@ -71,7 +80,7 @@ namespace GsJX3AssistantNativeHelper.Kits
                                 }
                                 catch (Exception ex)
                                 {
-                                    _loggingKit.Error(ex.ToString());
+                                    loggingKit.Error(ex.ToString());
                                 }
                                 finally
                                 {
@@ -88,7 +97,7 @@ namespace GsJX3AssistantNativeHelper.Kits
                 }
                 catch (Exception ex)
                 {
-                    _loggingKit.Error(ex.ToString());
+                    // mute exception
                 }
 
             });
@@ -96,9 +105,9 @@ namespace GsJX3AssistantNativeHelper.Kits
 
         public void Stop()
         {
-            _loggingKit.Warn("Listener stopped.");
-            _listener.Stop();
-            _listener.Close();
+            loggingKit.Warn("Listener stopped.");
+            listener.Stop();
+            listener.Close();
         }
 
         public string HandleHttpRequest(HttpListenerRequest request)
@@ -107,23 +116,23 @@ namespace GsJX3AssistantNativeHelper.Kits
 
             if (request.RawUrl.StartsWith("/heartBeat"))
             {
-                _loggingKit.Verbose("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
+                loggingKit.Verbose("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 // heartbeat request
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    _loggingKit.Verbose("Heartbeat detected. Resetting suicide countdown");
-                    ((Application.Current as App).MainWindow as MainWindow).resetSuicideCounter();
+                    loggingKit.Verbose("Heartbeat detected. Resetting suicide countdown");
+                    timeoutKit.ResetTimeout();
                 });
             } else
 
 
             if (request.RawUrl.StartsWith("/shutdown"))
             {
-                _loggingKit.Warn("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
+                loggingKit.Warn("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     response = "1";
-                    (Application.Current.MainWindow as MainWindow).suicide("Received shutdown request");
+                    terminate();
                 });
             }
             else
@@ -131,44 +140,26 @@ namespace GsJX3AssistantNativeHelper.Kits
 
             if (request.RawUrl.StartsWith("/version"))
             {
-                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
+                loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 response = (Application.Current as App).nhVersion;
-            } else
-            
-            
-            if (request.RawUrl.StartsWith("/visible"))
-            {
-                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
-                bool isVisible = request.QueryString.Get("visible") == "true";
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    if (isVisible)
-                    {
-                        (Application.Current.MainWindow).Show();
-                    }
-                    else
-                    {
-                        (Application.Current.MainWindow).Hide();
-                    }
-                });
             } else
             
             
             if (request.RawUrl.StartsWith("/getPixelColor"))
             {
-                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
+                loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 int x = int.Parse(request.QueryString.Get("X"));
                 int y = int.Parse(request.QueryString.Get("Y"));
                 IDisplayHelper displayHelper = new DisplayHelper_GDI();
                 System.Drawing.Color pixelColor = displayHelper.GetColorAt(new System.Drawing.Point(x, y));
                 response = "{\"R\":"+pixelColor.R.ToString() + ",\"G\":" + pixelColor.G.ToString() + ",\"B\":" + pixelColor.B.ToString()+"}";
-                _loggingKit.Info(response);
+                loggingKit.Info(response);
             } else
             
 
             if (request.RawUrl.StartsWith("/getCursorCoordinates"))
             {
-                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
+                loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 AutoResetEvent stopWaitHandle = new AutoResetEvent(false);
                 // Must be done on UI thread or Garbage Collection will freeze the cursor
                 Application.Current.Dispatcher.Invoke(() =>
@@ -177,7 +168,7 @@ namespace GsJX3AssistantNativeHelper.Kits
                     cursorReader.GetCursorPosition((System.Drawing.Point point, int mouseButton) =>
                     {
                         response = "{\"X\":" + point.X + ",\"Y\":" + point.Y + ",\"MB\":" + mouseButton + "}";
-                        _loggingKit.Info(response);
+                        loggingKit.Info(response);
                         stopWaitHandle.Set();
                     });
                 });
@@ -188,13 +179,14 @@ namespace GsJX3AssistantNativeHelper.Kits
 
             if (request.RawUrl.StartsWith("/mouseClickAt"))
             {
-                _loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
+                loggingKit.Info("[HTTP]<" + request.RemoteEndPoint + ">[" + request.Url + "]");
                 int x = int.Parse(request.QueryString.Get("X"));
                 int y = int.Parse(request.QueryString.Get("Y"));
                 int mb = int.Parse(request.QueryString.Get("MB"));
+                bool dblClick = request.QueryString.Get("dblClick") == "1";
 
                 IMouseSimulator mouseSimulator = new MouseSimulator_MouseEvent();
-                mouseSimulator.Click(new System.Drawing.Point(x, y), mb);
+                mouseSimulator.Click(new System.Drawing.Point(x, y), mb, dblClick);
             }
 
             return response;

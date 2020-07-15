@@ -1,0 +1,31 @@
+This software is provided freely on an "as is" and "as available" basis, and you agaree that you use such software entirely at your own risk.
+
+The author gives absolutely no warranty and accepts no responsibility or liability for the compliance of JX3 EULA. Under no circumstances will the author be held responsible for any claims, damages, losses, expenses, costs, or liabilities including, without limitation, any direct or indirect damages for loss of profits, business interfuption, loss of information or suspension of accounts resulting or arising directly or indirectly from your use of or inability to use this software or any tools derived from this software.
+
+Source code available on https://github.com/gentlespoon/Gs-JX3-Assistant
+
+All rights reserved.
+
+=======================================
+
+MIT License
+
+Copyright (c) 2020 GentleSpoon
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
