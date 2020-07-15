@@ -1,0 +1,11 @@
+<div class="card">
+  <app-lifeskill-tab [mode]="mode"></app-lifeskill-tab>
+
+  <div class="cardBody">
+    <app-lsfr *ngIf="mode == 'fr'"></app-lsfr>
+    <app-lspr *ngIf="mode == 'pr'"></app-lspr>
+    <app-lsys *ngIf="mode == 'ys'"></app-lsys>
+    <app-lszj *ngIf="mode == 'zj'"></app-lszj>
+    <app-lszz *ngIf="mode == 'zz'"></app-lszz>
+  </div>
+</div>

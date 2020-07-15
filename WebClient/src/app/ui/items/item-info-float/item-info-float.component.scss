@@ -1,0 +1,63 @@
+@import "../../../../colors.scss";
+
+.float {
+  position: absolute;
+  background-color: $color-background-dark;
+  min-width: 250px;
+  min-height: 0;
+  color: $color-description-light;
+  padding: 10px;
+  cursor: default;
+  outline: 1px solid $color-background-dark;
+  border: 1px solid black;
+}
+
+.title {
+  height: 25px;
+  line-height: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin-bottom: 5px;
+
+  &.item-color-0 {
+    color: $color-0-light;
+  }
+  &.item-color-1 {
+    color: $color-1-light;
+  }
+  &.item-color-2 {
+    color: $color-2-light;
+  }
+  &.item-color-3 {
+    color: $color-3-light;
+  }
+  &.item-color-4 {
+    color: $color-4-light;
+  }
+  &.item-color-5 {
+    color: $color-5-light;
+  }
+}
+
+.topRightButtons {
+  height: 15px;
+  line-height: 15px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  & > a {
+    margin-right: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 10px;
+    &:hover {
+      text-shadow: 0 0 2px yellow;
+      color: yellow;
+    }
+  }
+}
+
+.bond {
+  color: white;
+}

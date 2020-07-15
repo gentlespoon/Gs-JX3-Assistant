@@ -1,0 +1,11 @@
+<div class="card">
+  <!-- connection status -->
+  <app-automator-status></app-automator-status>
+
+  <!-- router -->
+  <app-automator-tab [mode]="mode"></app-automator-tab>
+  <div class="cardBody">
+    <app-automator-setup *ngIf="!mode"></app-automator-setup>
+    <app-automator-dy *ngIf="mode == 'dy'"></app-automator-dy>
+  </div>
+</div>

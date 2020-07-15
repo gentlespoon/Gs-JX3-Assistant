@@ -1,0 +1,34 @@
+<div class="banner">
+  <div class="brand">
+    <a [routerLink]="['/']">
+      JX3 <del>小</del><span style="font-size: 30px;">大</span>助手
+    </a>
+  </div>
+
+  <div class="menu">
+    <a [class.activated]="activatedRoute == '/'" [routerLink]="['/']">
+      关于
+    </a>
+    <a
+      [class.activated]="activatedRoute.startsWith('/automator')"
+      [routerLink]="['/automator']"
+    >
+      自动化
+    </a>
+    <a
+      [class.activated]="activatedRoute.startsWith('/lifeSkill')"
+      [routerLink]="['lifeSkill']"
+    >
+      生活技能
+      <fa-icon [icon]="faCaretDown"></fa-icon>
+    </a>
+    <a
+      [class.activated]="
+        activatedRoute == '/itemList' || activatedRoute.startsWith('/itemInfo')
+      "
+      [routerLink]="['/itemList']"
+    >
+      物品列表
+    </a>
+  </div>
+</div>

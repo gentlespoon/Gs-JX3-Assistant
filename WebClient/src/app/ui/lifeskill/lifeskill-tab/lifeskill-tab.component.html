@@ -1,0 +1,9 @@
+<div class="tab-bar">
+  <a
+    *ngFor="let skill of Object.keys(skills)"
+    [routerLink]="['/lifeSkill/' + skill]"
+    [class.activated]="mode == skill"
+  >
+    {{ skills[skill] }}
+  </a>
+</div>
