@@ -86,7 +86,7 @@ namespace GsJX3AssistantNativeHelper
         {
             get
             {
-                return (Application.Current as App).logFilePath;
+                return (Application.Current as App).path_logFileName;
             }
         }
 

@@ -11,6 +11,7 @@ using System.Web;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
+using System.IO;
 
 namespace GsJX3AssistantNativeHelper
 {
@@ -20,7 +21,8 @@ namespace GsJX3AssistantNativeHelper
     public partial class App : Application
     {
         public bool verboseLogging = false;
-        public string logFilePath = DateTime.Now.ToString("yyyyMMdd") + ".log";
+        public string path_logFileName = DateTime.Now.ToString("yyyyMMdd") + ".log";
+        public string path_AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         public int httpPort = 65512;
         public bool visible = true;
 
@@ -34,7 +36,7 @@ namespace GsJX3AssistantNativeHelper
         {
             // Extract embedded DLL
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            loggingKit = new LoggingKit(logFilePath);
+            loggingKit = new LoggingKit(path_logFileName);
 
             loggingKit.Info("version " + nhVersion);
 
