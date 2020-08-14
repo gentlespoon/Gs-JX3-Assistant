@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { LanLinkComponent } from './lan-link.component';
 
@@ -8,9 +9,9 @@ describe('LanLinkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LanLinkComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule],
+      declarations: [LanLinkComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

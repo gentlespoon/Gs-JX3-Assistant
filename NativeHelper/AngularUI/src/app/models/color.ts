@@ -4,9 +4,18 @@ export class Color {
   B: number;
 
   constructor(R: number, G: number, B: number) {
-    this.R = R;
-    this.G = G;
-    this.B = B;
+    if (R >= 0 && R <= 255) this.R = R;
+    else {
+      throw new Error('Invalid color');
+    }
+    if (G >= 0 && G <= 255) this.G = G;
+    else {
+      throw new Error('Invalid color');
+    }
+    if (B >= 0 && B <= 255) this.B = B;
+    else {
+      throw new Error('Invalid color');
+    }
   }
 
   public isSame(c: Color): boolean {

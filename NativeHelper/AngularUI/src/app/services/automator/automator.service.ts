@@ -35,7 +35,6 @@ export class AutomatorService {
           this.heartBeatFailure = 0;
 
           if (!this.isConnected) {
-            this.checkVersion();
             this.getAutomatorAddress();
             this.isConnected = true;
           }
@@ -109,19 +108,6 @@ export class AutomatorService {
           console.error(error);
         }
       );
-  }
-
-  checkVersion(): void {
-    this.httpClient.get(`/api/version`, { responseType: 'text' }).subscribe(
-      (response) => {
-        if (response !== this.expectedversion) {
-          window.alert(
-            `助手客户端已有新版本，请使用新版本。\n\n您的版本：${response}\n当前版本：${this.expectedversion}`
-          );
-        }
-      },
-      (error) => {}
-    );
   }
 
   getAutomatorAddress(): void {
