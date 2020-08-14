@@ -25,7 +25,7 @@ namespace GsJX3AssistantNativeHelper
     /// </summary>
     public partial class App : Application
     {
-        internal string nhVersion = "20.08.13.1900";
+        internal string nhVersion = "20.08.13.1901";
 
         private IContainer container;
 

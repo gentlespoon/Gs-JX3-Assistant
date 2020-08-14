@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GsJX3AssistantNativeHelper"
-#define MyAppVersion "20.08.13.1900"
+#define MyAppVersion "20.08.13.1901"
 #define MyAppPublisher "GentleSpoon.com"
 #define MyAppURL "https://jx3.gentlespoon.com/"
 #define MyAppExeName "GsJX3AssistantNativeHelper.exe"

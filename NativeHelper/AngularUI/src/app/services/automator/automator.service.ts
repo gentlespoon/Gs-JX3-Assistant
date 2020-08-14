@@ -4,6 +4,7 @@ import { MouseAction } from '../../models/mouse-action';
 import { PixelColor } from '../../models/pixel-color';
 import { Coordinates } from '../../models/coordinates';
 import { Color } from '../../models/color';
+import { Version } from 'src/app/version';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class AutomatorService {
 
   public isConnected = false;
 
-  expectedversion = '20.08.13.1900';
+  expectedversion = Version.current;
 
   public heartBeatInterval: any;
   public heartBeatFailure: number = 0;

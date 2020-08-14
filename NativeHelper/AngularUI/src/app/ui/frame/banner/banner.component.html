@@ -1,8 +1,14 @@
 <div class="banner">
   <div class="brand">
-    <a [routerLink]="['/']">
-      JX3自动化工具
-    </a>
+    <a [routerLink]="['/']"> JX3自动化工具</a>
+    <span *ngIf="Version.hasUpdate"
+      >&nbsp;<a
+        href="https://github.com/gentlespoon/Gs-JX3-Assistant/releases"
+        target="_blank"
+        style="color: yellow;"
+        >【有更新版本】</a
+      ></span
+    >
   </div>
 
   <div class="menu">
