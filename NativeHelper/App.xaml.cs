@@ -6,13 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Timers;
-using GsJX3AssistantNativeHelper.Kits;
 using System.Web;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.IO;
 using System.Drawing;
+using Autofac;
+using Serilog;
+using GsJX3AssistantNativeHelper.Kits.UIKit;
+using GsJX3AssistantNativeHelper.Kits.ConnectionKit;
+using GsJX3AssistantNativeHelper.Kits.General;
 
 namespace GsJX3AssistantNativeHelper
 {
@@ -21,102 +25,64 @@ namespace GsJX3AssistantNativeHelper
     /// </summary>
     public partial class App : Application
     {
-        
-        internal string nhVersion = "20.07.15.0147";
+        internal string nhVersion = "20.08.13.1900";
 
-        
-        private LoggingKit loggingKit;
+        private IContainer container;
+
+        private ILogger log;
         private HttpServerKit httpServerKit;
-        private TimeoutKit timeoutKit;
         private NotifyIconKit notifyIconKit;
+        private EnvironmentSetupKit envSetupKit;
 
         public App()
         {
-            Console.WriteLine(AppPaths.path_logFileFullPath);
+            container = CompositionRoot.SetupContainer();
 
-            // Setup logging
-            loggingKit = new LoggingKit(AppPaths.path_logFileFullPath, false);
-            loggingKit.Info($"Application starting up (version {nhVersion}) at {AppPaths.path_AppPath}");
-
-            notifyIconKit = new NotifyIconKit();
-            notifyIconKit.Normal();
-
-            // register scheme handler
-            var schemeRegisterKit = new SchemeRegisterKit(loggingKit);
-            schemeRegisterKit.registerSchemeHandler();
-
-            timeoutKit = new TimeoutKit(30, Terminate, notifyIconKit, loggingKit);
-            timeoutKit.Start();
-
-            
+            log = container.Resolve<ILogger>();
+            log.Information("==== NEW SESSION ====");
+            log.Information($"Application starting up (version {nhVersion})");
+            log.Information($"Startup location {AppPaths.path_AppPath}");
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            int httpPort = (new Random()).Next(5000, 65500);
-            bool openBrowser = true;
-            if (e.Args.Length == 1)
-            {
-                // if started by URL Scheme
-                string arg = e.Args[0];
-                arg = arg.Substring(SchemeRegisterKit.protocol.Length + 3);
-                if (arg.EndsWith("/"))
-                {
-                    Console.WriteLine("Removing trailing /");
-                    arg = arg.Remove(arg.Length - 1);
-                }
+            notifyIconKit = container.Resolve<NotifyIconKit>();
+            httpServerKit = container.Resolve<HttpServerKit>();
 
-                var parsedQS = HttpUtility.ParseQueryString(arg);
+            log.Debug("[Application_Startup] Showing NotifyIcon");
+            notifyIconKit.Show();
 
-                foreach (string key in parsedQS)
-                {
-                    loggingKit.Info("[StartupArgs] " + key + ": " + parsedQS[key]);
-                    switch (key)
-                    {
-                        case "port":
-                            try
-                            {
-                                httpPort = int.Parse(parsedQS[key]);
-                                openBrowser = false;
-                            }
-                            catch
-                            {
-                                var errorMsg = $"Failed to parse HTTP port from {parsedQS[key]}";
-                                loggingKit.Error(errorMsg);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
+            var uiLauncher = container.Resolve<UILauncher>();
+            httpServerKit.RegisterUILauncher(uiLauncher);
+            notifyIconKit.RegisterUILauncher(uiLauncher);
+            httpServerKit.RegisterPortChangedObserver(notifyIconKit);
+            httpServerKit.RegisterPortChangedObserver(uiLauncher);
 
-            }
-            else
-            {
-                loggingKit.Warn($"Started without arguments.");
-            }
-
-            httpServerKit = new HttpServerKit(httpPort, Terminate, timeoutKit, loggingKit);
+            // Start server
+            log.Debug("[Application_Startup] Launching HTTP Server");
             httpServerKit.Start();
 
-            if (openBrowser)
-            {
-                Process.Start($"https://jx3.gentlespoon.com/automator?port={httpPort}");
-            }
+            log.Debug("[Application_Startup] Launching Web UI");
+            uiLauncher.LaunchWebUI();
         }
-
-        
 
         public void Terminate()
         {
+            log?.Debug("[Terminate] Starting Terminate sequence");
+            envSetupKit?.RemoveFirewallPortRule();
+            log?.Debug("[Terminate] Removed Firewall port rule");
             httpServerKit?.Stop();
-            timeoutKit?.Stop();
+            log?.Debug("[Terminate] Stopped HTTP Server");
             notifyIconKit?.Hide();
+            log?.Debug("[Terminate] Hide NotifyIcon");
             Thread.Sleep(1000);
+            log?.Debug("[Terminate] Env Exit");
             Environment.Exit(Environment.ExitCode);
         }
 
-
-
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            Terminate();
+        }
     }
 }

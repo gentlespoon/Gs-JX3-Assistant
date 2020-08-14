@@ -1,0 +1,109 @@
+<div class="card">
+  <fieldset>
+    <legend>进度</legend>
+    <fieldset class="prog prog1">
+      <legend>
+        垂钓 {{ angleCountdown }}/
+        <input type="number" [(ngModel)]="angleTimeout" />秒
+      </legend>
+      <div class="progressbar" [style]="angleProgressbarStyle"></div>
+    </fieldset>
+    <fieldset class="prog prog2">
+      <legend>
+        收杆 {{ harvestCountdown }}/
+        <input type="number" [(ngModel)]="harvestTimeout" />秒
+      </legend>
+      <div class="progressbar" [style]="harvestProgressbarStyle"></div>
+    </fieldset>
+  </fieldset>
+
+  <fieldset>
+    <legend>控制</legend>
+    <button class="controlBtn" (click)="start()" [disabled]="!canStart">
+      <fa-icon [icon]="faPlay"></fa-icon>
+      开始
+    </button>
+    <button class="controlBtn" (click)="stop()" [disabled]="!canStop">
+      <fa-icon [icon]="faStop"></fa-icon>
+      停止
+    </button>
+  </fieldset>
+
+  <fieldset>
+    <legend>设置</legend>
+    <fieldset class="settingItem">
+      <legend>收杆 *</legend>
+      <button
+        [class.notSet]="!harvestAction"
+        [class.set]="harvestAction"
+        (click)="setHarvestAction()"
+        [disabled]="settingHarvest"
+      >
+        <span *ngIf="!harvestAction">
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon> 未设置
+        </span>
+        <span *ngIf="harvestAction">
+          <fa-icon [icon]="farCheckCircle"></fa-icon> 已设置
+        </span>
+      </button>
+      <div *ngIf="harvestAction">
+        <div>
+          坐标[{{ harvestAction.coordinates.X }},
+          {{ harvestAction.coordinates.Y }}]
+        </div>
+        <div>鼠标键{{ harvestAction.MB }}</div>
+      </div>
+    </fieldset>
+    <fieldset class="settingItem">
+      <legend>垂钓 *</legend>
+      <button
+        [class.notSet]="!anglingAction"
+        [class.set]="anglingAction"
+        (click)="setAnglingAction()"
+        [disabled]="settingAngling"
+      >
+        <span *ngIf="!anglingAction">
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon> 未设置
+        </span>
+        <span *ngIf="anglingAction">
+          <fa-icon [icon]="farCheckCircle"></fa-icon> 已设置
+        </span>
+      </button>
+      <div *ngIf="anglingAction">
+        <div>
+          坐标[{{ anglingAction.coordinates.X }},
+          {{ anglingAction.coordinates.Y }}]
+        </div>
+        <div>鼠标键{{ anglingAction.MB }}</div>
+      </div>
+    </fieldset>
+    <fieldset class="settingItem">
+      <legend>上钩提示 *</legend>
+      <div>尽量选择白色区域</div>
+      <button
+        [class.notSet]="!baitIndicator"
+        [class.set]="baitIndicator"
+        (click)="setBaitIndicator()"
+        [disabled]="settingBait"
+      >
+        <span *ngIf="!baitIndicator">
+          <fa-icon [icon]="faExclamationTriangle"></fa-icon> 未设置
+        </span>
+        <span *ngIf="baitIndicator">
+          <fa-icon [icon]="farCheckCircle"></fa-icon> 已设置
+        </span>
+      </button>
+      <div *ngIf="baitIndicator">
+        <div>
+          坐标[{{ baitIndicator.coordinates.X }},
+          {{ baitIndicator.coordinates.Y }}]
+        </div>
+        <div>
+          颜色[{{ baitIndicator.color.R }}, {{ baitIndicator.color.G }},
+          {{ baitIndicator.color.B }}]
+        </div>
+        <div [style]="baitIndicatorStyle"></div>
+      </div>
+    </fieldset>
+  </fieldset>
+</div>

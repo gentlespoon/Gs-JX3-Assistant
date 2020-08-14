@@ -8,7 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GsJX3AssistantNativeHelper.Kits {
+namespace GsJX3AssistantNativeHelper.Kits.HIDKits.Mouse
+{
     class MouseSimulator_MouseEvent : IMouseSimulator
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]

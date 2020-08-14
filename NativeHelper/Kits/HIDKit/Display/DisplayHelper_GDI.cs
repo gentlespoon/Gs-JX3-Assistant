@@ -9,7 +9,7 @@ using DColor = System.Drawing.Color;
 using System.Runtime.InteropServices;
 using System.IO;
 
-namespace GsJX3AssistantNativeHelper.Kits
+namespace GsJX3AssistantNativeHelper.Kits.HIDKits.Display
 {
 
 

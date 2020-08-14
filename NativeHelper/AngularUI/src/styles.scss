@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./colors.scss";
+@import "./items.scss";
+
+* {
+  white-space: nowrap;
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei", "PingFangSC-Regular", Helvetica, Arial,
+    sans-serif !important;
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+html,
+body {
+  margin: 0;
+}
+
+p {
+  white-space: normal;
+}
+
+.card {
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 2px gray;
+  min-height: 250px;
+  min-width: 340px;
+  overflow: hidden;
+  background-color: white;
+}

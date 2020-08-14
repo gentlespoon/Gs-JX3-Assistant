@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using DColor = System.Drawing.Color;
 
-namespace GsJX3AssistantNativeHelper.Kits
+namespace GsJX3AssistantNativeHelper.Kits.HIDKits.Display
 {
     public interface IDisplayHelper
     {

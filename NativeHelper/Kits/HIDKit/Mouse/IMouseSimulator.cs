@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace GsJX3AssistantNativeHelper.Kits
+namespace GsJX3AssistantNativeHelper.Kits.HIDKits.Mouse
 {
     public interface IMouseSimulator
     {

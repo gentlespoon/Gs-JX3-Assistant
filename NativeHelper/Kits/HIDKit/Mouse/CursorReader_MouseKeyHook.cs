@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Gma.System.MouseKeyHook;
 
-namespace GsJX3AssistantNativeHelper.Kits
+namespace GsJX3AssistantNativeHelper.Kits.HIDKits.Mouse
 {
     class CursorReader_MouseKeyHook : ICursorReader
     {

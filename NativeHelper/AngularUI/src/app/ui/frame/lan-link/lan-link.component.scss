@@ -1,0 +1,17 @@
+@import "../../../../colors.scss";
+
+.card {
+  background-color: $color-background-light;
+  padding: 1em 0;
+  color: white;
+  user-select: none;
+  text-align: center;
+}
+
+a {
+  color: white;
+}
+
+.QRCode {
+  margin: 1em;
+}

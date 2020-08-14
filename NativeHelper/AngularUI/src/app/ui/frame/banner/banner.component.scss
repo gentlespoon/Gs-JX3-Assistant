@@ -1,0 +1,57 @@
+@import "../../../../colors.scss";
+
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: $color-background-light;
+  height: 70px;
+  text-align: center;
+  z-index: 999;
+  user-select: none;
+}
+
+.brand {
+  height: 40px;
+  & > a {
+    font-weight: bold;
+    font-size: 22px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+.menu {
+  height: 30px;
+  scrollbar-width: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  & > a {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+a {
+  border-radius: 5px 5px 0 0;
+  text-decoration: none;
+  color: white;
+  &.activated {
+    color: black;
+    background-color: white;
+  }
+
+  &.status {
+    &.connected {
+      background-color: #32aa00;
+    }
+    &.disconnected {
+      background-color: #ff4500;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@import "../../../../colors.scss";
+.card {
+  background-color: $color-background-light;
+  padding: 20px;
+  color: white;
+  user-select: none;
+}
+
+a {
+  color: white;
+}
+
+div {
+  vertical-align: top;
+}
+
+.componentRoot {
+  padding: 5px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+fieldset {
+  border-radius: 2px;
+  padding: 1px;
+  margin: 0;
+}
+legend {
+  margin-left: 5px;
+}
+
+.prog {
+  & > .progressbar {
+    height: 15px;
+    text-align: center;
+  }
+}
+
+.inlineblock {
+  display: inline-block;
+}
+
+.notSet {
+  color: #ff4444;
+  font-weight: bold;
+}
+.set {
+  color: #00aa00;
+  font-weight: bold;
+}
+
+input[type="number"] {
+  width: 60px;
+}
+
+button.controlBtn {
+  width: 50%;
+  height: 60px;
+}
+
+button {
+  text-align: center;
+}

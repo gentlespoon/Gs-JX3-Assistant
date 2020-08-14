@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GsJX3AssistantNativeHelper"
-#define MyAppVersion "20.07.15.0147"
+#define MyAppVersion "20.08.13.1900"
 #define MyAppPublisher "GentleSpoon.com"
 #define MyAppURL "https://jx3.gentlespoon.com/"
 #define MyAppExeName "GsJX3AssistantNativeHelper.exe"
@@ -25,7 +25,7 @@ DisableProgramGroupPage=yes
 UsedUserAreasWarning=no
 LicenseFile=D:\Sources\GitHub\Gs-JX3-Assistant\NativeHelper\Installer_Info_Before_Installation.txt
 ; Remove the following line to run in administrative install mode (install for all users.)
-PrivilegesRequired=lowest
+PrivilegesRequired=admin
 OutputBaseFilename=GsJX3NH_{#MyAppVersion}
 SetupIconFile=D:\Sources\GitHub\Gs-JX3-Assistant\NativeHelper\icon-7x.ico
 Compression=lzma
@@ -40,9 +40,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 6.1; Check: not IsAdminInstallMode
 
 [Files]
-Source: "D:\Sources\GitHub\Gs-JX3-Assistant\NativeHelper\bin\Debug\GsJX3AssistantNativeHelper.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Sources\GitHub\Gs-JX3-Assistant\NativeHelper\bin\Debug\Gma.System.MouseKeyHook.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Sources\GitHub\Gs-JX3-Assistant\NativeHelper\bin\Debug\Icons\*"; DestDir: "{app}\Icons"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\Sources\GitHub\Gs-JX3-Assistant\NativeHelper\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Sources\GitHub\Gs-JX3-Assistant\NativeHelper\bin\Release\Icons\*"; DestDir: "{app}\Icons"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\Sources\GitHub\Gs-JX3-Assistant\NativeHelper\bin\Release\UI\*"; DestDir: "{app}\UI"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -50,6 +50,6 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
-;[Run]
-;Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+[Run]
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent runascurrentuser
 

@@ -1,0 +1,22 @@
+<div class="card">
+  <div *ngIf="automatorService.automatorAddresses.length == 0">
+    跨设备连接加载中...
+  </div>
+
+  <div *ngIf="automatorService.automatorAddresses.length > 1">
+    您的电脑有多个IP地址<br />其中部分IP可能无法连接<br />请尝试其他IP
+  </div>
+  <div
+    class="QRCode"
+    *ngFor="let ipAddress of automatorService.automatorAddresses"
+  >
+    <qrcode
+      [qrdata]="generateURL(ipAddress)"
+      [width]="300"
+      [errorCorrectionLevel]="'M'"
+    ></qrcode>
+    <a href="{{ generateURL(ipAddress) }}" target="_blank">
+      {{ generateURL(ipAddress) }}
+    </a>
+  </div>
+</div>
